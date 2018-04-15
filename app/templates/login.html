@@ -4,8 +4,8 @@
 <h1>Login</h1>
 <form action="/login" method="post" name="login">
 	{{ form.hidden_tag() }}
-	<p>name:</p><p> {{ form.username }}</p>
-	<p>password: </p><p>{{ form.password }}</p>
+	<p>name:</p><p> {{ form.user_name }}</p>
+	<p>password: </p><p>{{ form.user_password }}</p>
 	<p>{{ form.submit }}</p>
 </form>
 {% endblock %}
