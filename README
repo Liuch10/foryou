@@ -5,3 +5,23 @@ pip install ipfsapi
 
 
 web3.py(A python interface for interacting with the Ethereum blockchain and ecosystem):https://github.com/ethereum/web3.py
+
+
+project structure
+-- app
+	-- models 					// data model entity
+		models.py
+	-- utils  					// utility tools 
+		*.py
+	-- views  					// controllers
+		*Ctrl.py  				// controller handler
+		views.py  				// router config
+	-- static 					// static files
+		-- css
+		-- js
+	-- templates 				// html files
+		base.html 				// base.html is the skeleton of every page
+		*.html
+	config.py
+	db_create.py 				// run this to init db
+	run.py

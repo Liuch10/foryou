@@ -1,8 +1,7 @@
-from flask import render_template, flash, url_for, session, redirect, request, g 
+from flask import g 
 from app import app, db, lm
-from flask_login import login_user, logout_user, current_user, login_required
+from flask_login import current_user
 from app.models.models import User
-from datetime import datetime
 
 from app.views.indexCtrl import index
 from app.views.loginCtrl import login, sign_up, logout

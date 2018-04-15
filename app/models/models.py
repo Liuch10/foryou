@@ -7,8 +7,6 @@ class User(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 	username = db.Column(db.String(64), unique = True)
 	password = db.Column(db.String(64))
-	role = db.Column(db.SmallInteger, default = ROLE_USER)
-	about_me = db.Column(db.String(140))
 	last_seen = db.Column(db.DateTime)
 
 	def is_authenticated(self):
