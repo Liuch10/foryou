@@ -1,0 +1,73 @@
+data models
+
+    //Tbl_Test
+        //test_id,
+        //test_content,
+    Tbl_User
+        user_id,
+        user_mail,
+        user_pw,
+        user_type,
+        user_city,
+        user_hospital,
+        user_department,
+        user_phone,
+        user_chain_address,
+        user_reg_time,
+
+    Tbl_Wallet
+        wallet_id,
+        wallet_address,
+        wallet_balance
+
+    Tbl_Transaction
+        trans_id,
+        user_id,
+        trans_from_address,
+        trans_to_address,
+        trans_amout
+        trans_time
+        trans_typetype
+
+    Tbl_Case
+        case_id,
+        upload_user_id,
+        case_chain_address
+        case_info,
+        is_diagnosed
+        diagnosis_info(json?),
+        in_consultant(bool)
+        consultation_message
+
+        
+    Tbl_Consultation
+        consultation_id,
+        case_id,
+        comment_user_id,
+        comment_content,
+        comment_time
+
+
+
+
+functions
+    register(user_mail,
+        user_pw,
+        user_type,
+        user_city,
+        user_hospital,
+        user_department,
+        user_phone,
+        user_chain_address,
+        user_reg_time)
+
+    login(user_mail, password)
+    changePassword(user_mail, verification_code, new_password)
+    viewTransactions(user_id)
+
+    uploadCase(user_id, img_url, case_info)
+    diagnose(case_id, user_id, diagnosis_info)
+    createConsultation(case_id, user_id, consultation_message)
+    replyConsultation(case_id, reply_user_id, comment)
+    addExpertCase(case_id, user_id)
+
