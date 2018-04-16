@@ -4,8 +4,9 @@ ROLE_USER = 0
 ROLE_ADMIN = 1
 
 class User(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    user_name = db.Column(db.String(64), unique = True)
+    id = db.Column(db.Integer, primary_key=True)
+    user_name = db.Column(db.String(64), unique=True)
+    user_mail = db.Column(db.String(64), unique=True)
     user_password = db.Column(db.String(64))
     user_type = db.Column(db.String(64))
     user_city = db.Column(db.String(64))
@@ -15,7 +16,7 @@ class User(db.Model):
     user_chain_address = db.Column(db.String(64))
     user_reg_time = db.Column(db.DateTime)
     last_seen = db.Column(db.DateTime)
-
+    user_verification_code = db.column(db.String(6))
     def is_authenticated(self):
         return True
     def is_active(self):
