@@ -12,9 +12,23 @@
 </form>
 
 
-<input onclick="add_to_ipfs()" type="button" value="test_ipfs_api"/>
+<!-- <input onclick="add_to_ipfs()" type="button" value="test_ipfs_api"/> -->
+<input type="file" id="files" style="display: none" onchange="add_to_ipfs(this);">
+<input type="button" id="fileImport" value="导入">
+
 <script src="/static/js/ipfs.js"></script>
 <script type="text/javascript">
+    $("#fileImport").click(function () {
+            $("#files").click();
+    })
+    function read_file_binary(obj) {
+        var file = obj.files[0];
+        var reader = new FileReader();
+        reader.readAsBinaryString(file)
+        reader.onload = function () {
+            var data = this.result
+        }
+    }
     function add_to_ipfs() {
         var host = 'localhost';
         var apiPort = '5001';
