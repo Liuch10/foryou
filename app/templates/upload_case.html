@@ -21,7 +21,9 @@
 <script src="/static/js/file-type.js"></script>
 <script src="/static/js/ipfs.js"></script>
 <script type="text/javascript">
+
     ipfs.setProvider();
+
     $("#fileImport").click(function () {
             $("#files").click();
     })
@@ -36,24 +38,6 @@
               alert(resHash)
             });
         }
-    }
-    function add_to_ipfs() {
-
-        var host = 'localhost';
-        var apiPort = '5001';
-        var ipfs = IpfsApi(host, apiPort);
-        var url = "https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1524020266&di=751fbe68daf489f8edae746a5f80a036&src=http://pic.chinaxinge.com/xinge/PHOTO/upload/shopimg/big2/201211/20121128003011.jpg";
-        ipfs.add(url, function (err, result) {
-            if (err) {
-                alert("Content submission error:", err);
-                return false;
-            } else if (result && result[0] && result[0].Hash) {
-                alert("Content successfully stored. IPFS address:", result[0].Hash);
-            } else {
-                alert("Unresolved content submission error");
-                return null;
-            }
-        });
     }
 </script>
 
