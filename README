@@ -1,4 +1,15 @@
 set up ethereum private chain service(on server side)
 
-dependency:
- install geth
+
+
+service:
+   1. set up a private chain（or use public ethereum chain when deploying)
+     ./foryouchain
+	dependency:
+	  install geth
+   2. set up a contract and deploy it on the chain
+   	dependency:
+	  web3.py:http://web3py.readthedocs.io/en/stable/quickstart.html?highlight=install#environment
+	  solidity compiler: http://solidity.readthedocs.io/en/v0.4.21/installing-solidity.html
+	
+	compile .sol and deploy on the chain(the account need to be unlocked before deploying)

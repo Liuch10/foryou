@@ -1,2 +1,3 @@
-rm -rf ./data/*
+rm -rf ./data
 rm ./account0.info
+mkdir ./data
