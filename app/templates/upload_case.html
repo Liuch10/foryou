@@ -8,13 +8,10 @@
     <p>patient_gender</p><p>{{form.patient_gender}}</p>
     <p>patiend_photo_type</p><p>{{form.patient_photo_type}}</p>
     <p>patient_photo_file</p><p>{{form.patient_photo_file}}</p>
-    <p>{{form.submit}}</p>
+    <input type="file" id="files" style="display: none" onchange="read_file_binary(this);">
+    <input type="button" id="fileImport" value="select file">
+    <p style = "margin-top: 15px;">{{form.submit}}</p>
 </form>
-
-
-<input onclick="add_to_ipfs()" type="button" value="test_ipfs_api"/>
-<input type="file" id="files" style="display: none" onchange="read_file_binary(this);">
-<input type="button" id="fileImport" value="导入">
 
 <!-- <script src="/static/js/ipfs.js"></script> -->
 <script src="/static/js/buffer.js"></script>
@@ -35,7 +32,8 @@
             var data = this.result;
             var jpgBuffer = new buffer.Buffer(data, 'binary');
             ipfs.add(jpgBuffer, function(err, resHash) {
-              alert(resHash)
+              alert(resHash);
+              $("#patient_photo_file").val(resHash);
             });
         }
     }
