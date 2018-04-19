@@ -24,5 +24,5 @@ class uploadCaseForm(Form):
     patient_gender = SelectField(choices=[('0', '未知/保密'), ('1', '男'), ('2', '女')])
     patient_photo_type = SelectField(
         choices=[('0', '其他'), ('1', 'CR'), ('2', 'DR'), ('3', 'CT'), ('4', 'MR'), ('5', '超声')])
-    patient_photo_file = FileField(validators=[Required()])
+    patient_photo_file = StringField(validators=[Required()])
     submit = SubmitField('Upload')

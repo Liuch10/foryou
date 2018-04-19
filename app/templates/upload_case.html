@@ -8,29 +8,34 @@
     <p>patient_gender</p><p>{{form.patient_gender}}</p>
     <p>patiend_photo_type</p><p>{{form.patient_photo_type}}</p>
     <p>patient_photo_file</p><p>{{form.patient_photo_file}}</p>
-    <p>{{form.submit}}</p>
+    <input type="file" id="files" style="display: none" onchange="read_file_binary(this);">
+    <input type="button" id="fileImport" value="select file">
+    <p style = "margin-top: 15px;">{{form.submit}}</p>
 </form>
 
-
-<input onclick="add_to_ipfs()" type="button" value="test_ipfs_api"/>
+<!-- <script src="/static/js/ipfs.js"></script> -->
+<script src="/static/js/buffer.js"></script>
+<script src="/static/js/file-type.js"></script>
 <script src="/static/js/ipfs.js"></script>
 <script type="text/javascript">
-    function add_to_ipfs() {
-        var host = 'localhost';
-        var apiPort = '5001';
-        var ipfs = IpfsApi(host, apiPort);
-        var url = "https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1524020266&di=751fbe68daf489f8edae746a5f80a036&src=http://pic.chinaxinge.com/xinge/PHOTO/upload/shopimg/big2/201211/20121128003011.jpg";
-        ipfs.add(url, function (err, result) {
-            if (err) {
-                alert("Content submission error:", err);
-                return false;
-            } else if (result && result[0] && result[0].Hash) {
-                alert("Content successfully stored. IPFS address:", result[0].Hash);
-            } else {
-                alert("Unresolved content submission error");
-                return null;
-            }
-        });
+
+    ipfs.setProvider();
+
+    $("#fileImport").click(function () {
+            $("#files").click();
+    })
+    function read_file_binary(obj) {
+        var file = obj.files[0];
+        var reader = new FileReader();
+        reader.readAsBinaryString(file);
+        reader.onload = function () {
+            var data = this.result;
+            var jpgBuffer = new buffer.Buffer(data, 'binary');
+            ipfs.add(jpgBuffer, function(err, resHash) {
+              alert(resHash);
+              $("#patient_photo_file").val(resHash);
+            });
+        }
     }
 </script>
 
