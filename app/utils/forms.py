@@ -14,6 +14,7 @@ class SignUpForm(Form):
     user_city           = StringField(validators = [Required(), Length(max = 15)])
     user_hospital       = StringField(validators = [Required(), Length(max = 15)])
     user_department     = StringField(validators = [Required(), Length(max = 15)])
+    user_title          = StringField(validators = [Required(), Length(max = 15)])
     user_phone          = StringField(validators = [Required(), Length(max = 15)])
     user_chain_address  = StringField(validators = [Required(), Length(max = 15)])
     submit = SubmitField('Sign up')
