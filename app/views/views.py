@@ -1,4 +1,4 @@
-from flask import g 
+from flask import g
 from flask_login import current_user
 from datetime import datetime
 
@@ -19,12 +19,12 @@ def before_request():
     if g.user.is_authenticated:
         g.user.last_seen = datetime.utcnow()
         db.session.add(g.user)
-        db.session.commit() 
+        db.session.commit()
 
-app.add_url_rule('/', methods=['GET'], view_func = index)
-app.add_url_rule('/index', methods=['GET'], view_func = index)
-app.add_url_rule('/login', methods=['GET','POST'], view_func = login)
-app.add_url_rule('/sign-up', methods=['GET','POST'], view_func = sign_up)
-app.add_url_rule('/logout', methods=['GET'], view_func = logout)
-
-app.add_url_rule('/upload-case', methods=['POST','GET'], view_func=upload_case)
+# app.add_url_rule('/', methods=['GET'], view_func = index)
+# app.add_url_rule('/index', methods=['GET'], view_func = index)
+# app.add_url_rule('/login', methods=['GET','POST'], view_func = login)
+# app.add_url_rule('/sign-up', methods=['GET','POST'], view_func = sign_up)
+# app.add_url_rule('/logout', methods=['GET'], view_func = logout)
+#
+# app.add_url_rule('/upload-case', methods=['POST','GET'], view_func=upload_case)

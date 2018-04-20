@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>工作主界面</title>	
+	<link rel="stylesheet" href="css/bootstrap.min.css">  
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="js/popper.min.js" ></script>
+	<script src="js/bootstrap.min.js"></script>
+	 <style>
+		  /* Make the image fully responsive */
+		 html,body{height:100%;width:100%;} 
+		 body{background-color: #2D343C}
+		  .carousel-inner img {
+		      width: 100%;
+		  }
+		  a{color: #FFFFFF;}
+	</style>
+</head>
+<body>
+	<div >
+		<div class="row clearfix" style="padding-top:1%;padding-bottom: 1%;border-bottom-width: 4px;border-bottom-style: solid;border-color: #3B586E;">
+			<div class="col-md-4 column text-center">
+				<img src="img/logo.png" ><img/>
+			</div>
+			<div class="col-md-6 column">
+				<ul class="nav">
+				    <li class="nav-item">
+				      <a class="nav-link" href="main.html">首页</a>
+				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" href="product.html">服务介绍</a>
+				     </li>
+				    <li class="nav-item">
+				      <a class="nav-link" href="about.html">了解我们</a>
+				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" href="contact.html">联系我们</a>
+				    </li>
+  			   </ul>
+			</div>
+			<div class="col-md-2 column">
+				<ul class="nav justify-content-end">
+				    <li class="nav-item">
+				      <a class="nav-link" href="#"><img class="rounded-circle" src="img/head.jpg" width="35px" height="35px"><img/></a>
+				    </li>
+				    <li class="nav-item">
+				      <label id="username" class="nav-link text-white">李四</label>
+				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" href="#"><img src="img/CH.png"><img/></a>
+				    </li>
+			  	</ul>
+			</div>
+		</div>
+		<div class="row clearfix">
+			<div class="col-md-2">
+			</div>
+			<div class="col-md-1" style="background-color: #333A44;" style="padding-top: 5%;">
+				<!-- Links -->
+			  <ul class="nav navbar-nav nav-justified">
+			    <li class="nav-item" style="padding-top: 20px;padding-bottom: 20px;">
+			      <a class="nav-link active" data-toggle="pill" href="#my_load">我要上传</a>
+			    </li>
+			   	<li class="nav-item" style="padding-top: 20px;padding-bottom: 20px;">
+			      <a class="nav-link" data-toggle="pill" href="#my_mark">我要标注</a>
+			    </li>
+			    <li class="nav-item" style="padding-top: 20px;padding-bottom: 20px;">
+			      <a class="nav-link" data-toggle="pill" href="#my_detect">我要会诊</a>
+			    </li>
+			   	<li class="nav-item" style="padding-top: 20px;padding-bottom: 20px;">
+			      <a class="nav-link" data-toggle="pill" href="#my_source">资源中心</a>
+			    </li>
+			    <li class="nav-item" style="padding-top: 20px;padding-bottom: 20px;">
+			      <a class="nav-link" data-toggle="pill" href="#">诊断记录</a>
+			    </li>
+			    <li class="nav-item" style="padding-top: 20px;padding-bottom: 20px;">
+			      <a class="nav-link" data-toggle="pill" href="#">健康管理</a>
+			    </li>
+			    <li class="nav-item" style="padding-top: 20px;padding-bottom: 20px;">
+			      <a class="nav-link" data-toggle="pill" href="#my_wallet">管理钱包</a>
+			    </li>
+			    <li class="nav-item" style="padding-top: 20px;padding-bottom: 20px;">
+			      <a class="nav-link" data-toggle="pill" href="#my_person_info">个人信息</a>
+			    </li>
+			  </ul>
+			</div>
+			<div class="col-md-7 tab-content">
+			  <div class="tab-pane active" id="my_load" style="padding-top: 2%;">	
+				<div class="text-center text-white" style="font-size: 150%;" id="">
+						<p>上传患病信息</p>
+				</div>
+				<div style="padding-top: 1%;padding-bottom: 1%;">
+					<button type="button" class="btn btn-primary btn-sm" style="padding-right:25px;margin-right: 20px;" data-toggle="modal" data-target="#loadimage"><img src="img/上传1.png"/>&nbsp;&nbsp;上&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;传</button>
+					<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#fqhzModal"><img src="img/会诊1.png"/>&nbsp;&nbsp;发起会诊</button>
+				</div>
+				<div class="input-group" style="padding-top: 1%;">
+					<span class="input-group-btn bg-secondary" style="margin: auto;border-radius: 20px;padding: 5px;">
+						<input type="text" class="bg-secondary border-0 text-white" value="请输入病人ID" style="width:300px;margin: auto;border-bottom-left-radius: 20px;border-top-left-radius: 20px;">
+						<img src="img/查询.png"/>
+					</span>
+				</div><!-- /input-group -->
+				<div style="padding-top: 2%;">
+					<table class="table table-dark table-hover">
+					    <thead>
+					      <tr>
+					      	<th> 
+	    						<input type="checkbox" value="" style="margin: 0px;">全选
+					      	</th>
+					        <th>患者ID</th>
+					        <th>姓名</th>
+					        <th>性别</th>
+					        <th>年龄</th>
+					        <th>影像类型</th>
+					        <th>良恶性</th>
+					        <th>诊断结果</th>
+					        <th>上传日期</th>					       
+					        <th>操作</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+					      <tr>
+					      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+					        <td>201804181023</td>
+					        <td>唐宝来</td>
+					        <td>男</td>
+					        <td>54</td>
+					        <td>DR</td>
+					        <td>良性</td>
+					        <td>正常</td>
+					        <td>2018/04/18 10:23:45</td>					    
+					        <td class="text-info"><a href="check.html">查看</a></td>
+					      </tr>
+					      <tr>
+					        <td><input type="checkbox" value="" style="margin: 0px;"></td>
+					        <td>201804181026</td>
+					        <td>富兴</td>
+					        <td>男</td>
+					        <td>66</td>
+					        <td>DR</td>
+					        <td>良性</td>
+					        <td>正常</td>
+					        <td>2018/04/18 10:12:21</td>
+					        <td class="text-info"><a href="check.html">查看</a></td>
+					      </tr>
+					      <tr>
+					        <td><input type="checkbox" value="" style="margin: 0px;"></td>
+					        <td>201804181032</td>
+					        <td>李子来</td>
+					        <td>男</td>
+					        <td>69</td>
+					        <td>DR</td>
+					        <td>恶性</td>
+					        <td>一期</td>
+					        <td>2018/04/18 10:32:56</td>
+					        <td class="text-info"><a href="check.html">查看</a></td>
+					      </tr>
+					       <tr>
+					        <td><input type="checkbox" value="" style="margin: 0px;"></td>
+					        <td>201804181033</td>
+					        <td>王富贵</td>
+					        <td>男</td>
+					        <td>57</td>
+					        <td>DR</td>
+					    	<td>恶性</td>
+					        <td>一期</td>
+					        <td>2018/04/18 10:33:12</td>	
+					        <td class="text-info"><a href="check.html">查看</a></td>
+					      </tr>
+					       <tr>
+					       <td><input type="checkbox" value="" style="margin: 0px;"></td>
+					        <td>201804181036</td>
+					        <td>王金彪</td>
+					        <td>男</td>
+					        <td>35</td>
+					        <td>DR</td>
+					        <td>恶性</td>
+					        <td>一期</td>
+					        <td>2018/04/18 10:36:23</td>
+					        <td class="text-info"><a href="check.html">查看</a></td>
+					      </tr>
+					      <tr>
+					       <td><input type="checkbox" value="" style="margin: 0px;"></td>
+					        <td>201804181049</td>
+					        <td>赵任申</td>
+					        <td>男</td>
+					        <td>42</td>
+					        <td>DR</td>
+					        <td>良性</td>
+					        <td>正常</td>
+					        <td>2018/04/18 10:49:12</td>
+					        <td class="text-info"><a href="check.html">查看</a></td>
+					      </tr>
+					      <tr>
+					       <td><input type="checkbox" value="" style="margin: 0px;"></td>
+					        <td>201804180152</td>
+					        <td>张金鑫</td>
+					        <td>男</td>
+					        <td>67</td>
+					        <td>DR</td>
+					        <td>恶性</td>
+					        <td>一期</td>
+					        <td>2018/04/18 10:53:34</td>
+					        <td class="text-info"><a href="check.html">查看</a></td>
+					      </tr>
+					      <tr>
+					      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+					        <td>201804181053</td>
+					        <td>王志珠</td>
+					        <td>女</td>
+					        <td>35</td>
+					        <td>DR</td>
+					        <td>良性</td>
+					        <td>正常</td>
+					        <td>2018/04/18 10:53:49</td>					    
+					        <td class="text-info"><a href="check.html">查看</a></td>
+					      </tr>
+					      <tr>
+					      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+					        <td>201804181058</td>
+					        <td>周少林</td>
+					        <td>男</td>
+					        <td>47</td>
+					        <td>DR</td>
+					        <td>良性</td>
+					        <td>正常</td>
+					        <td>2018/04/18 10:58:48</td>					    
+					        <td class="text-info"><a href="check.html">查看</a></td>
+					      </tr>
+					      <tr>
+					      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+					        <td>201804181101</td>
+					        <td>魏文国</td>
+					        <td>男</td>
+					        <td>69</td>
+					        <td>DR</td>
+					        <td>恶性</td>
+					        <td>一期</td>
+					        <td>2018/04/18 11:02:12</td>					    
+					        <td class="text-info"><a href="check.html">查看</a></td>
+					      </tr>
+					    </tbody>
+					  </table>
+					  <div class="container-fluid" style="padding-left: 40%;">
+					 		<ul class="pagination pagination-sm">
+							   <li class="page-item"><a class="page-link" href="">&laquo;</a></li>
+							  <li class="page-item"><a class="page-link" href="">1</a></li>
+							  <li class="page-item active"><a class="page-link" href="">2</a></li>
+							  <li class="page-item"><a class="page-link" href="">3</a></li>
+							  <li class="page-item"><a class="page-link" href="">&raquo;</a></li>
+							</ul>
+					  </div>
+				</div>
+			  </div>	
+			  <div class="tab-pane fade" id="my_mark" style="padding-top: 2%;">
+			  	<div class="text-center text-white" style="font-size: 150%;" id="">
+						<p>我要标注</p>
+				</div>	
+				<div style="padding-top: 1%;padding-bottom: 1%;">
+					<button type="button" class="btn btn-primary btn-sm" style="padding-right:25px;margin-right: 20px;" onclick="location='look.html'"><img src="img/上传1.png"/>&nbsp;&nbsp;标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注</button>
+					<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#fqhzModal"><img src="img/会诊1.png"/>&nbsp;&nbsp;发起会诊</button>
+				</div>
+				<div class="input-group" style="padding-top: 1%;">
+					<span class="input-group-btn bg-secondary" style="margin: auto;border-radius: 20px;padding: 5px;">
+						<input type="text" class="bg-secondary border-0 text-white" value="请输入病人ID" style="width:300px;margin: auto;border-bottom-left-radius: 20px;border-top-left-radius: 20px;">
+						<img src="img/查询.png"/>
+					</span>
+				</div><!-- /input-group -->
+				<div style="padding-top: 2%;">
+					<table class="table table-dark table-hover">
+					    <thead>
+					      <tr>
+					      	<th> 
+	    						<input type="checkbox" value="" style="margin: 0px;">全选
+					      	</th>
+					        <th>患者ID</th>
+					        <th>姓名</th>
+					        <th>性别</th>
+					        <th>年龄</th>
+					        <th>影像类型</th>
+					        <th>良恶性</th>
+					        <th>诊断结果</th>
+					        <th>标注状态</th>
+					        <th>上传日期</th>
+					        <th>操作</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+					      <tr>
+					      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+					      	<td>201804181049</td>
+					        <td>赵任申</td>
+					        <td>男</td>
+					        <td>42</td>
+					        <td>DR</td>
+					        <td>良性</td>
+					        <td>正常</td>
+					        <td>已标注</td>
+					        <td>2018/04/18 10:49:12</td>
+					        <td class="text-info"><a href="check.html">查看</a></td>
+					      </tr>
+					     <tr>
+					      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+					        <td>201804181023</td>
+					        <td>唐宝来</td>
+					        <td>男</td>
+					        <td>54</td>
+					        <td>DR</td>
+					        <td>良性</td>
+					        <td>正常</td>
+					        <td>已标记</td>
+					        <td>2018/04/18 10:23:45</td>					
+					        <td class="text-info"><a href="check.html">查看</a></td>
+					      </tr>
+					     <tr>
+					        <td><input type="checkbox" value="" style="margin: 0px;"></td>
+					        <td>201804181026</td>
+					        <td>富兴</td>
+					        <td>男</td>
+					        <td>66</td>
+					        <td>DR</td>
+					        <td>良性</td>
+					        <td>正常</td>
+					        <td>已标注</td>
+					        <td>2018/04/18 10:12:21</td>
+					        <td class="text-info"><a href="check.html">查看</a></td>
+					      </tr>
+					      <tr>
+					        <td><input type="checkbox" value="" style="margin: 0px;"></td>
+					        <td>201804181032</td>
+					        <td>李子来</td>
+					        <td>男</td>
+					        <td>69</td>
+					        <td>DR</td>
+					        <td>恶性</td>
+					        <td>一期</td>
+					        <td>已标注</td>
+					        <td>2018/04/18 10:32:56</td>
+					        <td class="text-info"><a href="check.html">查看</a></td>
+					      </tr>
+					       <tr>
+					        <td><input type="checkbox" value="" style="margin: 0px;"></td>
+					        <td>201804181033</td>
+					        <td>王富贵</td>
+					        <td>男</td>
+					        <td>57</td>
+					        <td>DR</td>
+					    	<td>恶性</td>
+					        <td>一期</td>
+					        <td>已标注</td>
+					        <td>2018/04/18 10:33:12</td>	
+					        <td class="text-info"><a href="check.html">查看</a></td>
+					      </tr>
+					       <tr>
+					       <td><input type="checkbox" value="" style="margin: 0px;"></td>
+					        <td>201804181036</td>
+					        <td>王金彪</td>
+					        <td>男</td>
+					        <td>35</td>
+					        <td>DR</td>
+					        <td>恶性</td>
+					        <td>一期</td>
+					        <td>已标注</td>
+					        <td>2018/04/18 10:36:23</td>
+					        <td class="text-info"><a href="check.html">查看</a></td>
+					      </tr>
+					       <tr>
+					       <td><input type="checkbox" value="" style="margin: 0px;"></td>
+					        <td>201804180152</td>
+					        <td>张金鑫</td>
+					        <td>男</td>
+					        <td>67</td>
+					        <td>DR</td>
+					        <td>恶性</td>
+					        <td>一期</td>
+					        <td>已标注</td>
+					        <td>2018/04/18 10:53:34</td>
+					        <td class="text-info"><a href="check.html">查看</a></td>
+					      </tr>
+					      <tr>
+					      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+					        <td>201804181053</td>
+					        <td>王志珠</td>
+					        <td>女</td>
+					        <td>35</td>
+					        <td>DR</td>
+					        <td>良性</td>
+					        <td>正常</td>
+					        <td>已标注</td>
+					        <td>2018/04/18 10:53:49</td>					    
+					        <td class="text-info"><a href="check.html">查看</a></td>
+					      </tr>
+					      <tr>
+					      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+					        <td>201804181058</td>
+					        <td>周少林</td>
+					        <td>男</td>
+					        <td>47</td>
+					        <td>DR</td>
+					        <td>良性</td>
+					        <td>正常</td>
+					        <td>已标注</td>
+					        <td>2018/04/18 10:58:48</td>					    
+					        <td class="text-info"><a href="check.html">查看</a></td>
+					      </tr>
+					      <tr>
+					      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+					        <td>201804181101</td>
+					        <td>魏文国</td>
+					        <td>男</td>
+					        <td>69</td>
+					        <td>DR</td>
+					        <td>恶性</td>
+					        <td>一期</td>
+					        <td>已标注</td>
+					        <td>2018/04/18 11:02:12</td>					    
+					        <td class="text-info"><a href="check.html">查看</a></td>
+					      </tr>
+					    </tbody>
+					  </table>
+					  <div class="container-fluid" style="padding-left: 40%;">
+					 		<ul class="pagination pagination-sm">
+							  <li class="page-item"><a class="page-link" href="">&laquo;</a></li>
+							  <li class="page-item"><a class="page-link" href="">1</a></li>
+							  <li class="page-item active"><a class="page-link" href="">2</a></li>
+							  <li class="page-item"><a class="page-link" href="">3</a></li>
+							  <li class="page-item"><a class="page-link" href="">&raquo;</a></li>
+							</ul>
+					  </div>
+					</div>
+			  </div>
+			  <div class="tab-pane fade" id="my_detect" style="padding-top: 2%;">
+			  	<div class="text-center text-white" style="font-size: 150%;" id="">
+						<p>我要会诊</p>
+				</div>
+				<div>
+					<div class="border-secondary" style="padding-top: 1%;border-bottom-width: 2px;border-bottom-style: solid;">
+						<ul class="nav navbar-collapse" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="pill" href="#fqhz">发起会诊</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="pill" href="#jshz">接收会诊</a>
+						</li>
+						</ul>
+					</div>
+					<div class="tab-content">
+						<div class="tab-pane active" id="fqhz">
+							<div style="padding-top: 1%;padding-bottom: 1%;">
+								<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#loadimage"><img src="img/上传1.png"/>上传</button>
+								<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#fqhzModal"><img src="img/会诊1.png"/>发起会诊</button>
+							</div>
+							<div class="input-group" style="padding-top: 1%;">
+								<span class="input-group-btn bg-secondary" style="margin: auto;border-radius: 20px;padding: 5px;">
+									<input type="text" class="bg-secondary border-0 text-white" value="请输入病人ID" style="width:300px;margin: auto;border-bottom-left-radius: 20px;border-top-left-radius: 20px;">
+									<img src="img/查询.png"/>
+								</span>
+							</div><!-- /input-group -->
+							<div style="padding-top: 2%;">
+								<table class="table table-dark table-hover">
+								    <thead>
+								      <tr>
+								      	<th> 
+				    						<input type="checkbox" value="" style="margin: 0px;">全选
+								      	</th>
+								        <th>患者ID</th>
+								        <th>姓名</th>
+								        <th>性别</th>
+								        <th>年龄</th>
+								        <th>影像类型</th>
+								        <th>良恶性</th>
+								        <th>会诊结果</th>
+								        <th>上传日期</th>
+								        <th>操作</th>
+								      </tr>
+								    </thead>
+								    <tbody>
+								       <tr>
+								      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+								      	<td>201804181049</td>
+								        <td>赵任申</td>
+								        <td>男</td>
+								        <td>42</td>
+								        <td>DR</td>
+								        <td>良性</td>
+								        <td>正常</td>
+								        <td>2018/04/18 10:49:12</td>
+								        <td class="text-info"><a href="check.html">查看</a></td>
+								      </tr>
+								     <tr>
+								      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+								        <td>201804181023</td>
+								        <td>唐宝来</td>
+								        <td>男</td>
+								        <td>54</td>
+								        <td>DR</td>
+								        <td>良性</td>
+								        <td>正常</td>
+								        <td>2018/04/18 10:23:45</td>					
+								        <td class="text-info"><a href="check.html">查看</a></td>
+								      </tr>
+								     <tr>
+								        <td><input type="checkbox" value="" style="margin: 0px;"></td>
+								        <td>201804181026</td>
+								        <td>富兴</td>
+								        <td>男</td>
+								        <td>66</td>
+								        <td>DR</td>
+								        <td>良性</td>
+								        <td>正常</td>
+								        <td>2018/04/18 10:12:21</td>
+								        <td class="text-info"><a href="check.html">查看</a></td>
+								      </tr>
+								      <tr>
+								        <td><input type="checkbox" value="" style="margin: 0px;"></td>
+								        <td>201804181032</td>
+								        <td>李子来</td>
+								        <td>男</td>
+								        <td>69</td>
+								        <td>DR</td>
+								        <td>恶性</td>
+								        <td>一期</td>
+								        <td>2018/04/18 10:32:56</td>
+								        <td class="text-info"><a href="check.html">查看</a></td>
+								      </tr>
+								       <tr>
+								        <td><input type="checkbox" value="" style="margin: 0px;"></td>
+								        <td>201804181033</td>
+								        <td>王富贵</td>
+								        <td>男</td>
+								        <td>57</td>
+								        <td>DR</td>
+								    	<td>恶性</td>
+								        <td>一期</td>
+								        <td>2018/04/18 10:33:12</td>	
+								        <td class="text-info"><a href="check.html">查看</a></td>
+								      </tr>
+								       <tr>
+								       <td><input type="checkbox" value="" style="margin: 0px;"></td>
+								        <td>201804181036</td>
+								        <td>王金彪</td>
+								        <td>男</td>
+								        <td>35</td>
+								        <td>DR</td>
+								        <td>恶性</td>
+								        <td>一期</td>
+								        <td>2018/04/18 10:36:23</td>
+								        <td class="text-info"><a href="check.html">查看</a></td>
+								      </tr>
+								       <tr>
+								       <td><input type="checkbox" value="" style="margin: 0px;"></td>
+								        <td>201804180152</td>
+								        <td>张金鑫</td>
+								        <td>男</td>
+								        <td>67</td>
+								        <td>DR</td>
+								        <td>恶性</td>
+								        <td>一期</td>
+								        <td>2018/04/18 10:53:34</td>
+								        <td class="text-info"><a href="check.html">查看</a></td>
+								      </tr>
+								      <tr>
+								      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+								        <td>201804181053</td>
+								        <td>王志珠</td>
+								        <td>女</td>
+								        <td>35</td>
+								        <td>DR</td>
+								        <td>良性</td>
+								        <td>正常</td>
+								        <td>2018/04/18 10:53:49</td>					    
+								        <td class="text-info"><a href="check.html">查看</a></td>
+								      </tr>
+								      <tr>
+								      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+								        <td>201804181058</td>
+								        <td>周少林</td>
+								        <td>男</td>
+								        <td>47</td>
+								        <td>DR</td>
+								        <td>良性</td>
+								        <td>正常</td>
+								        <td>2018/04/18 10:58:48</td>					    
+								        <td class="text-info"><a href="check.html">查看</a></td>
+								      </tr>
+								      <tr>
+								      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+								        <td>201804181101</td>
+								        <td>魏文国</td>
+								        <td>男</td>
+								        <td>69</td>
+								        <td>DR</td>
+								        <td>恶性</td>
+								        <td>一期</td>
+								        <td>2018/04/18 11:02:12</td>					    
+								        <td class="text-info"><a href="check.html">查看</a></td>
+					       			  </tr>
+								    </tbody>
+						  		</table>
+						  		<div class="container-fluid" style="padding-left: 40%;">
+					 		<ul class="pagination pagination-sm">
+							  <li class="page-item"><a class="page-link" href="">&laquo;</a></li>
+							  <li class="page-item"><a class="page-link" href="">1</a></li>
+							  <li class="page-item active"><a class="page-link" href="">2</a></li>
+							  <li class="page-item"><a class="page-link" href="">3</a></li>
+							  <li class="page-item"><a class="page-link" href="">&raquo;</a></li>
+							</ul>
+					  </div>
+							</div>
+						</div>
+				 		<div class="tab-pane fade" id="jshz">
+				 			<div>
+				 				
+				 			</div>
+				 			<div style="padding-top: 1%;padding-bottom: 1%;">
+								<button type="button" class="btn btn-primary btn-sm" onclick="location='look.html'"><img src="img/会诊1.png"/>会诊</button>
+							</div>
+				 			<div class="input-group" style="padding-top: 1%;">
+								<span class="input-group-btn bg-secondary" style="margin: auto;border-radius: 20px;padding: 5px;">
+									<input type="text" class="bg-secondary border-0 text-white" value="请输入病人ID" style="width:300px;margin: auto;border-bottom-left-radius: 20px;border-top-left-radius: 20px;">
+									<img src="img/查询.png"/>
+								</span>
+							</div><!-- /input-group -->
+							<div style="padding-top: 2%;">
+								<table class="table table-dark table-hover">
+								    <thead>
+								      <tr>
+								      	<th> 
+				    						<input type="checkbox" value="" style="margin: 0px;">全选
+								      	</th>
+								        <th>会诊说明</th>
+								        <th>发起人</th>
+								        <th>所在医院</th>
+								        <th>所在科室</th>
+								        <th>发起日期</th>
+								        <th>操作</th>
+								      </tr>
+								    </thead>
+								    <tbody>
+								      <tr>
+								      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+								        <td>疑似尘肺病，请帮忙复诊</td>
+								        <td>李磊</td>
+								        <td>**医院</td>
+								        <td>**科室</td>
+								        <td>2018.02.28</td>
+								        <td class="text-info"><a onclick="changePage(1)">查看</a></td>
+								      </tr>
+								      <tr>
+								      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+								        <td>疑似尘肺病，请帮忙复诊</td>
+								        <td>王兵</td>
+								        <td>**医院</td>
+								        <td>**科室</td>
+								        <td>2018.02.28</td>
+								        <td class="text-info"><a onclick="changePage(1)">查看</a></td>
+								      </tr>
+								     <tr>
+								      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+								        <td>疑似尘肺病，请帮忙复诊</td>
+								        <td>王兵</td>
+								        <td>**医院</td>
+								        <td>**科室</td>								        
+								        <td>2018.02.28</td>
+								        <td class="text-info"><a  onclick="changePage(1)">查看</a></td>
+								      </tr>
+								      <tr>
+								      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+								        <td>疑似尘肺病，请帮忙复诊</td>
+								        <td>孙来由</td>
+								        <td>**医院</td>
+								        <td>**科室</td>
+								        <td>2018.02.28</td>
+								        <td class="text-info"><a  onclick="changePage(1)">查看</a></td>
+								      </tr>
+								      <tr>
+								      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+								        <td>疑似尘肺病，请帮忙复诊</td>
+								        <td>孙来由</td>
+								        <td>**医院</td>
+								        <td>**科室</td>
+								        <td>2018.02.28</td>
+								        <td class="text-info"><a  onclick="changePage(1)">查看</a></td>
+								      </tr>
+								      <tr>
+								      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+								        <td>疑似尘肺病，请帮忙复诊</td>
+								        <td>孙来由</td>
+								        <td>**医院</td>
+								        <td>**科室</td>
+								        <td>2018.02.28</td>
+								        <td class="text-info"><a  onclick="changePage(1)">查看</a></td>
+								      </tr>
+								      <tr>
+								      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+								        <td>疑似尘肺病，请帮忙复诊</td>
+								        <td>孙来由</td>
+								        <td>**医院</td>
+								        <td>**科室</td>
+								        <td>2018.02.28</td>
+								        <td class="text-info"><a  onclick="changePage(1)">查看</a></td>
+								      </tr>
+								      <tr>
+								      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+								        <td>疑似尘肺病，请帮忙复诊</td>
+								        <td>王龙</td>
+								        <td>**医院</td>
+								        <td>**科室</td>
+								        <td>2018.03.03</td>
+								        <td class="text-info"><a  onclick="changePage(1)">查看</a></td>
+								      </tr>
+								      <tr>
+								      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+								        <td>疑似尘肺病，请帮忙复诊</td>
+								        <td>赵天琦</td>
+								        <td>**医院</td>
+								        <td>**科室</td>
+								        <td>2018.02.27</td>
+								        <td class="text-info"><a  onclick="changePage(1)">查看</a></td>
+								      </tr>
+								      <tr>
+								      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+								        <td>疑似尘肺病，请帮忙复诊</td>
+								        <td>周杰</td>
+								        <td>**医院</td>
+								        <td>**科室</td>
+								        <td>2018.03.01</td>
+								        <td class="text-info"><a  onclick="changePage(1)">查看</a></td>
+								      </tr>
+								    </tbody>
+							  	</table>
+							  	<div class="container-fluid" style="padding-left: 40%;">
+					 		<ul class="pagination pagination-sm">
+							  <li class="page-item"><a class="page-link" href="">&laquo;</a></li>
+							  <li class="page-item"><a class="page-link" href="">1</a></li>
+							  <li class="page-item active"><a class="page-link" href="">2</a></li>
+							  <li class="page-item"><a class="page-link" href="">3</a></li>
+							  <li class="page-item"><a class="page-link" href="">&raquo;</a></li>
+							</ul>
+					  </div>
+							</div>
+						</div>
+						<div class="" id="cktest" style="display: none;">
+							<div style="padding-top:2%;padding-bottom: 2%;">
+								<span>	
+									<a href="" onclick="changeImage(2)" style="text-decoration: none;">&#60;&nbsp;&nbsp;返回上一步</a>
+								</span>
+							</div>
+							<div class="container">
+								<div class="row">
+									<div class="col-6">
+										<img src="img/jshz.png" class="float-right"/>
+									</div>
+									<div class="col-6 text-left" style="background-color: #5A6268;padding-top: 1%;" >
+										<div>
+											<label class="text-white" for="title">求助说明</label>
+											<textarea class="form-control bg-secondary text-white" rows="2" id="title">疑似尘肺病，需要进一步复诊</textarea>
+										</div>
+										<div>
+											<label class="text-white" for="reveice">我的回复</label>
+											<textarea class="form-control bg-secondary text-white" rows="2" id="reveice"></textarea>
+											<div class="text-right" style="padding: 5px;">
+												<button class="btn-sm bg-secondary text-white border-0">发送</button>
+											</div>
+											
+										</div>
+										<div>
+											<textarea class="form-control bg-secondary text-white" rows="5" >李敏:疑似尘肺病，需要进一步复诊，需要更精确的数据才能确认尘肺病几期。 赵磊:精确数据确认尘肺病一期。</textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			 	</div>
+			  </div>
+			  <div class="tab-pane fade" id="my_source" style="padding-top: 2%;">
+			  	<div class="text-center text-white" style="font-size: 150%;" id="">
+						<p>资源中心</p>
+				</div>
+				<div class="border-secondary" style="padding-top: 1%;border-bottom-width: 2px;border-bottom-style: solid;">
+						<ul class="nav navbar-collapse" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="pill" href="#yhdtgx">用户动态更新</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="pill" href="#zjzydt">专家资源动态</a>
+						</li>
+						</ul>
+				</div>
+				<div style="padding-top: 1%;padding-bottom: 1%;">
+					<button type="button" class="btn btn-primary btn-sm" style="padding-right:25px;margin-right: 20px;" data-toggle="modal" data-target="#loadimage"><img src="img/上传1.png"/>&nbsp;&nbsp;上&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;传</button>
+					<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#fqhzModal"><img src="img/会诊1.png"/>&nbsp;&nbsp;发起会诊</button>
+				</div>
+				<div class="input-group" style="padding-top: 1%;">
+					<span class="input-group-btn bg-secondary" style="margin: auto;border-radius: 20px;padding: 5px;">
+						<input type="text" class="bg-secondary border-0 text-white" value="请输入病人ID" style="width:300px;margin: auto;border-bottom-left-radius: 20px;border-top-left-radius: 20px;">
+						<img src="img/查询.png"/>
+					</span>
+				</div><!-- /input-group -->
+				<div class="tab-content">
+					<div id="yhdtgx" class="tab-pane active" style="padding-top: 2%;">
+						<table class="table table-dark table-hover">
+						    <thead>
+						      <tr>
+						      	<th> 
+		    						<input type="checkbox" value="" style="margin: 0px;">全选
+						      	</th>
+						        <th>患者ID</th>
+						        <th>姓名</th>
+						        <th>性别</th>
+						        <th>年龄</th>
+						        <th>影像类型</th>
+						        <th>良恶性</th>
+						        <th>诊断结果</th>
+						        <th>上传日期</th>
+						        <th>医院</th>
+						        <th>科室</th>
+						        <th>更新专家库</th>
+						        <th>操作</th>
+						      </tr>
+						    </thead>
+						    <tbody>						
+						      <tr>
+						      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+						      	<td>201804181049</td>
+						        <td>赵任申</td>
+						        <td>男</td>
+						        <td>42</td>
+						        <td>DR</td>
+						        <td>良性</td>
+						        <td>正常</td>
+						        <td>2018/04/18 10:49:12</td>
+						        <td>**医院</td>
+						        <td>**科室</td>
+						        <td class="text-info"><a href="" data-toggle="modal" data-target="#update">更新</a></td>
+						        <td class="text-info"><a href="check.html">查看</a></td>
+						      </tr>
+						     <tr>
+						      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+						        <td>201804181023</td>
+						        <td>唐宝来</td>
+						        <td>男</td>
+						        <td>54</td>
+						        <td>DR</td>
+						        <td>良性</td>
+						        <td>正常</td>
+						        <td>2018/04/18 10:23:45</td>					
+						         <td>**医院</td>
+						        <td>**科室</td>
+						        <td class="text-info"><a href="" data-toggle="modal" data-target="#update">更新</a></td>
+						        <td class="text-info"><a href="check.html">查看</a></td>
+						      </tr>
+						     <tr>
+						        <td><input type="checkbox" value="" style="margin: 0px;"></td>
+						        <td>201804181026</td>
+						        <td>富兴</td>
+						        <td>男</td>
+						        <td>66</td>
+						        <td>DR</td>
+						        <td>良性</td>
+						        <td>正常</td>
+						        <td>2018/04/18 10:12:21</td>
+						        <td>**医院</td>
+						        <td>**科室</td>
+						        <td class="text-info"><a href="" data-toggle="modal" data-target="#update">更新</a></td>
+						        <td class="text-info"><a href="check.html">查看</a></td>
+						      </tr>
+						      <tr>
+						        <td><input type="checkbox" value="" style="margin: 0px;"></td>
+						        <td>201804181032</td>
+						        <td>李子来</td>
+						        <td>男</td>
+						        <td>69</td>
+						        <td>DR</td>
+						        <td>恶性</td>
+						        <td>一期</td>
+						        <td>2018/04/18 10:32:56</td>
+						         <td>**医院</td>
+						        <td>**科室</td>
+						        <td class="text-info"><a href="" data-toggle="modal" data-target="#update">更新</a></td>
+						        <td class="text-info"><a href="check.html">查看</a></td>
+						      </tr>
+						       <tr>
+						        <td><input type="checkbox" value="" style="margin: 0px;"></td>
+						        <td>201804181033</td>
+						        <td>王富贵</td>
+						        <td>男</td>
+						        <td>57</td>
+						        <td>DR</td>
+						    	<td>恶性</td>
+						        <td>一期</td>
+						        <td>2018/04/18 10:33:12</td>	
+						         <td>**医院</td>
+						        <td>**科室</td>
+						        <td class="text-info"><a href="" data-toggle="modal" data-target="#update">更新</a></td>
+						        <td class="text-info"><a href="check.html">查看</a></td>
+						      </tr>
+						       <tr>
+						       <td><input type="checkbox" value="" style="margin: 0px;"></td>
+						        <td>201804181036</td>
+						        <td>王金彪</td>
+						        <td>男</td>
+						        <td>35</td>
+						        <td>DR</td>
+						        <td>恶性</td>
+						        <td>一期</td>
+						        <td>2018/04/18 10:36:23</td>
+						         <td>**医院</td>
+						        <td>**科室</td>
+						        <td class="text-info"><a href="" data-toggle="modal" data-target="#update">更新</a></td>
+						        <td class="text-info"><a href="check.html">查看</a></td>
+						      </tr>
+						       <tr>
+						       <td><input type="checkbox" value="" style="margin: 0px;"></td>
+						        <td>201804180152</td>
+						        <td>张金鑫</td>
+						        <td>男</td>
+						        <td>67</td>
+						        <td>DR</td>
+						        <td>恶性</td>
+						        <td>一期</td>
+						        <td>2018/04/18 10:53:34</td>
+						        <td>**医院</td>
+						        <td>**科室</td>
+						        <td class="text-info"><a href="" data-toggle="modal" data-target="#update">更新</a></td>
+						        <td class="text-info"><a href="check.html">查看</a></td>
+						      </tr>
+						      <tr>
+						      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+						        <td>201804181053</td>
+						        <td>王志珠</td>
+						        <td>女</td>
+						        <td>35</td>
+						        <td>DR</td>
+						        <td>良性</td>
+						        <td>正常</td>
+						        <td>2018/04/18 10:53:49</td>					    
+						         <td>**医院</td>
+						        <td>**科室</td>
+						        <td class="text-info"><a href="" data-toggle="modal" data-target="#update">更新</a></td>
+						        <td class="text-info"><a href="check.html">查看</a></td>
+						      </tr>
+						      <tr>
+						      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+						        <td>201804181058</td>
+						        <td>周少林</td>
+						        <td>男</td>
+						        <td>47</td>
+						        <td>DR</td>
+						        <td>良性</td>
+						        <td>正常</td>
+						        <td>2018/04/18 10:58:48</td>					    
+						         <td>**医院</td>
+						        <td>**科室</td>
+						        <td class="text-info"><a href="" data-toggle="modal" data-target="#update">更新</a></td>
+						        <td class="text-info"><a href="check.html">查看</a></td>
+						      </tr>
+						      <tr>
+						      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+						        <td>201804181101</td>
+						        <td>魏文国</td>
+						        <td>男</td>
+						        <td>69</td>
+						        <td>DR</td>
+						        <td>恶性</td>
+						        <td>一期</td>
+						        <td>2018/04/18 11:02:12</td>					    
+						         <td>**医院</td>
+						        <td>**科室</td>
+						        <td class="text-info"><a href="" data-toggle="modal" data-target="#update">更新</a></td>
+						        <td class="text-info"><a href="check.html">查看</a></td>
+			       			  </tr>
+						    </tbody>
+						  </table>
+						  <div class="container-fluid" style="padding-left: 40%;">
+					 		<ul class="pagination pagination-sm">
+							  <li class="page-item"><a class="page-link" href="">&laquo;</a></li>
+							  <li class="page-item"><a class="page-link" href="">1</a></li>
+							  <li class="page-item active"><a class="page-link" href="">2</a></li>
+							  <li class="page-item"><a class="page-link" href="">3</a></li>
+							  <li class="page-item"><a class="page-link" href="">&raquo;</a></li>
+							</ul>
+					  </div>
+					</div>
+					<div id="zjzydt" class="tab-pane fade" style="padding-top: 2%;">
+						<table class="table table-dark table-hover">
+						    <thead>
+						      <tr>
+						      	<th> 
+		    						<input type="checkbox" value="" style="margin: 0px;">全选
+						      	</th>
+						        <th>患者ID</th>
+						        <th>姓名</th>
+						        <th>性别</th>
+						        <th>年龄</th>
+						        <th>影像类型</th>
+						        <th>良恶性</th>
+						        <th>诊断结果</th>
+						        <th>上传日期</th>
+						        <th>医院</th>
+						        <th>专家姓名</th>
+						        <th>操作</th>
+						      </tr>
+						    </thead>
+						    <tbody>
+						      <tr>
+						      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+						      	<td>201804181049</td>
+						        <td>赵任申</td>
+						        <td>男</td>
+						        <td>42</td>
+						        <td>DR</td>
+						        <td>良性</td>
+						        <td>正常</td>
+						        <td>2018/04/18 10:49:12</td>
+						        <td>**医院</td>
+						        <td>李磊</td>
+						        <td class="text-info"><a href="check.html">查看</a></td>
+						      </tr>
+						     <tr>
+						      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+						        <td>201804181023</td>
+						        <td>唐宝来</td>
+						        <td>男</td>
+						        <td>54</td>
+						        <td>DR</td>
+						        <td>良性</td>
+						        <td>正常</td>
+						        <td>2018/04/18 10:23:45</td>	
+						        <td>**医院</td>
+						        <td>李磊</td>
+						        <td class="text-info"><a href="check.html">查看</a></td>
+						      </tr>
+						     <tr>
+						        <td><input type="checkbox" value="" style="margin: 0px;"></td>
+						        <td>201804181026</td>
+						        <td>富兴</td>
+						        <td>男</td>
+						        <td>66</td>
+						        <td>DR</td>
+						        <td>良性</td>
+						        <td>正常</td>
+						        <td>2018/04/18 10:12:21</td>
+						        <td>**医院</td>
+						        <td>李磊</td>
+						        <td class="text-info"><a href="check.html">查看</a></td>
+						      </tr>
+						      <tr>
+						        <td><input type="checkbox" value="" style="margin: 0px;"></td>
+						        <td>201804181032</td>
+						        <td>李子来</td>
+						        <td>男</td>
+						        <td>69</td>
+						        <td>DR</td>
+						        <td>恶性</td>
+						        <td>一期</td>
+						        <td>2018/04/18 10:32:56</td>
+						        <td>**医院</td>
+						        <td>赵平</td>
+						        <td class="text-info"><a href="check.html">查看</a></td>
+						      </tr>
+						       <tr>
+						        <td><input type="checkbox" value="" style="margin: 0px;"></td>
+						        <td>201804181033</td>
+						        <td>王富贵</td>
+						        <td>男</td>
+						        <td>57</td>
+						        <td>DR</td>
+						    	<td>恶性</td>
+						        <td>一期</td>
+						        <td>2018/04/18 10:33:12</td>	
+						        <td>**医院</td>
+						        <td>王洁</td>
+						        <td class="text-info"><a href="check.html">查看</a></td>
+						      </tr>
+						       <tr>
+						       <td><input type="checkbox" value="" style="margin: 0px;"></td>
+						        <td>201804181036</td>
+						        <td>王金彪</td>
+						        <td>男</td>
+						        <td>35</td>
+						        <td>DR</td>
+						        <td>恶性</td>
+						        <td>一期</td>
+						        <td>2018/04/18 10:36:23</td>
+						        <td>**医院</td>
+						        <td>赵才辉</td>
+						        <td class="text-info"><a href="check.html">查看</a></td>
+						      </tr>
+						       <tr>
+						       <td><input type="checkbox" value="" style="margin: 0px;"></td>
+						        <td>201804180152</td>
+						        <td>张金鑫</td>
+						        <td>男</td>
+						        <td>67</td>
+						        <td>DR</td>
+						        <td>恶性</td>
+						        <td>一期</td>
+						        <td>2018/04/18 10:53:34</td>
+						        <td>**医院</td>
+						        <td>赵振华</td>
+						        <td class="text-info"><a href="check.html">查看</a></td>
+						      </tr>
+						      <tr>
+						      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+						        <td>201804181053</td>
+						        <td>王志珠</td>
+						        <td>女</td>
+						        <td>35</td>
+						        <td>DR</td>
+						        <td>良性</td>
+						        <td>正常</td>
+						        <td>2018/04/18 10:53:49</td>
+						        <td>**医院</td>
+						        <td>张艳</td>
+						        <td class="text-info"><a href="check.html">查看</a></td>
+						      </tr>
+						      <tr>
+						      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+						        <td>201804181058</td>
+						        <td>周少林</td>
+						        <td>男</td>
+						        <td>47</td>
+						        <td>DR</td>
+						        <td>良性</td>
+						        <td>正常</td>
+						        <td>2018/04/18 10:58:48</td>
+						        <td>**医院</td>
+						        <td>陈先伟</td>
+						        <td class="text-info"><a href="check.html">查看</a></td>
+						      </tr>
+						      <tr>
+						      	<td><input type="checkbox" value="" style="margin: 0px;"></td>
+						        <td>201804181101</td>
+						        <td>魏文国</td>
+						        <td>男</td>
+						        <td>69</td>
+						        <td>DR</td>
+						        <td>恶性</td>
+						        <td>一期</td>
+						        <td>2018/04/18 11:02:12</td>	
+						        <td>**医院</td>
+						        <td>杜明达</td>
+						        <td class="text-info"><a href="check.html">查看</a></td>
+			       			  </tr>
+						    </tbody>
+						  </table>
+						  <div class="container-fluid" style="padding-left: 40%;">
+					 		<ul class="pagination pagination-sm">
+							   <li class="page-item"><a class="page-link" href="">&laquo;</a></li>
+							  <li class="page-item"><a class="page-link" href="">1</a></li>
+							  <li class="page-item active"><a class="page-link" href="">2</a></li>
+							  <li class="page-item"><a class="page-link" href="">3</a></li>
+							  <li class="page-item"><a class="page-link" href="">&raquo;</a></li>
+							</ul>
+					  </div>
+					</div>
+				</div>
+			  </div>
+			  <div class="tab-pane fade" id="my_person_info" style="padding-top:2%">
+			  		<div class="text-center text-white" style="font-size: 150%;" id="">
+						<p>个人信息</p>
+					</div>
+					<div>
+						 <label class="text-white">修改个人资料</label>
+					</div>
+					<div class="text-white align-content-center">
+						<form>
+							<div class="input-group">
+								<span style="margin: auto;">
+									<label for="name">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</label>
+									<input type="text" id="name" class="bg-secondary border-0 text-white" style="margin: auto;padding-left: 5px;">
+								</span>
+							</div><!-- /input-group -->
+							<div class="input-group">
+								<span style="margin: auto;">
+									<label for="age">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄</label>
+							   		<input type="number" id="age" class="bg-secondary border-0 text-white" style="margin: auto;padding-left: 5px;">
+								</span>
+							</div><!-- /input-group -->
+							<div class="input-group">
+								<span style="margin: auto;">
+							    	<label for="hospital">任职医院</label>
+							    	<input type="text" id="hospital" class="bg-secondary border-0 text-white" style="margin: auto;padding-left: 5px;">
+								</span>
+							</div>
+							<div class="input-group">
+								<span style="margin: auto;">
+							    	<label for="">科&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;室</label>
+							    	<input type="text" id="" class="bg-secondary border-0 text-white" style="margin: auto;padding-left: 5px;">
+								</span>
+							</div>
+							<div class="input-group">
+								<span style="margin: auto;">
+							    	<label for="">职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;务</label>
+							    	<input type="text" id="" class="bg-secondary border-0 text-white" style="margin: auto;padding-left: 5px;">
+								</span>
+							</div>
+							<div class="input-group">
+								<span style="margin: auto;">
+							    	<label for="">手&nbsp;&nbsp;机&nbsp;&nbsp;号</label>
+							    	<input type="text" id="" class="bg-secondary border-0 text-white" style="margin: auto;padding-left: 5px;">
+								</span>
+							</div>
+							<div class="input-group">
+								<span style="margin: auto;">
+							    	<label for="">邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱</label>
+							    	<input type="text" id="" class="bg-secondary border-0 text-white" style="margin: auto;padding-left: 5px;">
+								</span>
+							</div>
+							<div class="input-group">
+							    <span style="margin: auto;">
+							    	<label for="province">省&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;份</label>
+							     	<select class="bg-secondary border-0 text-white" id="province" style="margin: auto;padding-left: 5px;">
+								        <option>北京</option>
+								        <option>江西</option>
+								        <option>内蒙古</option>
+								        <option>云南</option>
+							     	</select>
+							    </span>  
+							</div>
+							<div class="input-group">
+								<span style="margin: auto;">
+							    	<label for="gx">影像共享</label>
+							    	<select class="bg-secondary border-0 text-white" id="province" style="margin: auto;padding-left: 5px;">
+								        <option>是</option>
+								        <option>否</option>
+							     	</select>
+								</span>
+							</div>
+							<div class="text-center">
+								<button type="button" class="btn btn-primary btn-sm" style="margin: auto;">修改</button>
+							</div>
+						</form>
+					</div>
+			  </div>
+			  <div class="tab-pane fade" id="my_wallet" style="padding-top:2%">
+			  		<div class="text-center text-white" style="font-size: 150%;" id="">
+						<p>我的钱包</p>
+					</div>
+					<div>
+						 <label class="text-white">医数币交易明细</label>
+					</div>
+					<div style="padding-top: 2%;">
+						<table class="table table-dark table-hover">
+						    <thead>
+						      <tr>
+						        <th>日期</th>
+						        <th>交易方式</th>
+						        <th>存入</th>
+						        <th>支出</th>
+						        <th>余币</th>
+						        <th>信息摘要</th>
+						      </tr>
+						    </thead>
+						    <tbody>
+						      <tr>
+						        <td>2018/02/21 16:15:23</td>
+						        <td>兑换</td>
+						        <td>1个</td>
+						        <td></td>
+						        <td>15个</td>
+						        <td>活动积分兑换</td>
+						      </tr>
+						      <tr>
+						      	 <td>2018/02/21 16:15:23</td>
+						        <td>兑换</td>
+						        <td>1个</td>
+						        <td></td>
+						        <td>15个</td>
+						        <td>活动积分兑换</td>
+						      </tr>
+						     <tr>
+						      	 <td>2018/02/21 16:15:23</td>
+						        <td>兑换</td>
+						        <td>1个</td>
+						        <td></td>
+						        <td>15个</td>
+						        <td>活动积分兑换</td>
+						      </tr>
+						      <tr>
+						      	 <td>2018/02/21 16:15:23</td>
+						        <td>兑换</td>
+						        <td>1个</td>
+						        <td></td>
+						        <td>15个</td>
+						        <td>活动积分兑换</td>
+						      </tr>
+						    </tbody>
+					  	</table>
+					  	<div class="container-fluid" style="padding-left: 40%;">
+					 		<ul class="pagination pagination-sm">
+							 <li class="page-item"><a class="page-link" href="">&laquo;</a></li>
+							  <li class="page-item"><a class="page-link" href="">1</a></li>
+							  <li class="page-item active"><a class="page-link" href="">2</a></li>
+							  <li class="page-item"><a class="page-link" href="">3</a></li>
+							  <li class="page-item"><a class="page-link" href="">&raquo;</a></li>
+							</ul>
+					  </div>
+					</div>
+			  </div>
+			</div>
+		</div>
+		<!-- 模态框 -->
+	  	<div class="modal fade" id="loadimage">
+	    	<div class="modal-dialog ">
+	     		<div class="modal-content" style="background-color: #2D343C;">
+	       		<!-- 模态框头部 -->
+			        <div class="modal-header">
+			          <h4 class="modal-title text-white">上传</h4>
+			          <button type="button" class="close" data-dismiss="modal">&times;</button>
+			        </div>
+	   
+			        <!-- 模态框主体 -->
+			        <div class="modal-body text-white">
+						 <form>
+						    <div class="form-group">
+						      <label for="">病人姓名</label>
+						      <input type="text" class="form-control bg-secondary text-white" id="">
+						    </div>
+						    <div class="form-group">
+						      <label for="">病人性别</label>
+						      <input type="text" class="form-control bg-secondary text-white" id="">
+						    </div>
+						    <div class="form-group">
+						      <label for="">病人年龄</label>
+						      <input type="text" class="form-control bg-secondary text-white" id="">
+						    </div>
+						     <div class="form-inline">
+						      <label for="">良恶性</label>
+						      <select class="bg-secondary border-0 text-white" id="province" style="margin: auto;padding-left: 5px;">
+							        <option>良性</option>
+							        <option>恶性</option>
+							  </select>
+							   <label for="">诊断结果</label>
+						      <select class="bg-secondary border-0 text-white" id="province" style="margin: auto;padding-left: 5px;">
+							        <option>正常</option>
+							        <option>尘肺病一期</option>
+							        <option>尘肺病一期</option>
+							        <option>尘肺病二期</option>
+							        <option>尘肺病三期</option>
+							  </select>
+						    </div>
+						    <div class="form-group" style="padding-top:10px ;">
+						      <label >影像类型</label>
+						      <select class="bg-secondary border-0 text-white" id="province" style="margin: auto;padding-left: 5px;">
+								        <option>CT</option>
+								        <option>DR</option>
+								        <option>CR</option>
+							  </select>
+						    </div>
+						    <div class="form-group">
+						      <label for="">文件路径</label>
+						      <input type="text" class="form-control bg-secondary text-white" id="">
+						    </div>
+  						</form>
+			        </div>
+			        <!-- 模态框底部 -->
+			        <div class="modal-footer">
+			          <button type="button" class="btn btn-secondary text-white" data-dismiss="modal" data-toggle="modal" data-target="#jlModal">上传</button>
+			        </div>
+	  			 </div>
+		 	</div>
+		</div>
+		<!-- 更新专家库 -->
+	  	<div class="modal fade" id="update">
+	    	<div class="modal-dialog ">
+	     		<div class="modal-content" style="background-color: #2D343C;">
+	       		<!-- 模态框头部 -->
+			        <div class="modal-header">
+			          <h4 class="modal-title text-white">专家库更新</h4>
+			          <button type="button" class="close" data-dismiss="modal">&times;</button>
+			        </div>
+	   
+			        <!-- 模态框主体 -->
+			        <div class="modal-body text-white">
+						<label for="comment" class="text-white">更新内容:</label>
+     					<textarea class="form-control text-white bg-secondary" rows="5" id="comment"></textarea>	
+			        </div>
+			        <!-- 模态框底部 -->
+			        <div class="modal-footer">
+			          <button type="button" class="btn btn-secondary text-white" data-dismiss="modal" data-toggle="modal" data-target="#jlModal">更新</button>
+			        </div>
+	  			 </div>
+		 	</div>
+		</div>
+		<!-- 发起会诊 -->
+		<div class="modal fade" id="fqhzModal">
+	    	<div class="modal-dialog ">
+	     		<div class="modal-content" style="background-color: #2D343C;">
+	       		<!-- 模态框头部 -->
+			        <div class="modal-header">
+			          <h4 class="modal-title text-white">发起会诊</h4>
+			          <button type="button" class="close" data-dismiss="modal">&times;</button>
+			        </div>
+	   
+			        <!-- 模态框主体 -->
+			        <div class="modal-body">
+			        	<p class="text-white">求助说明</p>
+	       			   <textarea class="form-control bg-secondary text-white border-0" rows="5" id="comment"></textarea>
+			        </div>
+			        <!-- 模态框底部 -->
+			        <div class="modal-footer">
+			          <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">发送</button>
+			        </div>
+	  			 </div>
+		 	</div>
+		</div>
+		<!-- 奖励 -->
+		<div class="modal fade" id="jlModal">
+	    	<div class="modal-dialog">
+	     		<div class="modal-content" style="background-color: #2D343C;">
+	       		<!-- 模态框头部 -->
+			        <div class="modal-header">
+			          <h4 class="modal-title text-white">操作奖励</h4>
+			          <button type="button" class="close" data-dismiss="modal">&times;</button>
+			        </div>
+	   
+			        <!-- 模态框主体 -->
+			        <div class="modal-body text-center">
+			        	<p class="text-white">操作成功</p>
+			        	<p class="text-white">恭喜您获取FOYO</p>
+			        	<label class="text-white">2枚</label>
+			        </div>
+			        <!-- 模态框底部 -->
+			        <div class="modal-footer">
+			          <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">确认</button>
+			        </div>
+	  			 </div>
+		 	</div>
+		</div>
+		<div class="fixed-bottom text-center bg-dark text-white-50">@2018 jiejiewisedoctor.com&nbsp;&nbsp;&nbsp;&nbsp;ALL&nbsp;rights&nbsp;reserved&nbsp;&nbsp;&nbsp;&nbsp;京ICP备16888888号-1</div>
+	</div>
+	<script>
+		function changePage(type_number)
+  			{
+  				switch (type_number){
+  					case 1:
+  					 	document.getElementById("cktest").style.display = "inline";
+  						document.getElementById("jshz").style.display = "none";
+  						break;
+  					case 2:
+  					  	document.getElementById("jshz").style.display = "inline";
+  						document.getElementById("cktest").style.display = "none";
+  						break;
+  					default:
+  						break;
+  				}	
+  			};
+	</script>
+</body>
+</html>
