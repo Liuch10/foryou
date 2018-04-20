@@ -6,11 +6,17 @@ from app import app, db
 import hashlib
 from datetime import datetime
 
+
+def getPasswordHash(passphrase):
+    md5 = hashlib.md5()
+    md5.update(passphrase.encode('utf-8'))
+    return md5.hexdigest()
+
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.login_check(request.form.get('user_name'), 
-            request.form.get('user_password'))
+        user = User.login_check(request.form.get('user_name'),
+                                getPasswordHash(request.form.get('user_password')))
         if user:
             login_user(user)
             user.last_seen = datetime.now()
@@ -39,7 +45,7 @@ def sign_up():
         user_department = request.form.get('user_department') or ""
         user_phone = request.form.get('user_phone') or ""
         user_chain_address = request.form.get('user_chain_address') or ""
-        register_check = User.query.filter(db.and_(User.user_name == user_name, 
+        register_check = User.query.filter(db.and_(User.user_name == user_name,
             User.user_password == user_password)).first()
         if register_check:
             return redirect('/sign-up')
