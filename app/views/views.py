@@ -23,7 +23,7 @@ def before_request():
 
 # app.add_url_rule('/', methods=['GET'], view_func = index)
 # app.add_url_rule('/index', methods=['GET'], view_func = index)
-# app.add_url_rule('/login', methods=['GET','POST'], view_func = login)
+app.add_url_rule('/login', methods=['GET', 'POST'], view_func=login)
 # app.add_url_rule('/sign-up', methods=['GET','POST'], view_func = sign_up)
 # app.add_url_rule('/logout', methods=['GET'], view_func = logout)
 #

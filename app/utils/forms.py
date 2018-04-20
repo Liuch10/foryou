@@ -1,10 +1,10 @@
 from flask_wtf import FlaskForm as Form
-from wtforms.fields import StringField, SelectField, SubmitField
+from wtforms.fields import StringField, SelectField, SubmitField, PasswordField
 from wtforms.validators import Required, Length, NumberRange
 
 class LoginForm(Form):
     user_name           = StringField(validators = [Required(), Length(max = 15)])
-    user_password       = StringField(validators = [Required(), Length(max = 15)])
+    user_password       = PasswordField(validators = [Required(), Length(max = 15)])
     submit = SubmitField('Login')
 
 class SignUpForm(Form):

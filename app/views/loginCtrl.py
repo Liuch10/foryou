@@ -3,6 +3,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from app.utils.forms import LoginForm, SignUpForm
 from app.models.models import User
 from app import app, db
+import hashlib
 from datetime import datetime
 
 def login():
