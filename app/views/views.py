@@ -5,8 +5,9 @@ from datetime import datetime
 from app import app, db, lm
 from app.models.models import User
 from app.views.indexCtrl import index
-from app.views.loginCtrl import login, sign_up, logout
+from app.views.loginCtrl import login, sign_up, logout, sendMail
 from app.views.uploadCtrl import upload_case
+
 
 @lm.user_loader
 def load_user(user_id):
@@ -21,10 +22,12 @@ def before_request():
         db.session.add(g.user)
         db.session.commit()
 
+
 # app.add_url_rule('/', methods=['GET'], view_func = index)
 # app.add_url_rule('/index', methods=['GET'], view_func = index)
 app.add_url_rule('/login', methods=['GET', 'POST'], view_func=login)
-# app.add_url_rule('/sign-up', methods=['GET','POST'], view_func = sign_up)
+app.add_url_rule('/sign-up', methods=['GET', 'POST'], view_func=sign_up)
+app.add_url_rule('/sendMail', methods=['POST'], view_func=sendMail)
 # app.add_url_rule('/logout', methods=['GET'], view_func = logout)
 #
 # app.add_url_rule('/upload-case', methods=['POST','GET'], view_func=upload_case)

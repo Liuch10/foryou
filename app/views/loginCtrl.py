@@ -6,11 +6,16 @@ from app import app, db
 import hashlib
 from datetime import datetime
 
+from mailer import Mailer
+from mailer import Message
+from random import randint
+
 
 def getPasswordHash(passphrase):
     md5 = hashlib.md5()
     md5.update(passphrase.encode('utf-8'))
     return md5.hexdigest()
+
 
 def login():
     form = LoginForm()
@@ -31,12 +36,14 @@ def login():
         else:
             flash('Login failed, username or password error!')
             return redirect('/login')
-    return render_template('login.html', form = form)
+    return render_template('login.html', form=form)
+
 
 def sign_up():
     form = SignUpForm()
     user = User()
     if form.validate_on_submit():
+        user_mail = request.form.get('user_mail')
         user_name = request.form.get('user_name')
         user_password = request.form.get('user_password')
         user_type = request.form.get('user_type') or ""
@@ -45,11 +52,12 @@ def sign_up():
         user_department = request.form.get('user_department') or ""
         user_phone = request.form.get('user_phone') or ""
         user_chain_address = request.form.get('user_chain_address') or ""
-        register_check = User.query.filter(db.and_(User.user_name == user_name,
-            User.user_password == user_password)).first()
+        register_check = User.query.filter(db.and_(User.user_mail == user_mail,
+                                                   User.user_password == user_password)).first()
         if register_check:
             return redirect('/sign-up')
-        if len(user_name) and len(user_password):
+        if (len(user_name) and len(user_password) and
+                ('verification_code' in session) and (session['verification_code'] == form.verification_code.data)):
             user.user_name = user_name
             user.user_password = user_password
             user.user_type = user_type
@@ -65,7 +73,30 @@ def sign_up():
         except:
             return redirect('/sign-up')
         return redirect('/index')
-    return render_template("sign_up.html", form = form)
+    return render_template("signup.html", form=form)
+
+
+def sendMail():
+    print(request.form.get('data').type)
+
+
+#    tomail = request.args.get('user_mail')
+
+#    print(tomail)
+
+# message = Message(From="foryou_official@163.com",
+#                   To='yks2005@qq.com',
+#                   charset="utf-8")
+# code = ''.join(["%s" % randint(0, 9) for num in range(0, 6)])
+# session['verification_code'] = code
+# message.Subject = "医数链验证码"
+#
+# message.Html = "验证码为： " + code
+#
+# sender = Mailer('smtp.163.com', port=465)
+# sender.send(message)
+# print('sent')
+
 
 @login_required
 def logout():
