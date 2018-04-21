@@ -5,7 +5,9 @@ ROLE_ADMIN = 1
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    user_name = db.Column(db.String(64), unique = True)
+    user_password = db.Column(db.String(64))
+    user_mail = db.Column(db.String(64), unique = True)
+    user_name = db.Column(db.String(64))
     user_password = db.Column(db.String(64))
     user_type = db.Column(db.String(64))
     user_city = db.Column(db.String(64))
@@ -30,8 +32,8 @@ class User(db.Model):
         return '<User %r>' % (self.user_name)
 
     @classmethod
-    def login_check(cls, username, password):
-        user = cls.query.filter(db.and_(User.user_name == username, User.user_password == password)).first()
+    def login_check(cls, mail, password):
+        user = cls.query.filter(db.and_(User.user_mail == mail, User.user_password == password)).first()
         if not user:
             return None
         return user
