@@ -61,7 +61,7 @@ class Case(db.Model):
     consultation_message = db.Column(db.String(64))
 
     def __repr__(self):
-        return '<Case %r>' % (self.body)
+        return '<Case %r>' % (self.case_patient_name)
 
 class ExpertCase(db.Model):
     id=db.Column(db.Integer, primary_key=True)

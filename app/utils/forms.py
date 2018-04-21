@@ -36,7 +36,7 @@ class CaseForm(Form):
     case_id = StringField()
     patient_name = StringField(validators=[Length(max=15)])
     patient_gender = SelectField(choices=[('0', '未知/保密'), ('1', '男'), ('2', '女')])
-    patient_age = StringField(validators=NumberRange(min=0, max=100))
+    patient_age = StringField(validators=[NumberRange(min=0, max=100)])
     patient_photo_type = SelectField(
         choices=[('0', '其他'), ('1', 'CR'), ('2', 'DR'), ('3', 'CT'), ('4', 'MR'), ('5', '超声')])
     patient_photo_file = StringField(validators=[Required()])
