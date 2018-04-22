@@ -26,6 +26,7 @@
                 <img src="/static/img/logo.png"/>
             </div>
             <form action="/login" method="post" name="login">
+                       {{ form.hidden_tag() }}
                 <div class="form-group text-left">
                     <label class="text-white" for="username">用户名</label>
                     {{form.user_mail(class_="form-control border-0 text-white",style="background-color: #888B90")}}
