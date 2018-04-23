@@ -26,6 +26,7 @@
                 <img src="/static/img/logo.png"/>
             </div>
             <form action="/login" method="post" name="login">
+                       {{ form.hidden_tag() }}
                 <div class="form-group text-left">
                     <label class="text-white" for="username">用户名</label>
                     {{form.user_mail(class_="form-control border-0 text-white",style="background-color: #888B90")}}
@@ -45,7 +46,7 @@
             </form>
         </div>
         <div class="text-info text-left" style="padding-left: 25%;padding-top: 10%;">
-            <a href="main.html">回到首页</a>
+            <a href="/main">回到首页</a>
         </div>
     </div>
 </div>
