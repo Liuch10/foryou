@@ -4,7 +4,7 @@ from app.utils.forms import CaseForm
 from app import db
 from random import choice
 from flask_login import current_user, login_required
-
+from sqlalchemy import desc
 
 
 # @login_required
@@ -116,26 +116,32 @@ def answer_case_table_infos():
         return rtn
 
 
+def toJson(case, secret=False):
+    d = {}
+    d['id'] = case.id
+    d['userid'] = case.id
+    d['name'] = case.case_patient_name if (not secret) else "****"
+    d['sex'] = case.case_patient_gender if (not secret) else "****"
+    d['age'] = case.case_patient_age if (not secret) else "****"
+    d['imgTpye'] = case.case_photo_type if (not secret) else "****"
+    d['type'] = case.case_diagnose_type if (not secret) else "****"
+    d['consultResult'] = case.case_diagnose_result if (not secret) else "****"
+    # d['commentType'] = cas
+    d['uploadDate'] = case.case_upload_time if (not secret) else "****"
+
+    return d
+
+
 def case_table_infos():
     # TODO... read from db
     # return as json
+    # print("case_table_infos")
+    cases = Case.query.order_by(desc(Case.case_upload_time)).all()
+    # print(cases)
     data = []
-    names = ['香', '草', '瓜', '果', '桃', '梨', '莓', '橘', '蕉', '苹']
-    sex = ['男', '女']
-    consultResult = ['好', '坏']
-    for i in range(1, 10):
-        d = {}
-        d['id'] = i
-        d['userid'] = i
-        d['name'] = choice(names) + choice(names)  # 随机选取汉字并拼接
-        d['sex'] = choice(sex)
-        d['age'] = 20
-        d['imgTpye'] = choice(names)
-        d['type'] = choice(consultResult)
-        d['consultResult'] = choice(consultResult)
-        d['commentType'] = choice(consultResult)
-        d['uploadDate'] = '2018-04-21'
-        data.append(d)
+
+    for i in range(1, len(cases)):
+        data.append(toJson(cases[i]))
     if request.method == 'GET':
         rdata = {'recordsTotal': len(data), 'data': data}
         rtn = jsonify(rdata)
