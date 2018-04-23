@@ -544,9 +544,9 @@ $(document).ready(function() {
     function getLeftNarBarActive() {
         var prefix = $(".navbar-nav .nav-link.active").data("tag");
         if (prefix == "huizhen-") {
-            prefix = $(".nav.navbar-collapse .nav-link.active").data("tag");
+            prefix = $(".nav.navbar-collapse .nav-link.active.huizhen-nav").data("tag");
         } else if (prefix == "source-") {
-            prefix = $(".nav.navbar-collapse .nav-link.active").data("tag");
+            prefix = $(".nav.navbar-collapse .nav-link.active.source-nav").data("tag");
         }
         return prefix;
     }
