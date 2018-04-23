@@ -32,28 +32,15 @@ def work_update_expert():
 
 
 def work_upload_case():
-    print(request.form)
-    
+    print("hrere")
     case_patient_name = request.form.get('patient_name')
     case_patient_gender = request.form.get('patient_gender')
     case_patient_age = request.form.get('patient_age')
-    case_photo_type = request.form.get('case_photo_type')
-    case_diagnose_type = request.form.get('case_diagnose_type')
-    case_diagnose_result = request.form.get('case_diagnose_result')
-    case_photo_hash = request.form.get('case_photo_hash')
+    case_photo_type = request.form.get('patient_photo_type')
+    case_diagnose_type = request.form.get('patient_diagnois_type')
+    case_diagnose_result = request.form.get('patient_diagnois_result')
+    case_photo_hash = request.form.get('patient_photo_file')
 
-    # case_photo_hash = db.Column(db.String(64))
-    #
-    # is_diagnosed = db.Column(db.Boolean, default=False)
-    # case_diagnose_info = db.Column(db.String(128), default="")
-    # case_diagnose_type = db.Column(db.String(128), default="")
-    # case_diagnose_time = db.Column(db.DateTime, default=datetime.strptime(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-    #                                                                       '%Y-%m-%d %H:%M:%S'))
-    #
-    # in_consultant = db.Column(db.Boolean, default=False)
-    # consultant_time = db.Column(db.DateTime, default=datetime.strptime(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-    #                                                                    '%Y-%m-%d %H:%M:%S'))
-    # consultation_message = db.Column(db.String(64), default="")
     case = Case(case_patient_name=case_patient_name,
                 case_patient_gender=case_patient_gender,
                 case_patient_age=case_patient_age,
@@ -62,15 +49,18 @@ def work_upload_case():
                 case_diagnose_result=case_diagnose_result,
                 case_photo_hash=case_photo_hash)
     try:
-        # TODO... write into db
+        # DONE
         print(case)
         print(case_photo_hash)
         upload_check = Case.query.filter_by(case_photo_hash=case_photo_hash).first()
-        print(upload_check)
-        db.session.add(case)
-        db.session.commit()
-        print("success")
-        return jsonify({'result': 'success'})
+        if (upload_check):
+            print("this photo has been uploaded")
+            return jsonify({'result': 'error'})
+        else:
+            db.session.add(case)
+            db.session.commit()
+            print("success")
+            return jsonify({'result': 'success'})
     except:
         print("error")
         return jsonify({'result': 'error'})

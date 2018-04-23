@@ -921,7 +921,7 @@
             var jpgBuffer = new buffer.Buffer(data, 'binary');
             ipfs.add(jpgBuffer, function (err, resHash) {
                 alert(resHash);
-                $("#case_photo_hash").data(resHash);
+                $("#case_photo_hash").val(resHash);
             });
         }
     }
