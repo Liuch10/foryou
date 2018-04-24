@@ -25,13 +25,6 @@ def work_start_consult():
     # comment = request.form.get('comment')
     # TODO... update consult_db # DONE
 
-    # id = db.Column(db.Integer, primary_key=True)
-    # comment_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), default=0)
-    # case_id = db.Column(db.Integer, db.ForeignKey('case.id'), default=0)
-    # comment_content = db.Column(db.String(128), default="default")
-    # comment_time = db.Column(db.DateTime,
-    #                          default=datetime.strptime(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-    #                                                    '%Y-%m-%d %H:%M:%S'))
     case_id = request.form.get('case_id') if request.form.get('case_id') else 8
     print(case_id)
     comment_content = request.form.get('comment') if request.form.get('comment') else "unknown"
@@ -39,7 +32,6 @@ def work_start_consult():
     case = Case.query.filter_by(id=case_id).first()
     print(case)
     try:
-        # if case and (not case.in_consultant):
         if case:
             if (not case.in_consultant):
                 case.in_consultant = True
@@ -56,10 +48,6 @@ def work_start_consult():
                 print("already")
                 return jsonify({'result': 'already in consultation'})
         else:
-            # case = Case(in_consultant=True, consultation_message=comment_content)
-            # db.session.add(case)
-            # db.session.commit()
-            # print(case.id)
             return jsonify({'result': 'no case instance' + str(case.id)})
     except:
         print("error")
@@ -68,11 +56,6 @@ def work_start_consult():
 
 def work_update_expert():
     # TODO... update expert_db
-    # id = db.Column(db.Integer, primary_kddey=True)
-    # original_case_id = db.Column(db.Integer, db.ForeignKey('case.id'))
-    # comment_user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    # expert_time = db.Column(db.DateTime, default=datetime.strptime(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-    #                                                                '%Y-%m-%d %H:%M:%S'))
     print(request.data)
     print("work_update_expert")
     case_id = request.form.get('case_id') if request.form.get('case_id') else 0  # js error in getSelected in the js
@@ -181,16 +164,6 @@ def source_case_table_infos():
         return rtn
 
 
-def Expert2Json(case, secret='false'):
-    d = {}
-    # d['id'] = i
-    # d['description'] = choice(names) + choice(names) + choice(names) + choice(names)
-    # d['starter'] = choice(names) + choice(names)
-    # d['hospital'] = choice(sex)
-    # d['start-date'] = '2018-04-21'
-    return d
-
-
 def answer_case_table_infos():
     # TODO... read from consultant_db
     # 接收会诊
@@ -198,14 +171,6 @@ def answer_case_table_infos():
     consultant_cases = Case.query.filter_by(in_consultant=True).order_by(desc(Case.consultant_time)).all()
 
     print("answer_case_table_infos:" + str(len(consultant_cases)))
-    # {"title": "index", "data": "id"},
-    # {"title": "会诊说明", "data": "description"},
-    # {"title": "发起人", "data": "starter"},
-    # {"title": "所在医院", "data": "hospital"},
-    # {"title": "所在科室", "data": "department"},
-    # {"title": "发起日期", "data": "start-date"},
-    # {"title": "操作", "data": null}
-
     data = []
     for i in range(1, len(consultant_cases)):
         d = {}
@@ -241,12 +206,8 @@ def Case2Json(case, secret=False):
 
 
 def case_table_infos():
-    # TODO... read from db
-    # DONE
-    # return as json
-    # print("case_table_infos")
+    # TODO... read from  DONE
     cases = Case.query.order_by(desc(Case.case_upload_time)).all()
-    # print(cases)
     data = []
 
     for i in range(1, len(cases)):
@@ -270,8 +231,8 @@ def update_personal_info():
         g.user.user_city = request.form.get('province')
         g.user.user_mail = request.form.get('mail')
         g.user.allow_share = True if (request.form.get('share') == '是') else False
-        # db.session.add(g.user)
-        # db.session.commit()
+        db.session.add(g.user)
+        db.session.commit()
         return jsonify({'result': '修改成功'})
     except:
         return jsonify({'result': "failed to update personal info"})
