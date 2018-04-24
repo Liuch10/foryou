@@ -787,13 +787,13 @@
                     </div>
                     <div class="form-inline">
                         <label for="">良恶性</label>
-                        <select class="bg-secondary border-0 text-white" id="case_diagnose_type"
+                        <select class="bg-secondary border-0 text-white" id="patient_diagnose_type"
                                 style="margin: auto;padding-left: 5px;">
                             <option>良性</option>
                             <option>恶性</option>
                         </select>
                         <label for="">诊断结果</label>
-                        <select class="bg-secondary border-0 text-white" id="case_diagnose_result"
+                        <select class="bg-secondary border-0 text-white" id="patient_diagnose_result"
                                 style="margin: auto;padding-left: 5px;">
                             <option>正常</option>
                             <option>尘肺病一期</option>
@@ -804,7 +804,7 @@
                     </div>
                     <div class="form-group" style="padding-top:10px ;">
                         <label>影像类型</label>
-                        <select class="bg-secondary border-0 text-white" id="case_photo_type"
+                        <select class="bg-secondary border-0 text-white" id="patient_photo_type"
                                 style="margin: auto;padding-left: 5px;">
                             <option>CT</option>
                             <option>DR</option>
@@ -817,7 +817,7 @@
 
                         <input type="button" id="fileImport" value="选择文件">
                         <input type="text" class="form-control bg-secondary text-white"
-                               id="case_photo_hash">
+                               id="patient_photo_file">
                     </div>
                 </form>
             </div>
@@ -921,7 +921,7 @@
             var jpgBuffer = new buffer.Buffer(data, 'binary');
             ipfs.add(jpgBuffer, function (err, resHash) {
                 alert(resHash);
-                $("#case_photo_hash").val(resHash);
+                $("#patient_photo_file").val(resHash);
             });
         }
     }

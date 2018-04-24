@@ -176,6 +176,7 @@ $(document).ready(function() {
             { "title": "会诊说明",  "data" : "description" },
             { "title": "发起人",  "data" : "starter" },
             { "title": "所在医院",  "data" : "hospital" },
+            { "title": "所在科室",  "data" : "department" },
             { "title": "发起日期",  "data" : "start-date" },
             { "title": "操作",  "data" : null }
         ],
@@ -312,7 +313,7 @@ $(document).ready(function() {
         "bAutoWidth" : true,
         "bFilter": true,
         "ajax": {
-            "url": "/case-table-source-infos",
+            "url": "/case-table-source-infos?type=expert",
             "type": "GET"
         },
         "language": {
@@ -391,7 +392,7 @@ $(document).ready(function() {
         "bAutoWidth" : true,
         "bFilter": true,
         "ajax": {
-            "url": "/case-table-source-infos",
+            "url": "/case-table-source-infos?type=case",
             "type": "GET"
         },
         "language": {
@@ -570,10 +571,12 @@ $(document).ready(function() {
     });
 
     $("#updateExpertBtn").click(function(){
+        
         var prefix = getLeftNarBarActive();
         var caseIds = getSelectedCase(prefix);
         var comment = $('#update-expert-comment').val();
         var data={
+            'caseid': caseIds,
             'comment'           : comment
         }
         $.ajax({
@@ -592,6 +595,7 @@ $(document).ready(function() {
 
     $("#fqhzModalBtn").click(function(){
         // TODO 发起会诊是可以同时对多个case发起会诊？
+        // 不可以，只能一个一个发起。这里设计一个复选框就是脑残
         var prefix = getLeftNarBarActive();
         var caseIds = getSelectedCase(prefix);
         var comment = $('#comment').val();
@@ -604,9 +608,9 @@ $(document).ready(function() {
             data: data,
             dataType: 'json',
             success: function(data){
-                alert('success');
+                    alert(data.result)
             },
-            error: function(){
+           error: function(){
                 alert('error');
             }
         });
@@ -618,16 +622,16 @@ $(document).ready(function() {
         var patient_age             = $('#patient_age').val();
         var patient_photo_type      = $('#patient_photo_type').val();
         var patient_photo_file      = $('#patient_photo_file').val();
-        var patient_diagnois_type   = $('#patient_diagnois_type').val();
-        var patient_diagnois_result = $('#patient_diagnois_result').val();
+        var patient_diagnose_type   = $('#patient_diagnose_type').val();
+        var patient_diagnose_result = $('#patient_diagnose_result').val();
         var data={
             'patient_name'           : patient_name,
             'patient_gender'         : patient_gender,
             'patient_age'            : parseInt(patient_age),
             'patient_photo_type'     : patient_photo_type,
             'patient_photo_file'     : patient_photo_file,
-            'patient_diagnois_type'  : patient_diagnois_type,
-            'patient_diagnois_result': patient_diagnois_result
+            'patient_diagnose_type'  : patient_diagnose_type,
+            'patient_diagnose_result': patient_diagnose_result
         }
         $.ajax({
             type: 'POST',
@@ -636,8 +640,11 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(data){
                 $('#loadimage').modal('hide')
-                if (data.result == "success" || data.result == "error") {
+                if (data.result == "success") {
                     $('#jlModal').modal('show')
+                }
+                else{
+                    alert(data.result)
                 }
             },
             error: function(){

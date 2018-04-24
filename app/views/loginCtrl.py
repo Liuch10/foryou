@@ -5,14 +5,10 @@ from app.utils.sendmail import send_mail
 from app.models.models import User
 from app import app, db
 from datetime import datetime
-
-from mailer import Mailer
-from mailer import Message
 from random import randint
 
 import hashlib
 import json
-import sys
 
 
 def getPasswordHash(passphrase):

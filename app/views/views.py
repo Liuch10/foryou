@@ -8,7 +8,8 @@ from app.views.indexCtrl import index
 from app.views.mainCtrl import main, contactUs, aboutUs, product
 from app.views.loginCtrl import login, sign_up, logout, sendMail
 from app.views.uploadCtrl import upload_case
-from app.views.workCtrl import work, case_table_infos, work_upload_case, work_start_consult, answer_case_table_infos, source_case_table_infos, work_update_expert, work_start_comment
+from app.views.workCtrl import work, case_table_infos, work_upload_case, work_start_consult, answer_case_table_infos, \
+    source_case_table_infos, work_update_expert, work_start_comment
 
 
 @lm.user_loader
@@ -26,10 +27,10 @@ def before_request():
 
 
 # app.add_url_rule('/', methods=['GET'], view_func = index)
-app.add_url_rule('/main', methods=['GET'], view_func = main)
-app.add_url_rule('/about-us', methods=['GET'], view_func = aboutUs)
-app.add_url_rule('/product', methods=['GET'], view_func = product)
-app.add_url_rule('/contact-us', methods=['GET'], view_func = contactUs)
+app.add_url_rule('/main', methods=['GET'], view_func=main)
+app.add_url_rule('/about-us', methods=['GET'], view_func=aboutUs)
+app.add_url_rule('/product', methods=['GET'], view_func=product)
+app.add_url_rule('/contact-us', methods=['GET'], view_func=contactUs)
 app.add_url_rule('/login', methods=['GET', 'POST'], view_func=login)
 app.add_url_rule('/sign-up', methods=['GET', 'POST'], view_func=sign_up)
 app.add_url_rule('/sendMail', methods=['POST'], view_func=sendMail)
