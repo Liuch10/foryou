@@ -10,6 +10,7 @@ class User(db.Model):
     user_mail = db.Column(db.String(64), unique=True, default="test@test.com")
     user_password = db.Column(db.String(64), default="default")
     user_name = db.Column(db.String(64), default="default")
+    user_age = db.Column(db.String(64), default="default")
     user_type = db.Column(db.String(64), default="doctor")
     user_city = db.Column(db.String(64), default="default")
     user_hospital = db.Column(db.String(64), default="default")
@@ -22,6 +23,7 @@ class User(db.Model):
     is_expert = db.Column(db.Boolean, default=False)
     last_seen = db.Column(db.DateTime, default=datetime.strptime(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                                                                  '%Y-%m-%d %H:%M:%S'))
+    allow_share = db.Column(db.Boolean, default=True)
 
     def is_authenticated(self):
         return True

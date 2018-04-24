@@ -1,8 +1,8 @@
-from flask import Response, render_template, jsonify, request
+from flask import Response, render_template, jsonify, request, g
 from app.models.models import User, Case, ExpertCase, Consultation
 from app.utils.forms import CaseForm
 from app import db
-from random import choice
+
 from flask_login import current_user, login_required
 from sqlalchemy import desc
 
@@ -56,11 +56,11 @@ def work_start_consult():
                 print("already")
                 return jsonify({'result': 'already in consultation'})
         else:
-            case = Case(in_consultant=True, consultation_message=comment_content)
-            db.session.add(case)
-            db.session.commit()
-            print(case.id)
-            return jsonify({'result': 'no case instance'})
+            # case = Case(in_consultant=True, consultation_message=comment_content)
+            # db.session.add(case)
+            # db.session.commit()
+            # print(case.id)
+            return jsonify({'result': 'no case instance' + str(case.id)})
     except:
         print("error")
         return jsonify({'result': 'error'})
@@ -255,3 +255,23 @@ def case_table_infos():
         rdata = {'recordsTotal': len(data), 'data': data}
         rtn = jsonify(rdata)
         return rtn
+
+
+def update_personal_info():
+    print("update_personal_info")
+    print(request.form)
+    try:
+        g.user.user_name = request.form.get('name')
+        g.user.age = request.form.get('age')
+        g.user.user_hospital = request.form.get('hospital')
+        g.user.user_department = request.form.get('department')
+        g.user.user_title = request.form.get('title')
+        g.user.telephone = request.form.get('telephone')
+        g.user.user_city = request.form.get('province')
+        g.user.user_mail = request.form.get('mail')
+        g.user.allow_share = True if (request.form.get('share') == '是') else False
+        # db.session.add(g.user)
+        # db.session.commit()
+        return jsonify({'result': '修改成功'})
+    except:
+        return jsonify({'result': "failed to update personal info"})

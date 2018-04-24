@@ -552,6 +552,8 @@ $(document).ready(function() {
         return prefix;
     }
 
+
+
     $("#startComment").click(function(){
         // TODO 每次标注取第一个选择的case
         var prefix = getLeftNarBarActive();

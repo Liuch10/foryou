@@ -688,7 +688,7 @@
 								</span>
                     </div>
                     <div class="text-center">
-                        <button type="button" class="btn btn-primary btn-sm" style="margin: auto;">修改</button>
+                        <button type="button" class="btn btn-primary btn-sm" style="margin: auto;" id="update_personal_info">修改</button>
                     </div>
                 </form>
             </div>
@@ -925,6 +925,36 @@
             });
         }
     }
+</script>
+<script>
+    $("#update_personal_info").click(function(){
+        var data={
+            name:$('#name').val(),
+            age:$('#age').val(),
+            hospital:$('#hospital').val(),
+            department:$('#department').val(),
+            title:$('#title').val(),
+            telephone:$('#telephone').val(),
+            mail:$('#mail').val(),
+            province:$('#province').val(),
+            share: $('#allowshare').val()
+        }
+        alert(data.name);
+        $.ajax({
+            type: 'POST',
+            url: '/updatePersonalInfo',
+            data: data,
+            dataType: 'json',
+            success: function(data){
+
+                alert(data.result);
+                $('#my_person_info').hide();
+            },
+            error: function(){
+                alert('修改失败');
+            }
+        });
+    });
 </script>
 <script>
     function changePage(type_number) {
