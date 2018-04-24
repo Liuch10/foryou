@@ -163,7 +163,7 @@
                     <a class="nav-link" data-toggle="pill" href="#my_wallet">管理钱包</a>
                 </li>
                 <li class="nav-item" style="padding-top: 20px;padding-bottom: 20px;">
-                    <a class="nav-link" data-toggle="pill" href="#my_person_info">个人信息</a>
+                    <a class="nav-link" data-toggle="pill" id='test_person' href="#my_person_info">个人信息</a>
                 </li>
             </ul>
         </div>
@@ -606,8 +606,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="tab-pane fade" id="my_person_info" style="padding-top:2%">
+            <div class="tab-pane fade" id="my_person_info" style="padding-top:2%">
             <div class="text-center text-white" style="font-size: 150%;" >
                 <p>个人信息</p>
             </div>
@@ -693,7 +692,7 @@
                 </form>
             </div>
         </div>
-        <div class="tab-pane fade" id="my_wallet" style="padding-top:2%">
+            <div class="tab-pane fade" id="my_wallet" style="padding-top:2%">
             <div class="text-center text-white" style="font-size: 150%;" >
                 <p>我的钱包</p>
             </div>
@@ -758,6 +757,8 @@
                 </div>
             </div>
         </div>
+        </div>
+
     </div>
 </div>
 <!-- 模态框 -->
@@ -948,7 +949,6 @@
             success: function(data){
 
                 alert(data.result);
-                $('#my_person_info').hide();
             },
             error: function(){
                 alert('修改失败');
@@ -957,6 +957,25 @@
     });
 </script>
 <script>
+    $('#test_person').on('click', function () {
+            $.ajax({
+            type: 'GET',
+            url: '/updatePersonalInfo',
+            success: function(data){
+                $('#name').val(data.name);
+                $('#age').val(data.age);
+                $('#hospital').val(data.hospital);
+                $('#department').val(data.department);
+                $('#title').val(data.title);
+                $('#telephone').val(data.telephone);
+                $('#mail').val(data.mail);
+                $('#province').val(data.province);
+                $('#allowshare').val(data.allowshare);
+            },
+            error: function(){
+            }
+        });
+    });
     function changePage(type_number) {
         switch (type_number) {
             case 1:
