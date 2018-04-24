@@ -25,6 +25,9 @@ class User(db.Model):
                                                                  '%Y-%m-%d %H:%M:%S'))
     allow_share = db.Column(db.Boolean, default=True)
 
+    user_wallet_balance = db.Column(db.Integer, default=0)
+    user_wallet_address = db.Column(db.String(64), default="default")
+
     def is_authenticated(self):
         return True
 
@@ -71,7 +74,6 @@ class Case(db.Model):
     consultant_time = db.Column(db.DateTime, default=datetime.strptime(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                                                                        '%Y-%m-%d %H:%M:%S'))
     consultation_message = db.Column(db.String(64), default="default")
-    user = db.relationship(User, backref="cases")
 
     def __repr__(self):
         return '<Case %r>' % (self.case_patient_name)
@@ -87,28 +89,6 @@ class ExpertCase(db.Model):
     expert = db.relationship(User, backref="expertcases")
 
 
-#
-# class Group(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#
-# class User(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     group_id = db.Column(db.ForeignKey(Group.id))
-#     group = db.relationship(Group, backref='users')
-#
-# db.create_all()
-# db.session.add(User(group=Group()))
-# db.session.commit()
-# u = User.query.get(1)
-# print(u.group)
-
-
-class Wallet(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    wallet_balance = db.Column(db.Integer, default=0)
-    wallet_address = db.Column(db.String(64), default="default")
-
-
 class Consultation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     comment_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), default=0)
@@ -122,10 +102,10 @@ class Consultation(db.Model):
 class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), default=0)
-    trans_from_address = db.Column(db.String(64), default="default")
-    trans_to_address = db.Column(db.String(64), default="default")
+    user = db.relationship(User, backref="transactions")
+
     trans_amount = db.Column(db.Integer, default=0)
     trans_time = db.Column(db.DateTime,
                            default=datetime.strptime(datetime.now().strftime('%Y-%m-%d %H:%M:%S'), '%Y-%m-%d %H:%M:%S'))
-    trans_typetype = db.Column(db.String(64), default="default")
+    trans_type = db.Column(db.String(64), default="default")
     trans_spec = db.Column(db.String(64), default="default")

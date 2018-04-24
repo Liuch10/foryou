@@ -222,6 +222,7 @@ def update_personal_info():
     print("update_personal_info")
     print(request.form)
     try:
+        g.user = current_user
         g.user.user_name = request.form.get('name')
         g.user.age = request.form.get('age')
         g.user.user_hospital = request.form.get('hospital')
