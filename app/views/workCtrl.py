@@ -221,19 +221,30 @@ def case_table_infos():
 def update_personal_info():
     print("update_personal_info")
     print(request.form)
-    try:
-        g.user = current_user
-        g.user.user_name = request.form.get('name')
-        g.user.age = request.form.get('age')
-        g.user.user_hospital = request.form.get('hospital')
-        g.user.user_department = request.form.get('department')
-        g.user.user_title = request.form.get('title')
-        g.user.telephone = request.form.get('telephone')
-        g.user.user_city = request.form.get('province')
-        g.user.user_mail = request.form.get('mail')
-        g.user.allow_share = True if (request.form.get('share') == '是') else False
-        db.session.add(g.user)
-        db.session.commit()
-        return jsonify({'result': '修改成功'})
-    except:
-        return jsonify({'result': "failed to update personal info"})
+
+    g.user = current_user
+    if request.method == 'POST':
+        try:
+            g.user.user_name = request.form.get('name')
+            g.user.age = request.form.get('age')
+            g.user.user_hospital = request.form.get('hospital')
+            g.user.user_department = request.form.get('department')
+            g.user.user_title = request.form.get('title')
+            g.user.telephone = request.form.get('telephone')
+            g.user.user_city = request.form.get('province')
+            g.user.user_mail = request.form.get('mail')
+            g.user.allow_share = True if (request.form.get('share') == '是') else False
+            db.session.add(g.user)
+            db.session.commit()
+            return jsonify({'result': '修改成功'})
+        except:
+            return jsonify({'result': "failed to update personal info"})
+    else:
+        rdata = {'name': g.user.user_name,
+                 'age': g.user.age,
+                 'hospital': g.user.user_hospital,
+                 'title': g.user.user_title,
+                 'telephone': g.user.telephone,
+                 'province': g.user.user_city,
+                 'mail': g.user.user_mail}
+        return jsonify(rdata)

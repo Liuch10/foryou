@@ -163,7 +163,7 @@
                     <a class="nav-link" data-toggle="pill" href="#my_wallet">管理钱包</a>
                 </li>
                 <li class="nav-item" style="padding-top: 20px;padding-bottom: 20px;">
-                    <a class="nav-link" data-toggle="pill" href="#my_person_info">个人信息</a>
+                    <a class="nav-link" data-toggle="pill" id='test_person' href="#my_person_info">个人信息</a>
                 </li>
             </ul>
         </div>
@@ -457,8 +457,9 @@
 
                             </div>
                             <div style="padding-top: 1%;padding-bottom: 1%;">
-                                <button type="button" class="btn btn-primary btn-sm" onclick="location='look.html'"><img
-                                        src="/static/img/会诊1.png"/>会诊
+
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                        data-target="#cktest"><img src="/static/img/会诊1.png"/>会诊
                                 </button>
                             </div>
                             <div class="input-group" style="padding-top: 1%;">
@@ -484,38 +485,6 @@
                                     </tr>
                                     </thead>
                                 </table>
-                            </div>
-                        </div>
-                        <div class="" id="cktest" style="display: none;">
-                            <div style="padding-top:2%;padding-bottom: 2%;">
-								<span>	
-									<a href="" onclick="changeImage(2)" style="text-decoration: none;">&#60;&nbsp;&nbsp;返回上一步</a>
-								</span>
-                            </div>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <img src="/static/img/jshz.png" class="float-right"/>
-                                    </div>
-                                    <div class="col-6 text-left" style="background-color: #5A6268;padding-top: 1%;">
-                                        <div>
-                                            <label class="text-white" for="title">求助说明</label>
-                                            <textarea class="form-control bg-secondary text-white" rows="2" id="consultation_message">疑似尘肺病，需要进一步复诊</textarea>
-                                        </div>
-                                        <div>
-                                            <label class="text-white" for="reveice">我的回复</label>
-                                            <textarea class="form-control bg-secondary text-white" rows="2"
-                                                      id="reveice"></textarea>
-                                            <div class="text-right" style="padding: 5px;">
-                                                <button class="btn-sm bg-secondary text-white border-0">发送</button>
-                                            </div>
-
-                                        </div>
-                                        <div>
-                                            <textarea class="form-control bg-secondary text-white" rows="5">李敏:疑似尘肺病，需要进一步复诊，需要更精确的数据才能确认尘肺病几期。 赵磊:精确数据确认尘肺病一期。</textarea>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -606,8 +575,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="tab-pane fade" id="my_person_info" style="padding-top:2%">
+            <div class="tab-pane fade" id="my_person_info" style="padding-top:2%">
             <div class="text-center text-white" style="font-size: 150%;" >
                 <p>个人信息</p>
             </div>
@@ -693,7 +661,7 @@
                 </form>
             </div>
         </div>
-        <div class="tab-pane fade" id="my_wallet" style="padding-top:2%">
+            <div class="tab-pane fade" id="my_wallet" style="padding-top:2%">
             <div class="text-center text-white" style="font-size: 150%;" >
                 <p>我的钱包</p>
             </div>
@@ -758,6 +726,8 @@
                 </div>
             </div>
         </div>
+        </div>
+
     </div>
 </div>
 <!-- 模态框 -->
@@ -849,6 +819,53 @@
                     更新
                 </button>
             </div>
+        </div>
+    </div>
+</div>
+<!-- 会诊 -->
+<div class="modal fade text-center" id="cktest">
+    <div class="modal-dialog " style="max-width: none! important; display:  inline-block;width:  auto;">
+        
+        <div class="modal-content" style="background-color: #2D343C;">
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title text-white">会诊</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- 模态框主体 -->
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-8">
+                            <img src="/static/img/jshz.png" class="float-right"/>
+                        </div>
+                        <div class="col-4 text-left" style="background-color: #5A6268;padding-top: 1%;">
+                            <div>
+                                <label class="text-white" for="title">求助说明</label>
+                                <textarea class="form-control bg-secondary text-white" rows="2" id="consultation_message">疑似尘肺病，需要进一步复诊</textarea>
+                            </div>
+                            <div>
+                                <label class="text-white" for="reveice">我的回复</label>
+                                <textarea class="form-control bg-secondary text-white" rows="2"
+                                          id="reveice"></textarea>
+                                <div class="text-right" style="padding: 5px;">
+                                    <button class="btn-sm bg-secondary text-white border-0" id="ckTestBtn">发送</button>
+                                </div>
+
+                            </div>
+                            <div>
+                                <textarea class="form-control bg-secondary text-white" rows="5">李敏:疑似尘肺病，需要进一步复诊，需要更精确的数据才能确认尘肺病几期。 赵磊:精确数据确认尘肺病一期。</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 模态框底部 -->
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary text-white" data-dismiss="modal" id="fqhzModalBtn">发送
+                </button>
+            </div> -->
         </div>
     </div>
 </div>
@@ -948,7 +965,6 @@
             success: function(data){
 
                 alert(data.result);
-                $('#my_person_info').hide();
             },
             error: function(){
                 alert('修改失败');
@@ -957,6 +973,25 @@
     });
 </script>
 <script>
+    $('#test_person').on('click', function () {
+            $.ajax({
+            type: 'GET',
+            url: '/updatePersonalInfo',
+            success: function(data){
+                $('#name').val(data.name);
+                $('#age').val(data.age);
+                $('#hospital').val(data.hospital);
+                $('#department').val(data.department);
+                $('#title').val(data.title);
+                $('#telephone').val(data.telephone);
+                $('#mail').val(data.mail);
+                $('#province').val(data.province);
+                $('#allowshare').val(data.allowshare);
+            },
+            error: function(){
+            }
+        });
+    });
     function changePage(type_number) {
         switch (type_number) {
             case 1:

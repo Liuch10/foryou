@@ -48,7 +48,7 @@ app.add_url_rule('/update_expert', methods=['POST'], view_func=work_update_exper
 app.add_url_rule('/start_comment', methods=['GET'], view_func=work_start_comment)
 
 # 修改资料
-app.add_url_rule('/updatePersonalInfo', methods=['POST'], view_func=update_personal_info)
+app.add_url_rule('/updatePersonalInfo', methods=['POST','GET'], view_func=update_personal_info)
 # app.add_url_rule('/logout', methods=['GET'], view_func = logout)
 #
 # app.add_url_rule('/upload-case', methods=['POST','GET'], view_func=upload_case)
