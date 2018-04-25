@@ -161,10 +161,10 @@
                     <a class="nav-link" data-toggle="pill" href="#">健康管理</a>
                 </li>
                 <li class="nav-item" style="padding-top: 20px;padding-bottom: 20px;">
-                    <a class="nav-link" data-toggle="pill" href="#my_wallet">管理钱包</a>
+                    <a class="nav-link" data-toggle="pill" id='check_wallet' href="#my_wallet">管理钱包</a>
                 </li>
                 <li class="nav-item" style="padding-top: 20px;padding-bottom: 20px;">
-                    <a class="nav-link" data-toggle="pill" id='test_person' href="#my_person_info">个人信息</a>
+                    <a class="nav-link" data-toggle="pill" id='check_person' href="#my_person_info">个人信息</a>
                 </li>
             </ul>
         </div>
@@ -407,10 +407,10 @@
                          style="padding-top: 1%;border-bottom-width: 2px;border-bottom-style: solid;">
                         <ul class="nav navbar-collapse" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link" data-tag="ask-huizhen-" data-toggle="pill" href="#fqhz">发起会诊</a>
+                                <a class="nav-link active show huizhen-nav" data-tag="ask-huizhen-" data-toggle="pill" href="#fqhz">发起会诊</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-tag="answer-huizhen-" data-toggle="pill" href="#jshz">接收会诊</a>
+                                <a class="nav-link huizhen-nav" data-tag="answer-huizhen-" data-toggle="pill" href="#jshz">接收会诊</a>
                             </li>
                         </ul>
                     </div>
@@ -499,10 +499,10 @@
                      style="padding-top: 1%;border-bottom-width: 2px;border-bottom-style: solid;">
                     <ul class="nav navbar-collapse" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link" data-tag="source-user-" data-toggle="pill" href="#yhdtgx">用户动态更新</a>
+                            <a class="nav-link active show source-nav" data-tag="source-user-" data-toggle="pill" href="#yhdtgx">用户动态更新</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-tag="source-expert-" data-toggle="pill" href="#zjzydt">专家资源动态</a>
+                            <a class="nav-link source-nav" data-tag="source-expert-" data-toggle="pill" href="#zjzydt">专家资源动态</a>
                         </li>
                     </ul>
                 </div>
@@ -974,7 +974,7 @@
     });
 </script>
 <script>
-    $('#test_person').on('click', function () {
+    $('#check_person').on('click', function () {
             $.ajax({
             type: 'GET',
             url: '/updatePersonalInfo',

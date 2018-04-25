@@ -15,8 +15,8 @@ def work():
 
 def work_start_comment():
     print("work_start_comment")
-    comment = request.form.get('comment')
     # TODO... update db
+    print(request.form)
     return jsonify({'result': 'success'})
 
 
@@ -24,28 +24,26 @@ def work_start_consult():
     print("work_start_consult")
     # comment = request.form.get('comment')
     # TODO... update consult_db # DONE
+    print(request.form)
 
-    case_id = request.form.get('case_id') if request.form.get('case_id') else 8
-    print(case_id)
-    comment_content = request.form.get('comment') if request.form.get('comment') else "unknown"
-    print(comment_content)
+    if not ('case_id' in request.form):
+        return jsonify({'result': '请正确选择案例'})
+
+    case_id = int(request.form.get('case_id'))
+    comment_content = request.form.get('comment') if request.form.get('comment') else "未填写"
     case = Case.query.filter_by(id=case_id).first()
-    print(case)
     try:
         if case:
-            if (not case.in_consultant):
+            if not case.in_consultant:
                 case.in_consultant = True
                 case.consultation_message = comment_content
                 db.session.add(case)
                 db.session.commit()
-                print(case.consultation_message)
                 return jsonify({'result': 'success'})
             else:
                 case.consultation_message = comment_content
                 db.session.add(case)
                 db.session.commit()
-                print(case.consultation_message)
-                print("already")
                 return jsonify({'result': 'already in consultation'})
         else:
             return jsonify({'result': 'no case instance' + str(case.id)})
@@ -56,30 +54,38 @@ def work_start_consult():
 
 def work_update_expert():
     # TODO... update expert_db
-    print(request.data)
     print("work_update_expert")
-    case_id = request.form.get('case_id') if request.form.get('case_id') else 0  # js error in getSelected in the js
+    if 'case_id' in request.form:
+        return jsonify({'result': '请选择'})
+    case_id = int(request.form.get('case_id'))
+    g.user = current_user
+    user_id = g.user.id if g.user.is_authenticated else 0
     expertCase = ExpertCase(original_case_id=case_id,
-                            expert_user_id=0)
+                            expert_user_id=user_id)
     try:
         db.session.add(expertCase)
         db.session.commit()
-        return jsonify({'result': 'success'})
+        return jsonify({'result': '更新专家资源成功'})
     except:
-        return jsonify({'result': 'error'})
+        return jsonify({'result': '更新专家资源失败'})
 
 
 def work_upload_case():
-    print(request.form)
-    case_patient_name = request.form.get('patient_name')
-    case_patient_gender = request.form.get('patient_gender')
-    case_patient_age = request.form.get('patient_age')
-    case_photo_type = request.form.get('patient_photo_type')
-    case_diagnose_type = request.form.get('patient_diagnose_type')
-    case_diagnose_result = request.form.get('patient_diagnose_result')
-    case_photo_hash = request.form.get('patient_photo_file')
+    g.user = current_user
+    upload_user_id = g.user.id if g.user.is_authenticated else 0
+    case_patient_name = request.form.get('patient_name') if 'patient_name' in request.form else '匿名'
+    case_patient_gender = request.form.get('patient_gender') if 'patient_gender' in request.form else '男'
+    case_patient_age = request.form.get('patient_age') if 'patient_age' in request.form else '0'
+    case_photo_type = request.form.get('patient_photo_type') if 'patient_photo_type' in request.form else '未知'
+    case_diagnose_type = request.form.get(
+        'patient_diagnose_type') if 'patient_diagnose_type' in request.form else '未知'
 
-    case = Case(case_patient_name=case_patient_name,
+    case_diagnose_result = request.form.get(
+        'patient_diagnose_result') if 'patient_diagnose_result' in request.form else "未知"
+    case_photo_hash = request.form.get('patient_photo_file') if 'patient_photo_file' in request.form else 'nohash'
+
+    case = Case(upload_user_id=upload_user_id,
+                case_patient_name=case_patient_name,
                 case_patient_gender=case_patient_gender,
                 case_patient_age=case_patient_age,
                 case_photo_type=case_photo_type,
@@ -88,12 +94,9 @@ def work_upload_case():
                 case_photo_hash=case_photo_hash)
     try:
         # DONE
-        print(case.case_photo_hash)
-        # print(case_photo_hash)
         upload_check = Case.query.filter_by(case_photo_hash=case_photo_hash).first()
-        if (upload_check):
-            print("this photo has been uploaded")
-            return jsonify({'result': 'this photo has been uploaded'})
+        if upload_check:
+            return jsonify({'result': '该文件已经被发布过'})
         else:
             db.session.add(case)
             db.session.commit()
@@ -106,36 +109,35 @@ def work_upload_case():
 
 def source_case_table_infos():
     # TODO... read from db DONE
-    # return as json
     # 资源中心
-    print(request.args)
     get_expert = True if (request.args['type'] == 'expert') else False
+    print('expert' + str(get_expert))
+    g.user = current_user
+    user_id = g.user.id if g.user.is_authenticated else 0
     if get_expert:
         expertcases = ExpertCase.query.order_by(desc(ExpertCase.expert_time)).all()
         cases = [case.original_case for case in expertcases]
         users = [case.expert for case in expertcases]
-        print('here')
-        # print(len(cases))
     else:
         cases = Case.query.order_by(desc(Case.case_upload_time)).all()
-        print(cases)
-        users = [case.user for case in cases]
-        print(len(cases))
+        users = [case.uploader for case in cases]
 
     data = []
     for i in range(1, len(cases)):
         d = {}
+        ownership = True if (int(user_id) == int(cases[i].upload_user_id)) else 0
+        share = True if (users[i] and users[i].allow_share) else False
         try:
             d['id'] = cases[i].id
             d['userid'] = cases[i].id
-            d['name'] = cases[i].case_patient_name  # choice(names) + choice(names)  # 随机选取汉字并拼接
-            d['sex'] = cases[i].case_patient_gender
-            d['age'] = cases[i].case_patient_age
-            d['imgTpye'] = cases[i].case_photo_type
-            d['type'] = cases[i].case_diagnose_type
-            d['consultResult'] = cases[i].case_diagnose_result
-            d['commentType'] = cases[i].is_tagged
-            d['uploadDate'] = cases[i].case_upload_time
+            d['name'] = cases[i].case_patient_name if (ownership and share) else "*"
+            d['sex'] = cases[i].case_patient_gender if (ownership and share) else "*"
+            d['age'] = cases[i].case_patient_age if (ownership and share) else "*"
+            d['imgTpye'] = cases[i].case_photo_type if (ownership and share) else "*"
+            d['type'] = cases[i].case_diagnose_type if (ownership and share) else "*"
+            d['consultResult'] = cases[i].case_diagnose_result if (ownership and share) else "*"
+            d['commentType'] = cases[i].is_tagged if (ownership and share) else "*"
+            d['uploadDate'] = cases[i].case_upload_time if (ownership and share) else "*"
         except:
             d['id'] = "-1"
             d['userid'] = "-2"
@@ -148,9 +150,9 @@ def source_case_table_infos():
             d['commentType'] = "*"
             d['uploadDate'] = "*"
         try:
-            d['department'] = users[i].user_department
-            d['hospital'] = users[i].user_hospital
-            d['expert'] = users[i].user_name
+            d['department'] = users[i].user_department if (ownership and share) else "*"
+            d['hospital'] = users[i].user_hospital if (ownership and share) else "*"
+            d['expert'] = users[i].user_name if (ownership and share) else "*"
         except:
 
             d['department'] = 'default_depart'
@@ -169,18 +171,17 @@ def answer_case_table_infos():
     # 接收会诊
     # return as json
     consultant_cases = Case.query.filter_by(in_consultant=True).order_by(desc(Case.consultant_time)).all()
-
-    print("answer_case_table_infos:" + str(len(consultant_cases)))
+    g.user = current_user
     data = []
     for i in range(1, len(consultant_cases)):
         d = {}
+        ownership = True if (g.user.is_authenticated and consultant_cases[i].upload_user_id == g.user.id) else False
         d['id'] = consultant_cases[i].id
         d['description'] = consultant_cases[i].consultation_message
-        print(str(consultant_cases[i].id) + ":" + str(consultant_cases[i].consultation_message))
-        d['starter'] = consultant_cases[i].upload_user_id
-        d['hospital'] = "test"
-        d['department'] = "test"
-        d['start-date'] = "test"
+        d['starter'] = consultant_cases[i].upload_user_id if ownership else '*'
+        d['hospital'] = "test" if ownership else '*'
+        d['department'] = "test" if ownership else '*'
+        d['start-date'] = "test" if ownership else '*'
         data.append(d)
     if request.method == 'GET':
         rdata = {'recordsTotal': len(data), 'data': data}
@@ -216,38 +217,6 @@ def case_table_infos():
         rdata = {'recordsTotal': len(data), 'data': data}
         rtn = jsonify(rdata)
         return rtn
-
-
-def update_personal_info():
-    print("update_personal_info")
-    print(request.form)
-
-    g.user = current_user
-    if request.method == 'POST':
-        try:
-            g.user.user_name = request.form.get('name')
-            g.user.age = request.form.get('age')
-            g.user.user_hospital = request.form.get('hospital')
-            g.user.user_department = request.form.get('department')
-            g.user.user_title = request.form.get('title')
-            g.user.telephone = request.form.get('telephone')
-            g.user.user_city = request.form.get('province')
-            g.user.user_mail = request.form.get('mail')
-            g.user.allow_share = True if (request.form.get('share') == '是') else False
-            db.session.add(g.user)
-            db.session.commit()
-            return jsonify({'result': '修改成功'})
-        except:
-            return jsonify({'result': "failed to update personal info"})
-    else:
-        rdata = {'name': g.user.user_name,
-                 'age': g.user.age,
-                 'hospital': g.user.user_hospital,
-                 'title': g.user.user_title,
-                 'telephone': g.user.telephone,
-                 'province': g.user.user_city,
-                 'mail': g.user.user_mail}
-        return jsonify(rdata)
 
 
 def update_personal_info():

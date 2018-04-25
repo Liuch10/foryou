@@ -54,16 +54,16 @@ class User(db.Model):
 class Case(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     upload_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), default=0)
+    uploader = db.relationship(User, backref="cases")
     case_upload_time = db.Column(db.DateTime, default=datetime.strptime(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                                                                         '%Y-%m-%d %H:%M:%S'))
     case_patient_name = db.Column(db.String(64), default="default")
     case_patient_gender = db.Column(db.String(64), default="default")
-    case_patient_age = db.Column(db.String(64), default="default")
+    case_patient_age = db.Column(db.String(64), default="0")
     case_photo_type = db.Column(db.String(64), default="default")
     case_photo_hash = db.Column(db.String(64), default="default")
     case_diagnose_type = db.Column(db.String(128), default="default")
     case_diagnose_result = db.Column(db.String(128), default="default")
-    # case_ = db.Column(db.String(64))
 
     is_tagged = db.Column(db.Boolean, default=False)
     case_tag_info = db.Column(db.String(128), default="default")
