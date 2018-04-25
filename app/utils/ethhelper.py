@@ -21,7 +21,6 @@ class EthHelper:
         self.web3.personal.lockAccount(addr)
 
 
-
 if __name__ == "__main__":
     # print(EthHelper.getBlockNumber())
     helper = EthHelper()

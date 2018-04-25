@@ -221,6 +221,7 @@ def case_table_infos():
 def update_personal_info():
     print("update_personal_info")
     print(request.form)
+
     g.user = current_user
     if request.method == 'POST':
         try:
