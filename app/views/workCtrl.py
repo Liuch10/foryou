@@ -208,9 +208,10 @@ def Case2Json(case, secret=False):
 
 def case_table_infos():
     # TODO... read from  DONE
-    cases = Case.query.order_by(desc(Case.case_upload_time)).all()
+    g.user = current_user
+    user_id = g.user.id if g.user.is_authenticated else 0
+    cases = Case.query.filter_by(upload_user_id=user_id).order_by(desc(Case.case_upload_time)).all()
     data = []
-
     for i in range(1, len(cases)):
         data.append(Case2Json(cases[i]))
     if request.method == 'GET':
