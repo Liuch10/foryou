@@ -1,0 +1,21 @@
+from flask import jsonify, g
+from flask_login import current_user, login_required
+from sqlalchemy import desc
+
+
+def check_wallet():
+    # TODO... frontend implementation
+    g.user = current_user
+    data = []
+    if g.user.is_authenticated:
+        trans = g.user.transactionss
+        for i in range(1, len(trans)):
+            d = {}
+            d['date'] = trans[i].trans_time
+            d['type'] = trans[i].trans_type
+            d['amount'] = trans[i].trans_amount
+            d['spec'] = trans[i].trans_spec
+            data.append(d)
+    rdata = {'recordsTotal': len(data), 'data': data}
+    rtn = jsonify(rdata)
+    return rtn
