@@ -560,16 +560,17 @@ $(document).ready(function() {
         var caseIds = getSelectedCase(prefix);
         var targetCaseId = caseIds[0];
         // TODO 跳转到check或者look页面，
-        $.ajax({
-            type: 'GET',
-            url:  '/start_comment?id=' + targetCaseId,
-            success: function(data){
-                console.log('success');
-            },
-            error: function(){
-                console.log('error');
-            }
-        });
+        window.location.href='/diagnose?id='+targetCaseId; 
+        // $.ajax({
+        //     type: 'GET',
+        //     url:  '/start_comment?id=' + targetCaseId,
+        //     success: function(data){
+        //         console.log('success');
+        //     },
+        //     error: function(){
+        //         console.log('error');
+        //     }
+        // });
     });
 
     $("#updateExpertBtn").click(function(){

@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm as Form
-from wtforms.fields import StringField, SelectField, SubmitField, PasswordField, RadioField
+from flask import jsonify
+from wtforms.fields import StringField, SelectField, SubmitField, PasswordField, RadioField, BooleanField
 from wtforms.validators import Required, Length, NumberRange, ValidationError, Email, EqualTo
 
 
@@ -52,3 +53,59 @@ class CaseForm(Form):
     case_diagnois_time = StringField()
     case_expert_time = StringField()
     submit = SubmitField('发布')
+
+
+class DiagnoseForm(Form):
+    photo_quality = SelectField(choices=[('未选择', '未选择'),
+                                         ('一级片', '一级片'),
+                                         ('二级片', '二级片'),
+                                         ('三级片', '三级片'),
+                                         ('四级片', '四级片')])
+    small_shadow_1 = StringField(default="")
+    small_shadow_2 = StringField(default="")
+    damage_1 = StringField(default="1/0")
+    damage_2 = StringField(default="2/0")
+    damage_3 = StringField(default="3/0")
+    damage_4 = StringField(default="4/0")
+    damage_5 = StringField(default="5/0")
+    damage_6 = StringField(default="6/0")
+    intensity = SelectField(choices=[('0', '0'), ('1', '1'), ('2', '2'), ('3', '3')], default="0")
+
+    other_sign = StringField(default="无")
+
+    bool_small_shadow = BooleanField('小阴影聚集', default=False)
+    bool_big_shadow = BooleanField('大阴影', default=False)
+    bool_pleural_plaque = BooleanField('胸膜斑', default=False)
+    bool_big_shadow_2_1 = BooleanField('大阴影达到2*1', default=False)
+    bool_pleural_calcification = BooleanField('胸膜钙化', default=False)
+    bool_shadow_disorder = BooleanField('心影紊乱', default=False)
+
+    level = SelectField(choices=[('无尘肺', '无尘肺'),
+                                 ('一期', '一期'),
+                                 ('二期', '二期'),
+                                 ('三期', '三期')], default="无尘肺")
+    remark = StringField(default="无")
+
+    def getJson(self, ):
+        rtn = {}
+        rtn['photo_quality'] = self.photo_quality.data
+        rtn['small_shadow_1'] = self.small_shadow_1.data
+        rtn['small_shadow_2'] = self.small_shadow_2.data
+        rtn['damage_1'] = self.damage_1.data
+        rtn['damage_2'] = self.damage_2.data
+        rtn['damage_3'] = self.damage_3.data
+        rtn['damage_4'] = self.damage_4.data
+        rtn['damage_5'] = self.damage_5.data
+        rtn['damage_6'] = self.damage_6.data
+        rtn['intensity'] = self.intensity.data
+        rtn['other_sign'] = self.other_sign.data
+        rtn['bool_small_shadow'] = self.bool_small_shadow.datad
+        rtn['bool_big_shadow'] = self.bool_big_shadow.data
+        rtn['bool_pleural_plaque'] = self.bool_pleural_plaque.data  # BooleanField('胸膜斑', default=False)
+        rtn['bool_big_shadow_2_1'] = self.bool_big_shadow_2_1.data  # BooleanField('大阴影达到2*1', default=False)
+        rtn['bool_pleural_calcification'] = self.bool_pleural_calcification  # BooleanField('胸膜钙化', default=False)
+        rtn['bool_shadow_disorder'] = self.bool_shadow_disorder  # BooleanField('心影紊乱', default=False)
+
+        rtn['level'] = self.level.data
+        rtn['remark'] = self.remark.data
+        return jsonify(rtn)
