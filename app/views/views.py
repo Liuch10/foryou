@@ -9,6 +9,7 @@ from app.views.loginCtrl import login, sign_up, logout, sendMail
 from app.views.workCtrl import work, case_table_infos, work_upload_case, work_start_consult, answer_case_table_infos, \
     source_case_table_infos, work_update_expert, work_start_comment, update_personal_info
 from app.views.diagnoseCtrl import diagnose
+from app.views.wallet import check_wallet
 
 
 @lm.user_loader
@@ -49,7 +50,8 @@ app.add_url_rule('/diagnose', methods=['GET', 'POST'], view_func=diagnose)
 
 # 修改资料
 app.add_url_rule('/updatePersonalInfo', methods=['POST', 'GET'], view_func=update_personal_info)
-
+# 上传病例
+app.add_url_rule('/wallet-table-infos', methods=['GET'], view_func=check_wallet)
 # app.add_url_rule('/logout', methods=['GET'], view_func = logout)
 #
 # app.add_url_rule('/upload-case', methods=['POST','GET'], view_func=upload_case)

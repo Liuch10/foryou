@@ -4,6 +4,7 @@ from sqlalchemy import desc
 
 
 def check_wallet():
+    print('check_wallet')
     # TODO... frontend implementation
     g.user = current_user
     data = []
@@ -11,6 +12,7 @@ def check_wallet():
         trans = g.user.transactionss
         for i in range(1, len(trans)):
             d = {}
+            d['id'] = i
             d['date'] = trans[i].trans_time
             d['type'] = trans[i].trans_type
             d['amount'] = trans[i].trans_amount

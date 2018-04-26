@@ -1,4 +1,46 @@
 $(document).ready(function() {
+    $('#wallet_table').DataTable( {
+        "bPaginate" : true, 
+        "processing": true,
+        "searching": true,
+        "serverSide": false,
+        "bDeferRender": true,
+        "bAutoWidth" : true,
+        "bFilter": true,
+        "ajax": {
+            "url": "/wallet-table-infos",
+            "type": "GET"
+        },"columns": [
+            { "title": "index",  "data" : "id" },
+            { "title": "日期",  "data" : "date" },
+            { "title": "交易方式",  "data" : "type" },
+            { "title": "存入",  "data" : "amount" },
+            { "title": "支出",  "data" : "amount1" },
+            { "title": "余币",  "data" : "amount2" },
+            { "title": "信息摘要",  "data" : "spec" }
+        ],
+        "aoColumnDefs":[
+            {
+                "bVisible": false, 
+                "aTargets": [ 0 ] 
+            },
+        ],
+        "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {   
+            $(nRow).css("background-color", "black");
+            $(nRow).css("color", "white");
+        },
+        initComplete : function() {
+            
+        },
+        "dom": 't<"#pBottom"p>',  
+        "fnInitComplete":function(){  
+            $("#pBottom > #case-table_previous").css("color", "white");
+            // $('#case-table').css("color","white").css("background-color","black");
+            $('.checkbox_select').parent('td').css("background-color","black");
+            // $("#case-table_filter").detach().appendTo('#new-search-area');
+        },
+    } );
+
     $('#case-table').DataTable( {
         "bPaginate" : true, 
         "processing": true,
@@ -645,7 +687,23 @@ $(document).ready(function() {
             success: function(data){
                 $('#loadimage').modal('hide')
                 if (data.result == "success") {
-                    $('#jlModal').modal('show')
+                    $('#jlModal').modal('show');
+                    // reload table
+                    var wallet_table = $('#wallet_table').DataTable();
+                    var case_table = $('#case-table').DataTable();
+                    var comment_page_case_table = $('#comment-page-case-table').DataTable();
+                    var answer_huizhen_case_table = $('#answer-huizhen-case-table').DataTable();
+                    var ask_huizhen_case_table = $('#ask-huizhen-case-table').DataTable();
+                    var source_expert_case_table = $('#source-expert-case-table').DataTable();
+                    var source_user_case_table = $('#source-user-case-table').DataTable();
+                    
+                    wallet_table.ajax.reload();
+                    case_table.ajax.reload();
+                    comment_page_case_table.ajax.reload();
+                    answer_huizhen_case_table.ajax.reload();
+                    ask_huizhen_case_table.ajax.reload();
+                    source_expert_case_table.ajax.reload();
+                    source_user_case_table.ajax.reload();
                 }
                 else{
                     alert(data.result)
