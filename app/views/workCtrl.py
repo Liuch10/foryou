@@ -253,3 +253,57 @@ def update_personal_info():
                  'share': g.user.allow_share if user_authenticated else ""}
 
     return jsonify(rdata)
+
+
+def reply_consultation():
+    # TODO get case_id and comment content from frontend
+    case_id = 0
+    comment_content = ""
+    g.user = current_user
+    comment_user_id = g.user.id if g.user.is_authenticated else 0
+    consult = Consultation(comment_user_id=comment_user_id,
+                           case_id=case_id,
+                           comment_content=comment_content)
+    try:
+        db.session.add(consult)
+        db.session.commit()
+        return jsonify({'result': '回复成功'})
+    except:
+        return jsonify({'result': '恢复失败'})
+
+
+def consultation_messages():
+    # id = db.Column(db.Integer, primary_key=True)
+    # comment_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), default=0)
+    # case_id = db.Column(db.Integer, db.ForeignKey('case.id'), default=0)
+    # comment_content = db.Column(db.String(128), default="default")
+    # comment_time = db.Column(db.DateTime,
+    #                          default=datetime.strptime(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+    #                                                    '%Y-%m-%d %H:%M:%S'))
+    # get the consultation messages
+    # TODO get case_id from front end
+
+    case_id = 0
+    print(request.form)
+    g.user = current_user
+    user_authenticated = g.user.is_authenticated
+    messages = []
+    if user_authenticated:
+        all_msgs = Consultation.query.filter_by(case_id=case_id).order_by(desc(ExpertCase.expert_time)).all()
+        for i in range(1, len(all_msgs)):
+            msg = {}
+            msg['name'] = all_msgs[i].commenter.user_name
+            msg['hospital'] = all_msgs[i].commenter.user_hospital
+            msg['content'] = all_msgs[i].comment_content
+            msg['time'] = all_msgs[i].comment_time
+            messages.append(msg)
+
+    else:
+        msg = {}
+        msg['name'] = 'default'
+        msg['hospital'] = 'default'
+        msg['content'] = 'default'
+        msg['time'] = 'default'
+        messages.append(msg)
+    rdata = {'recordsTotal': len(messages), 'data': messages}
+    return jsonify(rdata)
