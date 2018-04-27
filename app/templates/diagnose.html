@@ -7,6 +7,48 @@
   		<script src="/static/js/jquery-3.3.1.min.js"></script>
   		<script src="/static/js/bootstrap-work.min.js"></script>
   		<script src="/static/js/comment-upload.js"></script>
+  		<script>
+  		function GetQueryString(name) {
+    		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    		var r = window.location.search.substr(1).match(reg);
+    		if (r != null) return unescape(r[2]); return null;
+		}
+		function hexToBase64(hexstring) {
+  			  return btoa(hexstring.match(/\w{2}/g).map(function(a) {
+        	return String.fromCharCode(parseInt(a, 16));
+    		}).join(""));
+    	};
+  		</script>
+  		<script src="/static/js/buffer.js"></script>
+		<script src="/static/js/file-type.js"></script>
+		<script src="/static/js/ipfs.js"></script>
+  		<script>
+  		 	ipfs.setProvider();
+  		 	var data={
+            id:GetQueryString('id')
+        	}
+        	$.ajax({
+            	type: 'POST',
+            	url:  '/getImageAddress',
+            	data: data,
+            	dataType: 'json',
+            	success: function(data){
+                    // alert(data.address);
+                if (data.result=='success'){
+                    ipfs.cat(data.address, function(err, data) {
+                        var buf = new buffer.Buffer(data, 'binary');
+                        var src=hexToBase64(buf.toString('hex'))
+                        $('#case_img').attr('src','data:image/jpeg;base64,'+src)
+                    });
+                }else{
+                    alert(data.address);
+                }
+            },
+	           error: function(){
+                alert('error');
+            }
+        });
+  		</script>
   		<style>
  			 input{
  			 	width: 70px;
@@ -26,7 +68,7 @@
 				<!-- {{form.hidden_tag()}} -->
 			<div class="row clearfix" style="padding-bottom: 0px;">
 				<div class="col-md-9 column border-0">
-					<img src="/static/img/detect.jpg" class="img-fluid" width="100%" height="100%"/ >
+					<img id='case_img' class="img-fluid" width="100%" height="100%"/ >
 				</div>
 				<div class="col-md-3 column " style="padding: 0px;">
 					<div class="form-group" style="background-color: #323943;">
