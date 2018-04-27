@@ -13,10 +13,10 @@ $(document).ready(function() {
         },"columns": [
             { "title": "index",  "data" : "id" },
             { "title": "日期",  "data" : "date" },
-            { "title": "交易方式",  "data" : "type" },
-            { "title": "存入",  "data" : "amount" },
-            { "title": "支出",  "data" : "amount1" },
-            { "title": "余币",  "data" : "amount2" },
+            { "title": "交易类型",  "data" : "type" },
+            { "title": "交易数量",  "data" : "amount" },
+            // { "title": "支出",  "data" : "amount1" },
+            // { "title": "余币",  "data" : "amount2" },
             { "title": "信息摘要",  "data" : "spec" }
         ],
         "aoColumnDefs":[
@@ -345,7 +345,7 @@ $(document).ready(function() {
             $("#ask-huizhen-all-checked").prop("checked",false);
         },
     } );
-
+    $("#check_source").click(function(){
     $('#source-expert-case-table').DataTable( {
         "bPaginate" : true, 
         "processing": true,
@@ -503,7 +503,7 @@ $(document).ready(function() {
             $("#source-user-all-checked").prop("checked",false);
         },
     } );
-
+    });
     $('[name=select_all]').on('click', function () {
         if (this.checked) {
             $('.checkbox_select').each(function () {
@@ -687,6 +687,7 @@ $(document).ready(function() {
             success: function(data){
                 $('#loadimage').modal('hide')
                 if (data.result == "success") {
+                    $('#token_amount').html(data.token);
                     $('#jlModal').modal('show');
                     // reload table
                     var wallet_table = $('#wallet_table').DataTable();

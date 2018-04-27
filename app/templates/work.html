@@ -152,7 +152,7 @@
                     <a class="nav-link" data-toggle="pill" data-tag="huizhen-" href="#my_detect">我要会诊</a>
                 </li>
                 <li class="nav-item" style="padding-top: 20px;padding-bottom: 20px;">
-                    <a class="nav-link" data-toggle="pill" data-tag="source-" href="#my_source">资源中心</a>
+                    <a class="nav-link" data-toggle="pill" id ='check_source' data-tag="source-" href="#my_source">资源中心</a>
                 </li>
                 <li class="nav-item" style="padding-top: 20px;padding-bottom: 20px;">
                     <a class="nav-link" data-toggle="pill" href="#">诊断记录</a>
@@ -673,12 +673,12 @@
                     <tr>
                     	<th>index</th>
                         <th>日期</th>
-                        <th>交易方式</th>
-                        <th>存入</th>
-                        <th>支出</th>
-                        <th>余币</th>
+                        <th>交易类型</th>
+                        <th>交易数量</th>
                         <th>信息摘要</th>
-                    </tr>
+<!--                         <th>余币</th>
+                        <th>信息摘要</th>
+ -->                    </tr>
                     </thead>
                 </table>
                 <!-- <div class="container-fluid" style="padding-left: 40%;">
@@ -872,7 +872,8 @@
             <div class="modal-body text-center">
                 <p class="text-white">操作成功</p>
                 <p class="text-white">恭喜您获取FOYO</p>
-                <label class="text-white">2枚</label>
+                <label class="text-white" id='token_amount'>0</label>
+                <label class="text-white">枚</label>
             </div>
             <!-- 模态框底部 -->
             <div class="modal-footer">

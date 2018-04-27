@@ -101,7 +101,7 @@ def work_upload_case():
             db.session.add(case)
             db.session.commit()
             print("success")
-            return jsonify({'result': 'success'})
+            return jsonify({'result': 'success', 'token': 3})
     except:
         print("error")
         return jsonify({'result': 'error'})
