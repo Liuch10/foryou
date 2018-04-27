@@ -7,7 +7,7 @@ from app.models.models import User
 from app.views.mainCtrl import main, contactUs, aboutUs, product
 from app.views.loginCtrl import login, sign_up, logout, sendMail
 from app.views.workCtrl import work, case_table_infos, work_upload_case, work_start_consult, answer_case_table_infos, \
-    source_case_table_infos, work_update_expert, work_start_comment, update_personal_info
+    source_case_table_infos, work_update_expert, work_start_comment, update_personal_info, get_image_address
 from app.views.diagnoseCtrl import diagnose
 from app.views.wallet import check_wallet
 
@@ -52,6 +52,8 @@ app.add_url_rule('/diagnose', methods=['GET', 'POST'], view_func=diagnose)
 app.add_url_rule('/updatePersonalInfo', methods=['POST', 'GET'], view_func=update_personal_info)
 # 上传病例
 app.add_url_rule('/wallet-table-infos', methods=['GET'], view_func=check_wallet)
+
+app.add_url_rule('/getImageAddress', methods=['POST'], view_func=get_image_address)
 # app.add_url_rule('/logout', methods=['GET'], view_func = logout)
 #
 # app.add_url_rule('/upload-case', methods=['POST','GET'], view_func=upload_case)

@@ -973,6 +973,25 @@
                 break;
         }
     };
+        function getImageAddress(id){
+        // alert(ipfs.cat('QmWo5Pgo3WAXZfTCNtuGgruafmQY13eSCCm4aNeZycVknE'))
+        var data={
+            id:id
+        }
+        $.ajax({
+            type: 'POST',
+            url:  '/getImageAddress',
+            data: data,
+            dataType: 'json',
+            success: function(data){
+                    alert(data.address)
+            },
+           error: function(){
+                alert('error');
+            }
+        });
+    };
 </script>
+
 </body>
 </html>

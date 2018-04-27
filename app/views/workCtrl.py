@@ -307,3 +307,15 @@ def consultation_messages():
         messages.append(msg)
     rdata = {'recordsTotal': len(messages), 'data': messages}
     return jsonify(rdata)
+
+
+def get_image_address():
+    case_id = int(request.form.get('id'))
+    case = Case.query.filter_by(id=case_id).first()
+    # return jsonify({'result': 'success', 'address': case.case_photo_hash})
+    if current_user.is_authenticated and case and case.upload_user_id == current_user.id:
+        addr = case.case_photo_hash
+        return jsonify({'result': 'success', 'address': addr})
+    else:
+        addr = 'invalid user'
+        return jsonify({'result': 'error', 'address': addr})
