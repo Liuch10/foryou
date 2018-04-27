@@ -85,7 +85,7 @@ $(document).ready(function() {
                 "targets": -1,
                 "bSortable": false,
                 render: function(data, type, row) {
-                    var html ='<a onclick="getImageAddress(' + row.id + ')" value="' + row.id + '">查看</a>';
+                    var html ='<a data-toggle="modal" data-target="#preview-modal" onclick="previewImage(' + row.id + ')" value="' + row.id + '">查看</a>';
 
                     return html;
                 }
@@ -164,7 +164,8 @@ $(document).ready(function() {
                 "targets": -1,
                 "bSortable": false,
                 render: function(data, type, row) {
-                    var html ='<a href="javascript:alert(' + row.id + ')" value="' + row.id + '">查看</button>';
+                    // var html ='<a href="javascript:alert(' + row.id + ')" value="' + row.id + '">查看</button>';
+                    var html ='<a data-toggle="modal" data-target="#preview-modal" onclick="previewImage(' + row.id + ')" value="' + row.id + '">查看</a>';
                     return html;
                 }
             },
@@ -237,7 +238,8 @@ $(document).ready(function() {
                 "targets": -1,
                 "bSortable": false,
                 render: function(data, type, row) {
-                    var html ='<a href="javascript:alert(' + row.id + ')" value="' + row.id + '">查看</button>';
+                    // var html ='<a href="javascript:alert(' + row.id + ')" value="' + row.id + '">查看</button>';
+                    var html ='<a data-toggle="modal" data-target="#preview-modal" onclick="previewImage(' + row.id + ')" value="' + row.id + '">查看</a>';
                     return html;
                 }
             },
@@ -314,7 +316,8 @@ $(document).ready(function() {
                 "targets": -1,
                 "bSortable": false,
                 render: function(data, type, row) {
-                    var html ='<a href="javascript:alert(' + row.id + ')" value="' + row.id + '">查看</button>';
+                    // var html ='<a href="javascript:alert(' + row.id + ')" value="' + row.id + '">查看</button>';
+                    var html ='<a data-toggle="modal" data-target="#preview-modal" onclick="previewImage(' + row.id + ')" value="' + row.id + '">查看</a>';
                     return html;
                 }
             },
@@ -393,7 +396,8 @@ $(document).ready(function() {
                 "targets": -1,
                 "bSortable": false,
                 render: function(data, type, row) {
-                    var html ='<a href="javascript:alert(' + row.id + ')" value="' + row.id + '">查看</button>';
+                    // var html ='<a href="javascript:alert(' + row.id + ')" value="' + row.id + '">查看</button>';
+                    var html ='<a data-toggle="modal" data-target="#preview-modal" onclick="previewImage(' + row.id + ')" value="' + row.id + '">查看</a>';
                     return html;
                 }
             },
@@ -472,7 +476,8 @@ $(document).ready(function() {
                 "targets": -1,
                 "bSortable": false,
                 render: function(data, type, row) {
-                    var html ='<a href="javascript:alert(' + row.id + ')" value="' + row.id + '">查看</button>';
+                    // var html ='<a href="javascript:alert(' + row.id + ')" value="' + row.id + '">查看</button>';
+                    var html ='<a data-toggle="modal" data-target="#preview-modal" onclick="previewImage(' + row.id + ')" value="' + row.id + '">查看</a>';
                     return html;
                 }
             },

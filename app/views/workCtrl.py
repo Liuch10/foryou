@@ -312,7 +312,7 @@ def consultation_messages():
 def get_image_address():
     case_id = int(request.form.get('id'))
     case = Case.query.filter_by(id=case_id).first()
-    # return jsonify({'result': 'success', 'address': case.case_photo_hash})
+    # return jsonify({'result': 'success', 'address': "QmWo5Pgo3WAXZfTCNtuGgruafmQY13eSCCm4aNeZycVknE"})
     if current_user.is_authenticated and case and case.upload_user_id == current_user.id:
         addr = case.case_photo_hash
         return jsonify({'result': 'success', 'address': addr})
