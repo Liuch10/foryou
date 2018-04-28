@@ -56,6 +56,8 @@ class CaseForm(Form):
 
 
 class DiagnoseForm(Form):
+    case_id = StringField(default="0")
+    case_patient_age = StringField(default="0")
     photo_quality = SelectField(choices=[('未选择', '未选择'),
                                          ('一级片', '一级片'),
                                          ('二级片', '二级片'),
@@ -85,6 +87,7 @@ class DiagnoseForm(Form):
                                  ('二期', '二期'),
                                  ('三期', '三期')], default="无尘肺")
     remark = StringField(default="无")
+    submit = SubmitField('提交标注')
 
     def getJson(self, ):
         rtn = {}
