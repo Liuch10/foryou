@@ -1,5 +1,76 @@
 $(document).ready(function() {
-    $('#comment-history-table').DataTable( {
+
+    $('#startConsult').click(function(){
+        $('#comment-history-table').DataTable().destroy();
+        var prefix = getLeftNarBarActive();
+        var caseIds = getSelectedCase(prefix);
+        case_id=caseIds[0];
+        $("#consultation_case_id").text(case_id);
+        var data={
+            id:case_id
+        }
+        $('#add_consultation_comment').unbind('click');
+        $('#add_consultation_comment').click(function(){
+            var comment={
+                msg:     $('#my_comment').val(),
+                case_id: case_id
+            }
+            $.ajax({
+                type: 'POST',
+                url:  '/addConsultationComment',
+                data: comment,
+                dataType: 'json',
+                success: function(data){
+                    if (data.result=='success'){
+                        var comment_history_table = $('#comment-history-table').DataTable();
+                        comment_history_table.ajax.reload();
+                    }else{
+                    alert(data.result);
+                    }
+                },
+                error: function(){
+                    alert('error');
+                }
+            });
+        });
+
+        //pic display 
+        $.ajax({
+            type: 'POST',
+            url:  '/getImageAddress',
+            data: data,
+            dataType: 'json',
+            success: function(data){
+                if (data.result=='success'){
+                    ipfs.cat(data.address, function(err, data) {
+                        var buf = new buffer.Buffer(data, 'binary');
+                        var src=hexToBase64(buf.toString('hex'));
+                        $('#consult_img').attr('src','data:image/jpeg;base64,'+src)
+                    });
+                }else{
+                    alert(data.address);
+                }
+            },
+           error: function(){
+                alert('error');
+            }
+        });
+
+        //message display 
+        $.ajax({
+            type: 'POST',
+            url:  '/getConsultationMessage',
+            data: data,
+            dataType: 'json',
+            success: function(data){
+                $("#consultation_message").val(data.message);
+            },
+           error: function(){
+                alert('error');
+            }
+        });
+        //table content 
+        $('#comment-history-table').DataTable( {
         "scrollY": '350px',
         "scrollCollapse": true,
         "processing": true,
@@ -7,7 +78,7 @@ $(document).ready(function() {
         "bDeferRender": true,
         "bAutoWidth" : true,
         "ajax": {
-            "url": "/comment-history-table-infos",
+            "url": "/comment-history-table-infos?case_id="+case_id.toString(),
             "type": "GET"
         },"columns": [
             { "title": "index",  "data" : "id" },
@@ -18,7 +89,7 @@ $(document).ready(function() {
         "aoColumnDefs":[
             {
                 "bVisible": false, 
-                "aTargets": [ 0 ] 
+                "aTargets": [ 0,3] 
             },
         ],
         "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {   
@@ -33,7 +104,9 @@ $(document).ready(function() {
             $("#pBottom > #case-table_previous").css("color", "white");
             $('.checkbox_select').parent('td').css("background-color","black");
         },
-    } );
+        });
+        });
+
     $('#wallet_table').DataTable( {
         "bPaginate" : true, 
         "processing": true,
@@ -385,7 +458,9 @@ $(document).ready(function() {
         },
     } );
     $("#check_source").click(function(){
-    $('#source-expert-case-table').DataTable( {
+        $('#source-expert-case-table').DataTable().destroy();
+        $('#source-user-case-table').DataTable().destroy();
+        $('#source-expert-case-table').DataTable({
         "bPaginate" : true, 
         "processing": true,
         "searching": true,
@@ -463,9 +538,9 @@ $(document).ready(function() {
         "fnDrawCallback": function(){
             $("#source-expert-all-checked").prop("checked",false);
         },
-    } );
+        });
 
-    $('#source-user-case-table').DataTable( {
+        $('#source-user-case-table').DataTable( {
         "bPaginate" : true, 
         "processing": true,
         "searching": true,
@@ -543,8 +618,10 @@ $(document).ready(function() {
         "fnDrawCallback": function(){
             $("#source-user-all-checked").prop("checked",false);
         },
-    } );
+        });
+
     });
+
     $('[name=select_all]').on('click', function () {
         if (this.checked) {
             $('.checkbox_select').each(function () {

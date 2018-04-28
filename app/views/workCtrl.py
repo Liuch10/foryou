@@ -13,28 +13,51 @@ def work():
     return render_template('work.html', form=form)
 
 
-def work_start_comment():
-    print("work_start_comment")
+def add_consultation_comment():
+    print("add_comment")
     # TODO... update db
+
     print(request.form)
-    return jsonify({'result': 'success'})
+    msg = request.form.get('msg')
+    case_id = int(request.form.get('case_id'))
+    g.user = current_user
+    upload_user_id = g.user.id if g.user.is_authenticated else 0
+    consultation = Consultation(comment_user_id=upload_user_id, case_id=case_id, comment_content=msg);
+    try:
+        db.session.add(consultation)
+        db.session.commit()
+        return jsonify({'result': 'success'})
+    except:
+        return jsonify({'result': 'fail to add comment'})
+
 
 def comment_history_table_infos():
+    print("comment_history_table_infos")
+    case_id = int(request.args['case_id'])
     data = []
-    for i in range(1, 10):
+    consultations = Consultation.query.filter_by(case_id=case_id).order_by(desc(Consultation.comment_time)).all()
+    print('len:')
+    print(len(consultations))
+    for i in range(1, len(consultations)):
         d = {}
-        d['id'] = i
-        d['doctor'] = "李敏"
-        d['comment'] = "疑似尘肺病，需要进一步复诊，需要更精确的数据才能确认尘肺病几期。"
-        d['date'] = "2018-04-28"
-        # d['doctor'] = i + 1
-        # d['comment'] = i + 2
-        # d['date'] = i + 3
+        d['id'] = consultations[i].id
+        d['doctor'] = 'test'#consultations[i].commenter.user_name
+        d['comment'] = consultations[i].comment_content
+        d['date'] = consultations[i].comment_time
         data.append(d)
-    if request.method == 'GET':
-        rdata = {'recordsTotal': len(data), 'data': data}
-        rtn = jsonify(rdata)
-        return rtn
+    if len(data) == 0:
+        d = {}
+        d['id'] = "none"
+        d['doctor'] = "none"
+        d['comment'] = "none"
+        d['date'] = "none"
+        data.append(d)
+
+    # if request.method == 'GET':
+    rdata = {'recordsTotal': len(data), 'data': data}
+    rtn = jsonify(rdata)
+    return rtn
+
 
 def work_start_consult():
     print("work_start_consult")
@@ -288,43 +311,6 @@ def reply_consultation():
         return jsonify({'result': '恢复失败'})
 
 
-def consultation_messages():
-    # id = db.Column(db.Integer, primary_key=True)
-    # comment_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), default=0)
-    # case_id = db.Column(db.Integer, db.ForeignKey('case.id'), default=0)
-    # comment_content = db.Column(db.String(128), default="default")
-    # comment_time = db.Column(db.DateTime,
-    #                          default=datetime.strptime(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-    #                                                    '%Y-%m-%d %H:%M:%S'))
-    # get the consultation messages
-    # TODO get case_id from front end
-
-    case_id = 0
-    print(request.form)
-    g.user = current_user
-    user_authenticated = g.user.is_authenticated
-    messages = []
-    if user_authenticated:
-        all_msgs = Consultation.query.filter_by(case_id=case_id).order_by(desc(ExpertCase.expert_time)).all()
-        for i in range(1, len(all_msgs)):
-            msg = {}
-            msg['name'] = all_msgs[i].commenter.user_name
-            msg['hospital'] = all_msgs[i].commenter.user_hospital
-            msg['content'] = all_msgs[i].comment_content
-            msg['time'] = all_msgs[i].comment_time
-            messages.append(msg)
-
-    else:
-        msg = {}
-        msg['name'] = 'default'
-        msg['hospital'] = 'default'
-        msg['content'] = 'default'
-        msg['time'] = 'default'
-        messages.append(msg)
-    rdata = {'recordsTotal': len(messages), 'data': messages}
-    return jsonify(rdata)
-
-
 def get_image_address():
     case_id = int(request.form.get('id'))
     case = Case.query.filter_by(id=case_id).first()
@@ -335,3 +321,16 @@ def get_image_address():
     else:
         addr = 'invalid user'
         return jsonify({'result': 'error', 'address': addr})
+
+
+def get_consultation_message():
+    print("consultation_message")
+    case_id = int(request.form.get('id'))
+    case = Case.query.filter_by(id=case_id).first()
+    print(case_id)
+    if current_user.is_authenticated and case and case.upload_user_id == current_user.id:
+        message = case.consultation_message
+        return jsonify({'result': 'success', 'address': message})
+    else:
+        message = 'invalid'
+        return jsonify({'result': 'error', 'message': message})

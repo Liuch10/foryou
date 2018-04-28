@@ -463,7 +463,7 @@
                             <div style="padding-top: 1%;padding-bottom: 1%;">
 
                                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#cktest"><img src="/static/img/会诊1.png"/>会诊
+                                        data-target="#cktest" id='startConsult'><img src="/static/img/会诊1.png"/>会诊
                                 </button>
                             </div>
                             <div class="input-group" style="padding-top: 1%;">
@@ -803,7 +803,8 @@
         <div class="modal-content" style="background-color: #2D343C;">
             <!-- 模态框头部 -->
             <div class="modal-header">
-                <h4 class="modal-title text-white">会诊</h4>
+                <h4 class="modal-title text-white">会诊病例：</h4>
+                <h4 class="modal-title text-white" id ="consultation_case_id"></h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -811,20 +812,20 @@
             <div class="modal-body">
                 <div class="container">
                     <div class="row">
-                        <div class="col-8">
-                            <img src="/static/img/jshz.png" class="float-right"/>
+                        <div class="col-8" >
+                            <img id='consult_img' height="800" width="500" class="float-right"/>
                         </div>
                         <div class="col-4 text-left" style="background-color: #5A6268;padding-top: 1%;">
                             <div>
                                 <label class="text-white" for="title">求助说明</label>
-                                <textarea class="form-control bg-secondary text-white" rows="2" id="consultation_message">疑似尘肺病，需要进一步复诊</textarea>
+                                <textarea class="form-control bg-secondary text-white" rows="2" id="consultation_message"></textarea>
                             </div>
                             <div>
                                 <label class="text-white" for="reveice">我的回复</label>
                                 <textarea class="form-control bg-secondary text-white" rows="2"
-                                          id="reveice"></textarea>
+                                          id="my_comment"></textarea>
                                 <div class="text-right" style="padding: 5px;">
-                                    <button class="btn-sm bg-secondary text-white border-0" id="ckTestBtn">发送</button>
+                                    <button class="btn-sm bg-secondary text-white border-0" id="add_consultation_comment">发送</button>
                                 </div>
 
                             </div>
@@ -865,8 +866,8 @@
 
             <!-- 模态框主体 -->
             <div class="modal-body">
-                <p class="text-white">求助说明</p>
-                <textarea class="form-control bg-secondary text-white border-0" rows="5" id="comment"></textarea>
+                <p class="text-white" >求助说明</p>
+                <textarea class="form-control bg-secondary text-white border-0" rows="5" id="consultation_message"></textarea>
             </div>
             <!-- 模态框底部 -->
             <div class="modal-footer">
@@ -936,6 +937,7 @@
 
 </script>
 <script>
+
     $("#update_personal_info").click(function(){
         var data={
             name:$('#name').val(),
@@ -999,7 +1001,6 @@
         }
     };
     function previewImage(id){
-        // alert(ipfs.cat('QmWo5Pgo3WAXZfTCNtuGgruafmQY13eSCCm4aNeZycVknE'))
         var data={
             id:id
         }
@@ -1009,7 +1010,6 @@
             data: data,
             dataType: 'json',
             success: function(data){
-                    // alert(data.address);
                     if (data.result=='success'){
                     ipfs.cat(data.address, function(err, data) {
                         var buf = new buffer.Buffer(data, 'binary');
@@ -1022,12 +1022,6 @@
             },
            error: function(){
                 alert('error');
-                        //             ipfs.cat("QmWo5Pgo3WAXZfTCNtuGgruafmQY13eSCCm4aNeZycVknE", function(err, data) {
-                        // var buf = new buffer.Buffer(data, 'binary');
-                        // var src=hexToBase64(buf.toString('hex'))
-                        // $('#preview').attr('src','data:image/jpeg;base64,'+src)
-                       
-                    // });
             }
         });
     };

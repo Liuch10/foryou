@@ -7,8 +7,8 @@ from app.models.models import User
 from app.views.mainCtrl import main, contactUs, aboutUs, product
 from app.views.loginCtrl import login, sign_up, logout, sendMail
 from app.views.workCtrl import work, case_table_infos, work_upload_case, work_start_consult, answer_case_table_infos, \
-    source_case_table_infos, work_update_expert, work_start_comment, update_personal_info, get_image_address, \
-    comment_history_table_infos
+    source_case_table_infos, work_update_expert, add_consultation_comment, update_personal_info, get_image_address, \
+    comment_history_table_infos, get_consultation_message
 from app.views.diagnoseCtrl import diagnose
 from app.views.wallet import check_wallet
 
@@ -48,7 +48,9 @@ app.add_url_rule('/start_consult', methods=['POST'], view_func=work_start_consul
 app.add_url_rule('/update_expert', methods=['POST'], view_func=work_update_expert)
 # 开始标注
 app.add_url_rule('/diagnose', methods=['GET', 'POST'], view_func=diagnose)
-# app.add_url_rule('/start_comment', methods=['GET','POST'], view_func=diagnose)
+
+# 会诊添加回复
+app.add_url_rule('/addConsultationComment', methods=['GET','POST'], view_func=add_consultation_comment)
 
 # 修改资料
 app.add_url_rule('/updatePersonalInfo', methods=['POST', 'GET'], view_func=update_personal_info)
@@ -59,3 +61,6 @@ app.add_url_rule('/getImageAddress', methods=['POST'], view_func=get_image_addre
 # app.add_url_rule('/logout', methods=['GET'], view_func = logout)
 #
 # app.add_url_rule('/upload-case', methods=['POST','GET'], view_func=upload_case)
+
+app.add_url_rule('/getConsultationMessage', methods=['POST'], view_func=get_consultation_message)
+

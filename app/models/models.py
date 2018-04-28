@@ -94,6 +94,7 @@ class Consultation(db.Model):
     comment_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), default=0)
     commenter = db.relationship(User, backref="consultations")
     case_id = db.Column(db.Integer, db.ForeignKey('case.id'), default=0)
+    original_case = db.relationship(Case, backref="consultations")
     comment_content = db.Column(db.String(128), default="default")
     comment_time = db.Column(db.DateTime,
                              default=datetime.strptime(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
