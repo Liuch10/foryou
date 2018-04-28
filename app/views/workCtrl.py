@@ -19,6 +19,22 @@ def work_start_comment():
     print(request.form)
     return jsonify({'result': 'success'})
 
+def comment_history_table_infos():
+    data = []
+    for i in range(1, 10):
+        d = {}
+        d['id'] = i
+        d['doctor'] = "李敏"
+        d['comment'] = "疑似尘肺病，需要进一步复诊，需要更精确的数据才能确认尘肺病几期。"
+        d['date'] = "2018-04-28"
+        # d['doctor'] = i + 1
+        # d['comment'] = i + 2
+        # d['date'] = i + 3
+        data.append(d)
+    if request.method == 'GET':
+        rdata = {'recordsTotal': len(data), 'data': data}
+        rtn = jsonify(rdata)
+        return rtn
 
 def work_start_consult():
     print("work_start_consult")

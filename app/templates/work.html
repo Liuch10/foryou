@@ -32,6 +32,9 @@
         }
     </style>
     <style type="text/css" media="screen">
+        .comment-history-table-header {
+            display: none;
+        }
         #case-table_filter label {
             color: white;
         }
@@ -825,8 +828,18 @@
                                 </div>
 
                             </div>
-                            <div>
-                                <textarea class="form-control bg-secondary text-white" rows="5">李敏:疑似尘肺病，需要进一步复诊，需要更精确的数据才能确认尘肺病几期。 赵磊:精确数据确认尘肺病一期。</textarea>
+                            <div style="padding-top: 2%;">
+                                <table id="comment-history-table" class="display" style="max-width: 220px; width:100%; background-color: black; color: white;">
+                                    <thead class="comment-history-table-header">
+                                    <tr>
+                                        <th>index</th>
+                                        <th>医生</th>
+                                        <th>评论</th>
+                                        <th>日期</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                                <!-- <textarea class="form-control bg-secondary text-white" rows="5">李敏:疑似尘肺病，需要进一步复诊，需要更精确的数据才能确认尘肺病几期。 赵磊:精确数据确认尘肺病一期。</textarea> -->
                             </div>
                         </div>
                     </div>

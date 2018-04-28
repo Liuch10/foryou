@@ -7,7 +7,8 @@ from app.models.models import User
 from app.views.mainCtrl import main, contactUs, aboutUs, product
 from app.views.loginCtrl import login, sign_up, logout, sendMail
 from app.views.workCtrl import work, case_table_infos, work_upload_case, work_start_consult, answer_case_table_infos, \
-    source_case_table_infos, work_update_expert, work_start_comment, update_personal_info, get_image_address
+    source_case_table_infos, work_update_expert, work_start_comment, update_personal_info, get_image_address, \
+    comment_history_table_infos
 from app.views.diagnoseCtrl import diagnose
 from app.views.wallet import check_wallet
 
@@ -38,6 +39,7 @@ app.add_url_rule('/work', methods=['GET'], view_func=work)
 app.add_url_rule('/case-table-infos', methods=['GET'], view_func=case_table_infos)
 app.add_url_rule('/answer-case-table-infos', methods=['GET'], view_func=answer_case_table_infos)
 app.add_url_rule('/case-table-source-infos', methods=['GET'], view_func=source_case_table_infos)
+app.add_url_rule('/comment-history-table-infos', methods=['GET'], view_func=comment_history_table_infos)
 # 上传病例
 app.add_url_rule('/upload_case', methods=['POST'], view_func=work_upload_case)
 # 发起会诊

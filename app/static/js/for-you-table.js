@@ -1,4 +1,39 @@
 $(document).ready(function() {
+    $('#comment-history-table').DataTable( {
+        "scrollY": '350px',
+        "scrollCollapse": true,
+        "processing": true,
+        "serverSide": false,
+        "bDeferRender": true,
+        "bAutoWidth" : true,
+        "ajax": {
+            "url": "/comment-history-table-infos",
+            "type": "GET"
+        },"columns": [
+            { "title": "index",  "data" : "id" },
+            { "title": "医生",  "data" : "doctor" },
+            { "title": "评论",  "data" : "comment" },
+            { "title": "日期",  "data" : "date" }
+        ],
+        "aoColumnDefs":[
+            {
+                "bVisible": false, 
+                "aTargets": [ 0 ] 
+            },
+        ],
+        "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {   
+            $(nRow).css("background-color", "black");
+            $(nRow).css("color", "white");
+        },
+        initComplete : function() {
+            
+        },
+        "dom": 't',  
+        "fnInitComplete":function(){  
+            $("#pBottom > #case-table_previous").css("color", "white");
+            $('.checkbox_select').parent('td').css("background-color","black");
+        },
+    } );
     $('#wallet_table').DataTable( {
         "bPaginate" : true, 
         "processing": true,
