@@ -62,6 +62,7 @@ class Case(db.Model):
     case_patient_age = db.Column(db.String(64), default="0")
     case_photo_type = db.Column(db.String(64), default="default")
     case_photo_hash = db.Column(db.String(64), default="default")
+    case_dcm_hash = db.Column(db.String(64), default="default")
     case_diagnose_type = db.Column(db.String(128), default="default")
     case_diagnose_result = db.Column(db.String(128), default="default")
 
@@ -111,3 +112,4 @@ class Transaction(db.Model):
                            default=datetime.strptime(datetime.now().strftime('%Y-%m-%d %H:%M:%S'), '%Y-%m-%d %H:%M:%S'))
     trans_type = db.Column(db.String(64), default="default")
     trans_spec = db.Column(db.String(64), default="default")
+    trans_hash = db.Column(db.String(64), default="default")
