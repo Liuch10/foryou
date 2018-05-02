@@ -107,6 +107,8 @@ $(document).ready(function() {
         });
         });
 
+    $('#check_wallet').click(function(){
+    $('#wallet_table').DataTable().destroy();
     $('#wallet_table').DataTable( {
         "bPaginate" : true, 
         "processing": true,
@@ -147,7 +149,8 @@ $(document).ready(function() {
             $('.checkbox_select').parent('td').css("background-color","black");
             // $("#case-table_filter").detach().appendTo('#new-search-area');
         },
-    } );
+    });
+    });
 
     $('#case-table').DataTable( {
         "bPaginate" : true, 
@@ -202,7 +205,7 @@ $(document).ready(function() {
                 "bSearchable": true,
                 "bVisible": true,
                 "bFilter": true,
-                "aTargets": [ 2 ] 
+                "aTargets": [ 2,3,4,5,6,7 ] 
             }, 
             {
                 "bVisible": false, 
@@ -457,6 +460,7 @@ $(document).ready(function() {
             $("#ask-huizhen-all-checked").prop("checked",false);
         },
     } );
+
     $("#check_source").click(function(){
         $('#source-expert-case-table').DataTable().destroy();
         $('#source-user-case-table').DataTable().destroy();

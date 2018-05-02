@@ -112,6 +112,7 @@ def work_update_expert():
 def work_upload_case():
     g.user = current_user
     upload_user_id = g.user.id if g.user.is_authenticated else 0
+    print(upload_user_id)
     case_patient_name = request.form.get('patient_name') if 'patient_name' in request.form else '匿名'
     case_patient_gender = request.form.get('patient_gender') if 'patient_gender' in request.form else '男'
     case_patient_age = request.form.get('patient_age') if 'patient_age' in request.form else '0'
@@ -135,6 +136,7 @@ def work_upload_case():
         # DONE
         upload_check = Case.query.filter_by(case_photo_hash=case_photo_hash).first()
         if upload_check:
+            print("already uploaed")
             return jsonify({'result': '该文件已经被发布过'})
         else:
             db.session.add(case)
