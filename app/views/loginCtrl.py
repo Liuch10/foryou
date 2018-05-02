@@ -1,4 +1,4 @@
-from flask import render_template, flash, url_for, session, redirect, request
+from flask import render_template, flash, url_for, session, redirect, request, g
 from flask_login import login_user, logout_user, current_user, login_required
 from app.utils.forms import LoginForm, SignUpForm
 from app.utils.sendmail import send_mail
@@ -33,7 +33,7 @@ def login():
                 return redirect('/login')
             # flash('Your name: ' + request.form.get('user_name'))
             print("login success")
-            return redirect(url_for("index"))
+            return redirect(url_for("work"))
         else:
             print('Login failed, usermail or password error!')
             return redirect('/login')
@@ -54,7 +54,6 @@ def sign_up():
         user_hospital = request.form.get('user_hospital') or ""
         user_department = request.form.get('user_department') or ""
         user_phone = request.form.get('user_phone') or ""
-        # user_chain_address = request.form.get('user_chain_address') or ""
         register_check = User.query.filter(db.and_(User.user_mail == user_mail,
                                                    User.user_password == user_password)).first()
         if register_check:
@@ -77,11 +76,19 @@ def sign_up():
                 db.session.commit()
             except:
                 print("db error")
-                return redirect('/sign-up')
+                return redirect('sign-up')
             print(user_mail + ":" + user_password)
-            return render_template("signup_success.html")
+            return redirect(url_for("sign_up_success"), msg="注册成功")
     print(form.errors)
     return render_template("signup.html", form=form)
+
+
+def sign_up_success():
+    g.user = current_user
+    if current_user.is_authenticated:
+        return render_template('signup_success.html', user_id=g.user.id, user_address=g.user.user_chain_address)
+    else:
+        return redirect('sign-up')
 
 
 def sendMail():
@@ -91,8 +98,8 @@ def sendMail():
         code = ''.join(["%s" % randint(0, 9) for _ in range(0, 6)])
 
         session['verification_code'] = code
-        if (send_mail(recv=receiver, content=code)):
-            # response ajax for front end
+        print("here" + session['verification_code'])
+        if send_mail(recv=receiver, content=code):
             return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
         else:
             return json.dumps({'success': False}), 500, {'ContentType': 'application/json'}
@@ -104,4 +111,4 @@ def sendMail():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect('main')

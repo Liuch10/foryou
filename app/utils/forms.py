@@ -21,7 +21,8 @@ class SignUpForm(Form):
     user_password = PasswordField(validators=[EqualTo('user_confirm_password', '两次输入密码一致')])
     user_confirm_password = PasswordField()
 
-    user_type = RadioField(choices=[('doctor', '医生'), ('patient', '普通用户（后续开放）')])
+    # user_type = RadioField(choices=[('doctor', '医生'), ('patient', '普通用户（后续开放）')])
+    user_type = RadioField(choices=[('doctor', '医生')])
     # user_type = StringField(validators=[Required(), Length(max=15)])
     user_city = SelectField(choices=[('北京', '北京'), ('江西', '江西'), ('内蒙古', '内蒙古'), ('云南', '云南'), ('其他', '其他')])
     user_hospital = StringField(validators=[Length(max=15)])

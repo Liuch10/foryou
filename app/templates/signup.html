@@ -7,6 +7,7 @@
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
     <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -91,12 +92,10 @@
                 </div>
                 <div class="col-6 text-left">
                     <div>
-                        {{form.user_mail(class_="bg-secondary border-0 text-white",style="margin-bottom:
-                        5px;margin-top:1px ;")}}
+                        {{form.user_mail(class_="bg-secondary border-0 text-white",style="margin-bottom:5px;margin-top:1px ;")}}
                     </div>
                     <div>
-                        {{form.user_password(class_="bg-secondary border-0 text-white",style="margin-bottom:
-                        5px;margin-top:1px ;")}}
+                        {{form.user_password(class_="bg-secondary border-0 text-white",style="margin-bottom:5px;margin-top:1px ;")}}
                     </div>
                     <div>
                         {{form.user_confirm_password(class_="bg-secondary border-0 text-white",style="margin-bottom:
@@ -132,7 +131,6 @@
 
         </div>
     </form>
-
     <script>
         $(function () {
             $("#sendcode").click(function () {

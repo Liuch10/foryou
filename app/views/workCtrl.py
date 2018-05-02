@@ -1,4 +1,4 @@
-from flask import Response, render_template, jsonify, request, g
+from flask import Response, render_template, jsonify, request, g, redirect, url_for
 from app.models.models import User, Case, ExpertCase, Consultation
 from app.utils.forms import CaseForm
 from app import db
@@ -7,10 +7,10 @@ from flask_login import current_user, login_required
 from sqlalchemy import desc
 
 
-# @login_required
+@login_required
 def work():
     form = CaseForm()
-    return render_template('work.html', form=form)
+    return render_template('work.html', form=form,current_user=current_user)
 
 
 def add_consultation_comment():
@@ -41,7 +41,7 @@ def comment_history_table_infos():
     for i in range(1, len(consultations)):
         d = {}
         d['id'] = consultations[i].id
-        d['doctor'] = 'test'#consultations[i].commenter.user_name
+        d['doctor'] = 'test'  # consultations[i].commenter.user_name
         d['comment'] = consultations[i].comment_content
         d['date'] = consultations[i].comment_time
         data.append(d)
@@ -267,14 +267,14 @@ def update_personal_info():
     if user_authenticated and request.method == 'POST':
         try:
             g.user.user_name = request.form.get('name')
-            g.user.age = request.form.get('age')
+            g.user.user_age = request.form.get('age')
             g.user.user_hospital = request.form.get('hospital')
             g.user.user_department = request.form.get('department')
             g.user.user_title = request.form.get('title')
             g.user.telephone = request.form.get('telephone')
             g.user.user_city = request.form.get('province')
             g.user.user_mail = request.form.get('mail')
-            g.user.allow_share = True if (request.form.get('share') == '是') else False
+            g.user.allow_share = True if (request.form.get('allowshare') == '是') else False
             db.session.add(g.user)
             db.session.commit()
             return jsonify({'result': '修改成功'})
@@ -282,15 +282,15 @@ def update_personal_info():
             return jsonify({'result': "failed to update personal info"})
     else:
         rdata = {'name': g.user.user_name if user_authenticated else "notlogin",
-                 'age': g.user.age if user_authenticated else "-1",
+                 'age': g.user.user_age if user_authenticated else "-1",
                  'hospital': g.user.user_hospital if user_authenticated else "notlogin",
                  'title': g.user.user_title if user_authenticated else "notlogin",
-                 'telephone': g.user.telephone if user_authenticated else "notlogin",
+                 'telephone': g.user.user_phone if user_authenticated else "notlogin",
                  'province': g.user.user_city if user_authenticated else "",
                  'mail': g.user.user_mail if user_authenticated else "notlogin",
                  'department': g.user.user_department if user_authenticated else "notlogin",
-                 'share': g.user.allow_share if user_authenticated else ""}
-
+                 'allowshare': '是' if user_authenticated and g.user.allow_share  else "否"}
+    # print(rdata)
     return jsonify(rdata)
 
 

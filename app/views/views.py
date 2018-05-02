@@ -5,7 +5,7 @@ from datetime import datetime
 from app import app, db, lm
 from app.models.models import User
 from app.views.mainCtrl import main, contactUs, aboutUs, product
-from app.views.loginCtrl import login, sign_up, logout, sendMail
+from app.views.loginCtrl import login, sign_up, logout, sendMail, sign_up_success
 from app.views.workCtrl import work, case_table_infos, work_upload_case, work_start_consult, answer_case_table_infos, \
     source_case_table_infos, work_update_expert, add_consultation_comment, update_personal_info, get_image_address, \
     comment_history_table_infos, get_consultation_message
@@ -34,6 +34,7 @@ app.add_url_rule('/product', methods=['GET'], view_func=product)
 app.add_url_rule('/contact-us', methods=['GET'], view_func=contactUs)
 app.add_url_rule('/login', methods=['GET', 'POST'], view_func=login)
 app.add_url_rule('/sign-up', methods=['GET', 'POST'], view_func=sign_up)
+app.add_url_rule('/sign-up-success', methods=['GET'], view_func=sign_up_success)
 app.add_url_rule('/sendMail', methods=['POST'], view_func=sendMail)
 app.add_url_rule('/work', methods=['GET'], view_func=work)
 app.add_url_rule('/case-table-infos', methods=['GET'], view_func=case_table_infos)
@@ -50,7 +51,7 @@ app.add_url_rule('/update_expert', methods=['POST'], view_func=work_update_exper
 app.add_url_rule('/diagnose', methods=['GET', 'POST'], view_func=diagnose)
 
 # 会诊添加回复
-app.add_url_rule('/addConsultationComment', methods=['GET','POST'], view_func=add_consultation_comment)
+app.add_url_rule('/addConsultationComment', methods=['GET', 'POST'], view_func=add_consultation_comment)
 
 # 修改资料
 app.add_url_rule('/updatePersonalInfo', methods=['POST', 'GET'], view_func=update_personal_info)
@@ -63,4 +64,3 @@ app.add_url_rule('/getImageAddress', methods=['POST'], view_func=get_image_addre
 # app.add_url_rule('/upload-case', methods=['POST','GET'], view_func=upload_case)
 
 app.add_url_rule('/getConsultationMessage', methods=['POST'], view_func=get_consultation_message)
-

@@ -39,8 +39,7 @@
                 恭喜您成功注册医数链医疗数据平台，基于区块链技术实现、去中心化、可信赖
             </div>
             <span>
-					<label for="userid">用户ID:</label>
-					<input id="useid" class="text-white bg-transparent border-0" value="3456799123055"/>
+					{{msg}}
 				</span>
         </div>
         <div class="text-center" style="padding-top: 10px;">
@@ -49,5 +48,13 @@
         </div>
     </div>
 </div>
+<script>
+    onload=function(){
+            setTimeout(go, 3000);
+        };
+        function go(){
+            location.href="/work";
+        }
+</script>
 </body>
 </html>
