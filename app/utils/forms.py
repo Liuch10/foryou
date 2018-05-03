@@ -3,6 +3,8 @@ from flask import jsonify
 from wtforms.fields import StringField, SelectField, SubmitField, PasswordField, RadioField, BooleanField
 from wtforms.validators import Required, Length, NumberRange, ValidationError, Email, EqualTo
 
+import json
+
 
 class LoginForm(Form):
     user_mail = StringField(validators=[Required()])
@@ -58,7 +60,7 @@ class CaseForm(Form):
 
 class DiagnoseForm(Form):
     case_id = StringField(default="0")
-    case_patient_age = StringField(default="0")
+    # case_patient_age = StringField(default="0")
     photo_quality = SelectField(choices=[('未选择', '未选择'),
                                          ('一级片', '一级片'),
                                          ('二级片', '二级片'),
@@ -90,26 +92,30 @@ class DiagnoseForm(Form):
     remark = StringField(default="无")
     submit = SubmitField('提交标注')
 
-    def getJson(self, ):
-        rtn = {}
-        rtn['photo_quality'] = self.photo_quality.data
-        rtn['small_shadow_1'] = self.small_shadow_1.data
-        rtn['small_shadow_2'] = self.small_shadow_2.data
-        rtn['damage_1'] = self.damage_1.data
-        rtn['damage_2'] = self.damage_2.data
-        rtn['damage_3'] = self.damage_3.data
-        rtn['damage_4'] = self.damage_4.data
-        rtn['damage_5'] = self.damage_5.data
-        rtn['damage_6'] = self.damage_6.data
-        rtn['intensity'] = self.intensity.data
-        rtn['other_sign'] = self.other_sign.data
-        rtn['bool_small_shadow'] = self.bool_small_shadow.datad
-        rtn['bool_big_shadow'] = self.bool_big_shadow.data
-        rtn['bool_pleural_plaque'] = self.bool_pleural_plaque.data  # BooleanField('胸膜斑', default=False)
-        rtn['bool_big_shadow_2_1'] = self.bool_big_shadow_2_1.data  # BooleanField('大阴影达到2*1', default=False)
-        rtn['bool_pleural_calcification'] = self.bool_pleural_calcification  # BooleanField('胸膜钙化', default=False)
-        rtn['bool_shadow_disorder'] = self.bool_shadow_disorder  # BooleanField('心影紊乱', default=False)
+    @staticmethod
+    def build_form_from_json_string(data):
+        print(data)
+        d_json = json.loads(data)
+        form = DiagnoseForm(case_id=int(d_json['case_id']),
+                            # case_patient_age=d_json['case_patient_age'] ,
+                            photo_quality=d_json['photo_quality'],
+                            small_shadow_1=d_json['small_shadow_1'],
+                            small_shadow_2=d_json['small_shadow_1'],
+                            damage_1=d_json['damage_1'],
+                            damage_2=d_json['damage_2'],
+                            damage_3=d_json['damage_3'],
+                            damage_4=d_json['damage_4'],
+                            damage_5=d_json['damage_5'],
+                            damage_6=d_json['damage_6'],
+                            intensity=d_json['intensity'],
+                            other_sign=d_json['other_sign'],
 
-        rtn['level'] = self.level.data
-        rtn['remark'] = self.remark.data
-        return jsonify(rtn)
+                            bool_small_shadow=True if 'bool_small_shadow' in d_json else False,
+                            bool_big_shadow=True if 'bool_big_shadow' in d_json else False,
+                            bool_pleural_plaque=True if 'bool_pleural_plaque' in d_json else False,
+                            bool_big_shadow_2_1=True if 'bool_big_shadow_2_1' in d_json else False,
+                            bool_pleural_calcification=True if 'bool_pleural_calcification' in d_json else False,
+                            level=d_json['level'],
+                            remark=d_json['remark'])
+
+        return form
