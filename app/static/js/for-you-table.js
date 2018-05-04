@@ -4,8 +4,9 @@ $(document).ready(function() {
         $('#comment-history-table').DataTable().destroy();
         var prefix = getLeftNarBarActive();
         var caseIds = getSelectedCase(prefix);
-        case_id=caseIds[0];
-        $("#consultation_case_id").text(case_id);
+        var descriptions = getSelectedCaseDescription(prefix)
+        $("#consultation_case_id").text(caseIds[0]);
+        $("#consultation_message").text(descriptions[0]);
         var data={
             id:case_id
         }
@@ -88,19 +89,19 @@ $(document).ready(function() {
         ],
         "aoColumnDefs":[
             {
-                "bVisible": false, 
-                "aTargets": [ 0,3] 
+                "bVisible": false,
+                "aTargets": [ 0,3]
             },
         ],
-        "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {   
+        "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             $(nRow).css("background-color", "black");
             $(nRow).css("color", "white");
         },
         initComplete : function() {
-            
+
         },
-        "dom": 't',  
-        "fnInitComplete":function(){  
+        "dom": 't',
+        "fnInitComplete":function(){
             $("#pBottom > #case-table_previous").css("color", "white");
             $('.checkbox_select').parent('td').css("background-color","black");
         },
@@ -110,7 +111,7 @@ $(document).ready(function() {
     $('#check_wallet').click(function(){
     $('#wallet_table').DataTable().destroy();
     $('#wallet_table').DataTable( {
-        "bPaginate" : true, 
+        "bPaginate" : true,
         "processing": true,
         "searching": true,
         "serverSide": false,
@@ -131,19 +132,19 @@ $(document).ready(function() {
         ],
         "aoColumnDefs":[
             {
-                "bVisible": false, 
-                "aTargets": [ 0 ] 
+                "bVisible": false,
+                "aTargets": [ 0 ]
             },
         ],
-        "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {   
+        "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             $(nRow).css("background-color", "black");
             $(nRow).css("color", "white");
         },
         initComplete : function() {
-            
+
         },
-        "dom": 't<"#pBottom"p>',  
-        "fnInitComplete":function(){  
+        "dom": 't<"#pBottom"p>',
+        "fnInitComplete":function(){
             $("#pBottom > #case-table_previous").css("color", "white");
             // $('#case-table').css("color","white").css("background-color","black");
             $('.checkbox_select').parent('td').css("background-color","black");
@@ -153,7 +154,7 @@ $(document).ready(function() {
     });
 
     $('#case-table').DataTable( {
-        "bPaginate" : true, 
+        "bPaginate" : true,
         "processing": true,
         "searching": true,
         "serverSide": false,
@@ -205,22 +206,22 @@ $(document).ready(function() {
                 "bSearchable": true,
                 "bVisible": true,
                 "bFilter": true,
-                "aTargets": [ 2,3,4,5,6,7 ] 
-            }, 
+                "aTargets": [ 2,3,4,5,6,7 ]
+            },
             {
-                "bVisible": false, 
-                "aTargets": [ 1, 9 ] 
+                "bVisible": false,
+                "aTargets": [ 1, 9 ]
             },
         ],
-        "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {   
+        "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             $(nRow).css("background-color", "black");
             $(nRow).css("color", "white");
         },
         initComplete : function() {
-            
+
         },
-        "dom": 'rft<"#pBottom"p>',  
-        "fnInitComplete":function(){  
+        "dom": 'rft<"#pBottom"p>',
+        "fnInitComplete":function(){
             $("#pBottom > #case-table_previous").css("color", "white");
             // $('#case-table').css("color","white").css("background-color","black");
             $('.checkbox_select').parent('td').css("background-color","black");
@@ -232,7 +233,7 @@ $(document).ready(function() {
     } );
 
     $('#comment-page-case-table').DataTable( {
-        "bPaginate" : true, 
+        "bPaginate" : true,
         "processing": true,
         "searching": true,
         "serverSide": false,
@@ -284,22 +285,22 @@ $(document).ready(function() {
                 "bSearchable": true,
                 "bVisible": true,
                 "bFilter": true,
-                "aTargets": [ 2 ] 
-            }, 
+                "aTargets": [ 2 ]
+            },
             {
-                "bVisible": false, 
-                "aTargets": [ 1 ] 
+                "bVisible": false,
+                "aTargets": [ 1 ]
             },
         ],
-        "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {   
+        "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             $(nRow).css("background-color", "black");
             $(nRow).css("color", "white");
         },
         initComplete : function() {
-            
+
         },
-        "dom": 'rft<"#pBottom"p>',  
-        "fnInitComplete":function(){  
+        "dom": 'rft<"#pBottom"p>',
+        "fnInitComplete":function(){
             $("#pBottom > #comment-page-case-table_previous").css("color", "white");
             $('.comment-checkbox-select').parent('td').css("background-color","black");
             // $("#case-table_filter").detach().appendTo('#new-search-area');
@@ -310,7 +311,7 @@ $(document).ready(function() {
     } );
 
     $('#answer-huizhen-case-table').DataTable( {
-        "bPaginate" : true, 
+        "bPaginate" : true,
         "processing": true,
         "searching": true,
         "serverSide": false,
@@ -341,7 +342,7 @@ $(document).ready(function() {
                 "data": null,
                 "bSortable": false,
                 render: function(data, type, row) {
-                    var html ="<input type ='checkbox' name='answer-huizhen-check-upload-case' class='answer-huizhen-checkbox-select' value='" + row.id + "'>";
+                    var html ="<input type ='checkbox' description='"+row.description+"' name='answer-huizhen-check-upload-case' class='answer-huizhen-checkbox-select' value='" + row.id + "'>";
                     return html;
                 }
             },
@@ -358,22 +359,22 @@ $(document).ready(function() {
                 "bSearchable": true,
                 "bVisible": true,
                 "bFilter": true,
-                "aTargets": [ 2 ] 
-            }, 
+                "aTargets": [ 2 ]
+            },
             {
-                "bVisible": false, 
-                "aTargets": [ 1 ] 
+                "bVisible": false,
+                "aTargets": [ 1 ]
             },
         ],
-        "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {   
+        "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             $(nRow).css("background-color", "black");
             $(nRow).css("color", "white");
         },
         initComplete : function() {
-            
+
         },
-        "dom": 'rft<"#pBottom"p>',  
-        "fnInitComplete":function(){  
+        "dom": 'rft<"#pBottom"p>',
+        "fnInitComplete":function(){
             $("#pBottom > #answer-huizhen-case-table_previous").css("color", "white");
             $('.answer-huizhen-checkbox-select').parent('td').css("background-color","black");
             // $("#case-table_filter").detach().appendTo('#new-search-area');
@@ -384,7 +385,7 @@ $(document).ready(function() {
     } );
 
     $('#ask-huizhen-case-table').DataTable( {
-        "bPaginate" : true, 
+        "bPaginate" : true,
         "processing": true,
         "searching": true,
         "serverSide": false,
@@ -436,22 +437,22 @@ $(document).ready(function() {
                 "bSearchable": true,
                 "bVisible": true,
                 "bFilter": true,
-                "aTargets": [ 2 ] 
-            }, 
+                "aTargets": [ 2 ]
+            },
             {
-                "bVisible": false, 
-                "aTargets": [ 1, 9 ] 
+                "bVisible": false,
+                "aTargets": [ 1, 9 ]
             },
         ],
-        "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {   
+        "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             $(nRow).css("background-color", "black");
             $(nRow).css("color", "white");
         },
         initComplete : function() {
-            
+
         },
-        "dom": 'rft<"#pBottom"p>',  
-        "fnInitComplete":function(){  
+        "dom": 'rft<"#pBottom"p>',
+        "fnInitComplete":function(){
             $("#pBottom > #ask-huizhen-case-table_previous").css("color", "white");
             $('.ask-huizhen-checkbox-select').parent('td').css("background-color","black");
             // $("#case-table_filter").detach().appendTo('#new-search-area');
@@ -465,7 +466,7 @@ $(document).ready(function() {
         $('#source-expert-case-table').DataTable().destroy();
         $('#source-user-case-table').DataTable().destroy();
         $('#source-expert-case-table').DataTable({
-        "bPaginate" : true, 
+        "bPaginate" : true,
         "processing": true,
         "searching": true,
         "serverSide": false,
@@ -519,22 +520,22 @@ $(document).ready(function() {
                 "bSearchable": true,
                 "bVisible": true,
                 "bFilter": true,
-                "aTargets": [ 2 ] 
-            }, 
+                "aTargets": [ 2 ]
+            },
             {
-                "bVisible": false, 
-                "aTargets": [ 1 ] 
+                "bVisible": false,
+                "aTargets": [ 1 ]
             },
         ],
-        "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {   
+        "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             $(nRow).css("background-color", "black");
             $(nRow).css("color", "white");
         },
         initComplete : function() {
-            
+
         },
-        "dom": 'rft<"#pBottom"p>',  
-        "fnInitComplete":function(){  
+        "dom": 'rft<"#pBottom"p>',
+        "fnInitComplete":function(){
             $("#pBottom > #source-expert-case-table_previous").css("color", "white");
             $('.source-expert-checkbox-select').parent('td').css("background-color","black");
             // $("#case-table_filter").detach().appendTo('#new-search-area');
@@ -545,7 +546,7 @@ $(document).ready(function() {
         });
 
         $('#source-user-case-table').DataTable( {
-        "bPaginate" : true, 
+        "bPaginate" : true,
         "processing": true,
         "searching": true,
         "serverSide": false,
@@ -599,22 +600,22 @@ $(document).ready(function() {
                 "bSearchable": true,
                 "bVisible": true,
                 "bFilter": true,
-                "aTargets": [ 2 ] 
-            }, 
+                "aTargets": [ 2 ]
+            },
             {
-                "bVisible": false, 
-                "aTargets": [ 1, 12 ] 
+                "bVisible": false,
+                "aTargets": [ 1, 12 ]
             },
         ],
-        "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {   
+        "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             $(nRow).css("background-color", "black");
             $(nRow).css("color", "white");
         },
         initComplete : function() {
-            
+
         },
-        "dom": 'rft<"#pBottom"p>',  
-        "fnInitComplete":function(){  
+        "dom": 'rft<"#pBottom"p>',
+        "fnInitComplete":function(){
             $("#pBottom > #source-user-case-table_previous").css("color", "white");
             $('.source-user-checkbox-select').parent('td').css("background-color","black");
             // $("#case-table_filter").detach().appendTo('#new-search-area');
@@ -700,8 +701,16 @@ $(document).ready(function() {
 
     function getSelectedCase(prefix) {
         var a = [];
-        $('input[name="' + prefix + 'check-upload-case"]:checked').each(function(){ 
+        $('input[name="' + prefix + 'check-upload-case"]:checked').each(function(){
             a.push($(this).val());
+        });
+        return a;
+    };
+
+    function getSelectedCaseDescription(prefix) {
+        var a = [];
+        $('input[name="' + prefix + 'check-upload-case"]:checked').each(function(){
+            a.push($(this).attr("description"));
         });
         return a;
     };
@@ -724,7 +733,7 @@ $(document).ready(function() {
         var caseIds = getSelectedCase(prefix);
         var targetCaseId = caseIds[0];
         // TODO 跳转到check或者look页面，
-        window.location.href='/diagnose?id='+targetCaseId; 
+        window.location.href='/diagnose?id='+targetCaseId;
         // $.ajax({
         //     type: 'GET',
         //     url:  '/start_comment?id=' + targetCaseId,
@@ -738,7 +747,7 @@ $(document).ready(function() {
     });
 
     $("#updateExpertBtn").click(function(){
-        
+
         var prefix = getLeftNarBarActive();
         var caseIds = getSelectedCase(prefix);
         var comment = $('#update-expert-comment').val();
@@ -765,7 +774,8 @@ $(document).ready(function() {
         // 不可以，只能一个一个发起。这里设计一个复选框就是脑残
         var prefix = getLeftNarBarActive();
         var caseIds = getSelectedCase(prefix);
-        var comment = $('#comment').val();
+        var comment = $('#help_text').val();
+        alert(comment)
         var data={
             'case_id'          : caseIds[0],
             'comment'           : comment
@@ -776,13 +786,20 @@ $(document).ready(function() {
             data: data,
             dataType: 'json',
             success: function(data){
-                    alert(data.result)
+                alert(data.result);
+                var answer_huizhen_case_table = $('#answer-huizhen-case-table').DataTable();
+                answer_huizhen_case_table.ajax.reload();
             },
            error: function(){
                 alert('error');
             }
         });
     });
+
+    $("#show-jshz").click(function () {
+        var answer_huizhen_case_table = $('#answer-huizhen-case-table').DataTable();
+        answer_huizhen_case_table.ajax.reload();
+    })
 
     $("#loadImageBtn").click(function(){
         var patient_name            = $('#patient_name').val();
@@ -812,15 +829,15 @@ $(document).ready(function() {
                     $('#token_amount').html(data.token);
                     $('#jlModal').modal('show');
                     // reload table
-                    var wallet_table = $('#wallet_table').DataTable();
+                    // var wallet_table = $('#wallet_table').DataTable();
                     var case_table = $('#case-table').DataTable();
                     var comment_page_case_table = $('#comment-page-case-table').DataTable();
                     var answer_huizhen_case_table = $('#answer-huizhen-case-table').DataTable();
                     var ask_huizhen_case_table = $('#ask-huizhen-case-table').DataTable();
                     var source_expert_case_table = $('#source-expert-case-table').DataTable();
                     var source_user_case_table = $('#source-user-case-table').DataTable();
-                    
-                    wallet_table.ajax.reload();
+
+                    // wallet_table.ajax.reload();
                     case_table.ajax.reload();
                     comment_page_case_table.ajax.reload();
                     answer_huizhen_case_table.ajax.reload();

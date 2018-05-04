@@ -10,7 +10,7 @@ from sqlalchemy import desc
 @login_required
 def work():
     form = CaseForm()
-    return render_template('work.html', form=form,current_user=current_user)
+    return render_template('work.html', form=form, current_user=current_user)
 
 
 def add_consultation_comment():
@@ -38,7 +38,7 @@ def comment_history_table_infos():
     consultations = Consultation.query.filter_by(case_id=case_id).order_by(desc(Consultation.comment_time)).all()
     print('len:')
     print(len(consultations))
-    for i in range(1, len(consultations)):
+    for i in range(0, len(consultations)):
         d = {}
         d['id'] = consultations[i].id
         d['doctor'] = 'test'  # consultations[i].commenter.user_name
@@ -62,7 +62,6 @@ def comment_history_table_infos():
 def work_start_consult():
     print("work_start_consult")
     # comment = request.form.get('comment')
-    # TODO... update consult_db # DONE
     print(request.form)
 
     if not ('case_id' in request.form):
@@ -78,12 +77,12 @@ def work_start_consult():
                 case.consultation_message = comment_content
                 db.session.add(case)
                 db.session.commit()
-                return jsonify({'result': 'success'})
+                return jsonify({'result': '会诊发布成功'})
             else:
                 case.consultation_message = comment_content
                 db.session.add(case)
                 db.session.commit()
-                return jsonify({'result': 'already in consultation'})
+                return jsonify({'result': '该病例已经是会诊病例'})
         else:
             return jsonify({'result': 'no case instance' + str(case.id)})
     except:
@@ -211,12 +210,17 @@ def answer_case_table_infos():
     # TODO... read from consultant_db
     # 接收会诊
     # return as json
+    print("answer-case_table-info")
     consultant_cases = Case.query.filter_by(in_consultant=True).order_by(desc(Case.consultant_time)).all()
+    print(len(consultant_cases))
     g.user = current_user
     data = []
-    for i in range(1, len(consultant_cases)):
+    if (not g.user.is_authenticated):
+        rdata = {'recordsTotal': 0, 'data': []}
+        return jsonify(rdata)
+    for i in range(0, len(consultant_cases)):
         d = {}
-        ownership = True if (g.user.is_authenticated and consultant_cases[i].upload_user_id == g.user.id) else False
+        ownership = True if (consultant_cases[i].upload_user_id == g.user.id) else False
         d['id'] = consultant_cases[i].id
         d['description'] = consultant_cases[i].consultation_message
         d['starter'] = consultant_cases[i].upload_user_id if ownership else '*'
@@ -253,7 +257,7 @@ def case_table_infos():
     user_id = g.user.id if g.user.is_authenticated else 0
     cases = Case.query.filter_by(upload_user_id=user_id).order_by(desc(Case.case_upload_time)).all()
     data = []
-    for i in range(1, len(cases)):
+    for i in range(0, len(cases)):
         data.append(Case2Json(cases[i]))
     if request.method == 'GET':
         rdata = {'recordsTotal': len(data), 'data': data}
