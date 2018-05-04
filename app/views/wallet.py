@@ -9,7 +9,7 @@ def check_wallet():
     data = []
     if g.user.is_authenticated:
         trans = g.user.transactions
-        for i in range(1, len(trans)):
+        for i in range(0, len(trans)):
             d = {}
             d['id'] = i
             d['date'] = trans[i].trans_time

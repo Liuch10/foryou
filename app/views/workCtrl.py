@@ -163,21 +163,22 @@ def source_case_table_infos():
         users = [case.uploader for case in cases]
 
     data = []
-    for i in range(1, len(cases)):
+    for i in range(0, len(cases)):
         d = {}
         ownership = True if (int(user_id) == int(cases[i].upload_user_id)) else 0
         share = True if (users[i] and users[i].allow_share) else False
+        visible = ownership or share
         try:
             d['id'] = cases[i].id
             d['userid'] = cases[i].id
-            d['name'] = cases[i].case_patient_name if (ownership and share) else "*"
-            d['sex'] = cases[i].case_patient_gender if (ownership and share) else "*"
-            d['age'] = cases[i].case_patient_age if (ownership and share) else "*"
-            d['imgTpye'] = cases[i].case_photo_type if (ownership and share) else "*"
-            d['type'] = cases[i].case_diagnose_type if (ownership and share) else "*"
-            d['consultResult'] = cases[i].case_diagnose_result if (ownership and share) else "*"
-            d['commentType'] = cases[i].is_tagged if (ownership and share) else "*"
-            d['uploadDate'] = cases[i].case_upload_time if (ownership and share) else "*"
+            d['name'] = cases[i].case_patient_name if visible else "*"
+            d['sex'] = cases[i].case_patient_gender if visible else "*"
+            d['age'] = cases[i].case_patient_age if visible else "*"
+            d['imgTpye'] = cases[i].case_photo_type if visible else "*"
+            d['type'] = cases[i].case_diagnose_type if visible else "*"
+            d['consultResult'] = cases[i].case_diagnose_result if visible else "*"
+            d['commentType'] = ('已标注' if cases[i].is_tagged else '未标注') if visible else "*"
+            d['uploadDate'] = cases[i].case_upload_time if visible else "*"
         except:
             d['id'] = "-1"
             d['userid'] = "-2"
