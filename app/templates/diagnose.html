@@ -1,237 +1,302 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>查看</title>
-		<link rel="stylesheet" href="/static/css/bootstrap-work.min.css">
-  		<script src="/static/js/jquery-3.3.1.min.js"></script>
-  		<script src="/static/js/bootstrap-work.min.js"></script>
-  		<script src="/static/js/comment-upload.js"></script>
-  		<script>
-  		function GetQueryString(name) {
-    		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-    		var r = window.location.search.substr(1).match(reg);
-    		if (r != null) return unescape(r[2]); return null;
-		};
-		function hexToBase64(hexstring) {
-  			  return btoa(hexstring.match(/\w{2}/g).map(function(a) {
-        	return String.fromCharCode(parseInt(a, 16));
-    		}).join(""));
-    	};
-  		</script>
-  		<script src="/static/js/buffer.js"></script>
-		<script src="/static/js/file-type.js"></script>
-		<script src="/static/js/ipfs.js"></script>
-  		<script>
-  		 	ipfs.setProvider();
-  		 	var data={
-            id:GetQueryString('id')
-        	}
-        	$.ajax({
-            	type: 'POST',
-            	url:  '/getImageAddress',
-            	data: data,
-            	dataType: 'json',
-            	success: function(data){
-                    // alert(data.address);
-                if (data.result=='success'){
-                    ipfs.cat(data.address, function(err, data) {
+<head>
+    <meta charset="UTF-8">
+    <title>查看</title>
+    <link rel="stylesheet" href="/static/css/bootstrap-work.min.css">
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/js/bootstrap-work.min.js"></script>
+    <script src="/static/js/comment-upload.js"></script>
+    <script>
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]);
+            return null;
+        };
+
+        function hexToBase64(hexstring) {
+            return btoa(hexstring.match(/\w{2}/g).map(function (a) {
+                return String.fromCharCode(parseInt(a, 16));
+            }).join(""));
+        };
+    </script>
+    <script src="/static/js/buffer.js"></script>
+    <script src="/static/js/file-type.js"></script>
+    <script src="/static/js/ipfs.js"></script>
+    <script>
+        ipfs.setProvider();
+        var data = {
+            id: GetQueryString('id')
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/getImageAddress',
+            data: data,
+            dataType: 'json',
+            success: function (data) {
+                // alert(data.address);
+                if (data.result == 'success') {
+                    ipfs.cat(data.address, function (err, data) {
                         var buf = new buffer.Buffer(data, 'binary');
-                        var src=hexToBase64(buf.toString('hex'))
-                        $('#case_img').attr('src','data:image/jpeg;base64,'+src)
+                        var src = hexToBase64(buf.toString('hex'))
+                        $('#case_img').attr('src', 'data:image/jpeg;base64,' + src)
                     });
-                }else{
+                } else {
                     alert(data.address);
                 }
             },
-	           error: function(){
+            error: function () {
                 alert('error');
             }
         });
-  		</script>
-  		<style>
- 			 input{
- 			 	width: 70px;
- 			 	border-radius: 3px;
- 			 }
- 			 td{
-			  	height:5px;
-			 }
-			 body{
-			 	padding: 0px;
-			 }
-  		</style>
-	</head>
-	<body style="background-color: #2D343C;">
-		<div class="container" style="padding: 0px;">
-			<form action="/diagnose" method="post" name="diagnose">
-				<!-- {{form.hidden_tag()}} -->
-			<div class="row clearfix" style="padding-bottom: 0px;">
-				<div class="col-md-9 column border-0">
-					<img id='case_img' class="img-fluid" width="100%" height="100%"/ >
-				</div>
-				<div class="col-md-3 column " style="padding: 0px;">
-					<div class="form-group" style="background-color: #323943;">
-						<div>
-							<label class="text-white" for="imagenumber">图像编号:</label>
-							{{form.case_id(style="width: auto;",type="text",class="bg-transparent border-0 text-white m-auto",readonly="readonly")}}
-						</div>
-						<div>
-							<label class="text-white" for="imagescale">影像显示比例:</label>
-							<input type="text" class="bg-transparent border-0 text-white" value="1:1" readonly="readonly" id="imagescale"/>
-						</div>
-						<div>
-							<label class="text-white" for="age">年龄:</label>
-							<label type="text" class="bg-transparent border-0 text-white m-auto" value="26" readonly="readonly" id="age">{{case_patient_age}}</label>
-						</div>
-					</div>
-					<div class="form-group" style="background-color: #323943;">
-						<div class="text-center">
-							<button type="button" class="bg-secondary text-white btn-sm">AI诊断</button>
-						</div>
-						<div>
-							<label class="text-danger" for="aiprop">AI诊断结果:</label>
-							<input style="width: auto;" type="text" class="bg-transparent border-0 text-white m-auto" value="" readonly="readonly" id="aiprop"/>
-							<label class="text-danger" for="imagescale">概率:</label>
-							<input type="text" class="bg-transparent border-0 text-white" value="" readonly="readonly" id="imagescale"/>
-						</div>
-					</div>
-					<div class="form-group" style="background-color: #323943;">
-						<div class="form-inline" style="padding-bottom: 5px;padding-top:5px ;">
-							 <label class="text-white" for="imagequality">图像质量:</label>&nbsp;&nbsp;
-							 {{form.photo_quality(class_="form-control bg-secondary border-0 text-white")}}
-						</div>
-						<div>
-							<label class="text-white" for="imagescale">小阴影形态:</label>
-							{{form.small_shadow_1(class_="border-0 text-white badge-secondary")}}
-							<span class="text-light font-italic">/</span>
-							{{form.small_shadow_2(class_="border-0 text-white badge-secondary")}}
+    </script>
+    <style>
+        input {
+            width: 70px;
+            border-radius: 3px;
+        }
 
-						</div>
-					</div>
-					<div class="form-group" style="background-color: #323943;">
-						<div class="form-inline">
-							<div  class="row clearfix">
-								<div class="col-md-4 column mx-auto">
-									<label class="text-white" for="imagequality">病变范围</label>
-								</div>
-								<div class="col-md-8 column" style="width: 250px;">
-									<table class="table table-bordered table-sm bg-secondary text-white text-center">
-									    <tbody>
-									      <tr>
-									        <td>{{form.damage_1}}</td>
-									        <td>{{form.damage_2}}</td>
-									      </tr>
-									      <tr>
-									        <td>{{form.damage_3}}</td>
-									        <td>{{form.damage_4}}</td>
-									      </tr>
-									      <tr>
-									        <td>{{form.damage_5}}</td>
-									        <td>{{form.damage_6}}</td>
-									      </tr>
-									    </tbody>
-									</table>
-								</div>
-							</div>	  
-						</div>
-					</div>
-					<div class="form-group" style="background-color: #323943;">
-						<div class="form-inline" style="padding-bottom: 5px;padding-top:5px ;">
-							 <label class="text-white" for="imagequality">总体密集度:</label>&nbsp;&nbsp;
-							      {{form.intensity(class_="form-check-label text-white",style="width: auto;")}}
-						</div>
-					</div>
-					<div class="form-group" style="background-color: #323943;">
-						<div class="form-inline" style="padding-bottom: 5px;padding-top:5px ;">
-							<div class="form-check form-check-inline">
-								 <label class="form-check-label text-white">
-								{{form.bool_small_shadow(class_="form-check-label text-white",style="width: auto;")}}
-								小阴影</label>
-							    </div>
-							    <div class="form-check form-check-inline">
-							    	<label class="form-check-label text-white">
-							    	{{form.bool_big_shadow(class_="form-check-label text-white",style="width: auto;")}}
-							    	大阴影
-							      </label>
-			<!-- 				      <label class="form-check-label text-white">
-							        <input type="checkbox" class="form-check-input" value="" style="width: auto;">大阴影
-							      </label> -->
-    						</div>
-    						<div class="form-check form-check-inline">
-    							<label class="form-check-label text-white">
-    							{{form.bool_pleural_plaque(class_="form-check-label text-white",style="width: auto;")}}
-    							胸膜斑
-    						</label>
-							      <!-- <label class="form-check-label text-white">
-							        <input type="checkbox" class="form-check-input" value="" style="width: auto;">胸膜斑&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-							    </div>
-							    <div class="form-check form-check-inline text-white">
-							    	<label class="form-check-label">
-    							{{form.bool_big_shadow_2_1(class_="form-check-label text-white",style="width: auto;")}}
-    							大阴影达到2*1
-							      </label>
-							      <!-- <label class="form-check-label">
-							        <input type="checkbox" class="form-check-input" value="" style="width: auto;">大阴影达到2*1
-							      </label> -->
-    						</div>
-    						<div class="form-check form-check-inline">
-<label class="form-check-label text-white">
-    							{{form.bool_pleural_calcification(class_="form-check-label text-white",style="width: auto;")}}
-    							胸膜钙化
-							      </label>
-							<!--       <label class="form-check-label text-white">
-							        <input type="checkbox" class="form-check-input" value="" style="width: auto;">胸膜钙化&nbsp;&nbsp;&nbsp;&nbsp;
-							      </label> -->
-							    </div>
-							    <div class="form-check form-check-inline">
-							    	<label class="form-check-label text-white">
-    							{{form.bool_shadow_disorder(class_="form-check-label text-white",style="width: auto;")}}
-    							心影紊乱
-							      </label>
-<!-- 							      <label class="form-check-label text-white">
-							        <input type="checkbox" class="form-check-input" value="" style="width: auto;">心影紊乱
-							      </label>-->
-							          						</div>
-						</div>
-					</div>
-					<div class="form-group" style="background-color: #323943;">
-						<div>
-							<label class="text-white" for="fjfh">附加符号:</label>
-<!-- 							<input style="width: auto;" type="text" class="bg-secondary border-0 text-white m-auto" value="" id="fjfh"/>
- -->					
- 						{{form.other_sign(class_="bg-secondary border-0 text-white m-auto")}}	
-						</div>
-						<div class="form-inline" style="padding-bottom: 5px;">
-							 <label class="text-white" for="imagequality">尘肺期别:</label>&nbsp;&nbsp;
-							 {{form.level(class_="form-control bg-secondary border-0 text-white",style="width:auto")}}
-							     <!--  <select class="form-control bg-secondary border-0 text-white" id="imagequality" style="width:auto;height: 25px; padding: 0px;">
-							        <option>无尘肺</option>
-							        <option>一期</option>
-							        <option>二期</option>
-							        <option>三期</option>
-							      </select> -->
-						</div>
-						<div>
-							<label for="comment" class="text-white">备注:</label>
-							{{form.remark(class_="form-control bg-secondary text-white border-0")}}
-     						<!-- <textarea class="form-control bg-secondary text-white border-0" rows="1" id="comment"></textarea> -->
-						</div>
-					</div>
-					<div class="form-group" style="background-color: #323943;padding: 5px;">
-						<!-- <div class="text-center" style="padding: 10px;">
-							<button type="button" class="btn btn-secondary btn-sm">&nbsp;&nbsp;后&nbsp;&nbsp;&nbsp;&nbsp;退&nbsp;&nbsp;</button>&nbsp;&nbsp;
-							<button type="button" class="btn btn-secondary btn-sm">&nbsp;&nbsp;跳&nbsp;&nbsp;&nbsp;&nbsp;过&nbsp;&nbsp;</button>
-						</div> -->
-						<div class="text-center" style="padding: 10px;">
-							<a href="javascript:history.go(-1)" type="button" class="btn btn-primary btn-sm">&nbsp;&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;&nbsp;</a>&nbsp;&nbsp;
-							{{form.submit(class_="btn btn-primary btn-sm")}}
-						</div>
-					</div>
-				</div>
-			</div>		
-		<!-- </form> -->
-		</div>
-		<div class="fixed-bottom text-center bg-dark text-white-50">@2018 jiejiewisedoctor.com&nbsp;&nbsp;&nbsp;&nbsp;ALL&nbsp;rights&nbsp;reserved&nbsp;&nbsp;&nbsp;&nbsp;京ICP备16888888号-1</div>
-	</body>
+        td {
+            height: 5px;
+        }
+
+        body {
+            padding: 0px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('form').submit(function (e) {
+                var url = "/diagnose"; // send the form data here.
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: $('form').serialize(), // serializes the form's elements.
+                    success: function (data) {
+                        $('#jlModal').modal('show');
+                    }
+                });
+                e.preventDefault(); // block the traditional submission of the form.
+            });
+            $.ajaxSetup({
+                beforeSend: function (xhr, settings) {
+                    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", "{{ form.csrf_token._value() }}")
+                    }
+                }
+            })
+
+            $("#jlModal").on("hide.bs.modal", function () {
+                // put your default event here
+                window.location.href = '/work';
+            });
+
+
+        });
+    </script>
+</head>
+<body style="background-color: #2D343C;">
+<div class="container" style="padding: 0px;">
+    <form method="post" name="diagnose">
+        <!-- {{form.hidden_tag()}} -->
+        <div class="row clearfix" style="padding-bottom: 0px;">
+            <div class="col-md-9 column border-0">
+                <img id='case_img' class="img-fluid" width="100%" height="100%"/ >
+            </div>
+            <div class="col-md-3 column " style="padding: 0px;">
+                <div class="form-group" style="background-color: #323943;">
+                    <div>
+                        <label class="text-white" for="imagenumber">图像编号:</label>
+                        {{form.case_id(style="width: auto;",type="text",class="bg-transparent border-0 text-white
+                        m-auto",readonly="readonly")}}
+                    </div>
+                    <div>
+                        <label class="text-white" for="imagescale">影像显示比例:</label>
+                        <input type="text" class="bg-transparent border-0 text-white" value="1:1" readonly="readonly"
+                               id="imagescale"/>
+                    </div>
+                    <div>
+                        <label class="text-white" for="age">年龄:</label>
+                        <label type="text" class="bg-transparent border-0 text-white m-auto" value="26"
+                               readonly="readonly" id="age">{{case_patient_age}}</label>
+                    </div>
+                </div>
+                <div class="form-group" style="background-color: #323943;">
+                    <div class="text-center">
+                        <button type="button" class="bg-secondary text-white btn-sm">AI诊断</button>
+                    </div>
+                    <div>
+                        <label class="text-danger" for="aiprop">AI诊断结果:</label>
+                        <input style="width: auto;" type="text" class="bg-transparent border-0 text-white m-auto"
+                               value="" readonly="readonly" id="aiprop"/>
+                        <label class="text-danger" for="imagescale">概率:</label>
+                        <input type="text" class="bg-transparent border-0 text-white" value="" readonly="readonly"
+                               id="imagescale"/>
+                    </div>
+                </div>
+                <div class="form-group" style="background-color: #323943;">
+                    <div class="form-inline" style="padding-bottom: 5px;padding-top:5px ;">
+                        <label class="text-white" for="imagequality">图像质量:</label>&nbsp;&nbsp;
+                        {{form.photo_quality(class_="form-control bg-secondary border-0 text-white")}}
+                    </div>
+                    <div>
+                        <label class="text-white" for="imagescale">小阴影形态:</label>
+                        {{form.small_shadow_1(class_="border-0 text-white badge-secondary")}}
+                        <span class="text-light font-italic">/</span>
+                        {{form.small_shadow_2(class_="border-0 text-white badge-secondary")}}
+
+                    </div>
+                </div>
+                <div class="form-group" style="background-color: #323943;">
+                    <div class="form-inline">
+                        <div class="row clearfix">
+                            <div class="col-md-4 column mx-auto">
+                                <label class="text-white" for="imagequality">病变范围</label>
+                            </div>
+                            <div class="col-md-8 column" style="width: 250px;">
+                                <table class="table table-bordered table-sm bg-secondary text-white text-center">
+                                    <tbody>
+                                    <tr>
+                                        <td>{{form.damage_1}}</td>
+                                        <td>{{form.damage_2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{form.damage_3}}</td>
+                                        <td>{{form.damage_4}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{form.damage_5}}</td>
+                                        <td>{{form.damage_6}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" style="background-color: #323943;">
+                    <div class="form-inline" style="padding-bottom: 5px;padding-top:5px ;">
+                        <label class="text-white" for="imagequality">总体密集度:</label>&nbsp;&nbsp;
+                        {{form.intensity(class_="form-check-label text-white",style="width: auto;")}}
+                    </div>
+                </div>
+                <div class="form-group" style="background-color: #323943;">
+                    <div class="form-inline" style="padding-bottom: 5px;padding-top:5px ;">
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label text-white">
+                                {{form.bool_small_shadow(class_="form-check-label text-white",style="width: auto;")}}
+                                小阴影</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label text-white">
+                                {{form.bool_big_shadow(class_="form-check-label text-white",style="width: auto;")}}
+                                大阴影
+                            </label>
+                            <!-- 				      <label class="form-check-label text-white">
+                                                    <input type="checkbox" class="form-check-input" value="" style="width: auto;">大阴影
+                                                  </label> -->
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label text-white">
+                                {{form.bool_pleural_plaque(class_="form-check-label text-white",style="width: auto;")}}
+                                胸膜斑
+                            </label>
+                            <!-- <label class="form-check-label text-white">
+                              <input type="checkbox" class="form-check-input" value="" style="width: auto;">胸膜斑&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                        </div>
+                        <div class="form-check form-check-inline text-white">
+                            <label class="form-check-label">
+                                {{form.bool_big_shadow_2_1(class_="form-check-label text-white",style="width: auto;")}}
+                                大阴影达到2*1
+                            </label>
+                            <!-- <label class="form-check-label">
+                              <input type="checkbox" class="form-check-input" value="" style="width: auto;">大阴影达到2*1
+                            </label> -->
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label text-white">
+                                {{form.bool_pleural_calcification(class_="form-check-label text-white",style="width:
+                                auto;")}}
+                                胸膜钙化
+                            </label>
+                            <!--       <label class="form-check-label text-white">
+                                    <input type="checkbox" class="form-check-input" value="" style="width: auto;">胸膜钙化&nbsp;&nbsp;&nbsp;&nbsp;
+                                  </label> -->
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label text-white">
+                                {{form.bool_shadow_disorder(class_="form-check-label text-white",style="width: auto;")}}
+                                心影紊乱
+                            </label>
+                            <!-- 							      <label class="form-check-label text-white">
+                                                                <input type="checkbox" class="form-check-input" value="" style="width: auto;">心影紊乱
+                                                              </label>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" style="background-color: #323943;">
+                    <div>
+                        <label class="text-white" for="fjfh">附加符号:</label>
+                        <!-- 							<input style="width: auto;" type="text" class="bg-secondary border-0 text-white m-auto" value="" id="fjfh"/>
+                         -->
+                        {{form.other_sign(class_="bg-secondary border-0 text-white m-auto")}}
+                    </div>
+                    <div class="form-inline" style="padding-bottom: 5px;">
+                        <label class="text-white" for="imagequality">尘肺期别:</label>&nbsp;&nbsp;
+                        {{form.level(class_="form-control bg-secondary border-0 text-white",style="width:auto")}}
+                        <!--  <select class="form-control bg-secondary border-0 text-white" id="imagequality" style="width:auto;height: 25px; padding: 0px;">
+                           <option>无尘肺</option>
+                           <option>一期</option>
+                           <option>二期</option>
+                           <option>三期</option>
+                         </select> -->
+                    </div>
+                    <div>
+                        <label for="comment" class="text-white">备注:</label>
+                        {{form.remark(class_="form-control bg-secondary text-white border-0")}}
+                        <!-- <textarea class="form-control bg-secondary text-white border-0" rows="1" id="comment"></textarea> -->
+                    </div>
+                </div>
+                <div class="form-group" style="background-color: #323943;padding: 5px;">
+                    <!-- <div class="text-center" style="padding: 10px;">
+                        <button type="button" class="btn btn-secondary btn-sm">&nbsp;&nbsp;后&nbsp;&nbsp;&nbsp;&nbsp;退&nbsp;&nbsp;</button>&nbsp;&nbsp;
+                        <button type="button" class="btn btn-secondary btn-sm">&nbsp;&nbsp;跳&nbsp;&nbsp;&nbsp;&nbsp;过&nbsp;&nbsp;</button>
+                    </div> -->
+                    <div class="text-center" style="padding: 10px;">
+                        <a href="javascript:history.go(-1)" type="button" class="btn btn-primary btn-sm">&nbsp;&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;&nbsp;</a>&nbsp;&nbsp;
+                        {{form.submit(class_="btn btn-primary btn-sm")}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- </form> -->
+    </form>
+</div>
+<div class="modal fade" id="jlModal">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color: #2D343C;">
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title text-white">操作奖励</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- 模态框主体 -->
+            <div class="modal-body text-center">
+                <p class="text-white">操作成功</p>
+                <p class="text-white">恭喜您获取FOYO</p>
+                <label class="text-white" id='token_amount'>0</label>
+                <label class="text-white">枚</label>
+            </div>
+            <!-- 模态框底部 -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="fixed-bottom text-center bg-dark text-white-50">@2018 jiejiewisedoctor.com&nbsp;&nbsp;&nbsp;&nbsp;ALL&nbsp;rights&nbsp;reserved&nbsp;&nbsp;&nbsp;&nbsp;京ICP备16888888号-1</div>
+</body>
 </html>

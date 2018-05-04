@@ -100,7 +100,7 @@ class DiagnoseForm(Form):
                             # case_patient_age=d_json['case_patient_age'] ,
                             photo_quality=d_json['photo_quality'],
                             small_shadow_1=d_json['small_shadow_1'],
-                            small_shadow_2=d_json['small_shadow_1'],
+                            small_shadow_2=d_json['small_shadow_2'],
                             damage_1=d_json['damage_1'],
                             damage_2=d_json['damage_2'],
                             damage_3=d_json['damage_3'],
