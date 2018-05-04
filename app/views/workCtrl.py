@@ -191,9 +191,9 @@ def source_case_table_infos():
             d['commentType'] = "*"
             d['uploadDate'] = "*"
         try:
-            d['department'] = users[i].user_department if (ownership and share) else "*"
-            d['hospital'] = users[i].user_hospital if (ownership and share) else "*"
-            d['expert'] = users[i].user_name if (ownership and share) else "*"
+            d['department'] = users[i].user_department if visible else "*"
+            d['hospital'] = users[i].user_hospital if visible else "*"
+            d['expert'] = users[i].user_name if visible else "*"
         except:
 
             d['department'] = 'default_depart'
@@ -321,13 +321,13 @@ def reply_consultation():
 def get_image_address():
     case_id = int(request.form.get('id'))
     case = Case.query.filter_by(id=case_id).first()
-    # return jsonify({'result': 'success', 'address': "QmWo5Pgo3WAXZfTCNtuGgruafmQY13eSCCm4aNeZycVknE"})
-    if current_user.is_authenticated and case and case.upload_user_id == current_user.id:
+    visible = case.uploader.allow_share or (case.upload_user_id == current_user.id)
+    if current_user.is_authenticated and case and visible:
         addr = case.case_photo_hash
         return jsonify({'result': 'success', 'address': addr})
     else:
-        addr = 'invalid user'
-        return jsonify({'result': 'error', 'address': addr})
+        addr = '该图片不开放查看'
+        return jsonify({'result': 'error', 'info': addr})
 
 
 def get_consultation_message():
