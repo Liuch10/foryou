@@ -4,11 +4,12 @@ $(document).ready(function() {
         $('#comment-history-table').DataTable().destroy();
         var prefix = getLeftNarBarActive();
         var caseIds = getSelectedCase(prefix);
+        var case_id=caseIds[0];
         var descriptions = getSelectedCaseDescription(prefix)
         $("#consultation_case_id").text(caseIds[0]);
         $("#consultation_message").text(descriptions[0]);
         var data={
-            id:case_id
+            id: case_id
         }
         $('#add_consultation_comment').unbind('click');
         $('#add_consultation_comment').click(function(){
