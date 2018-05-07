@@ -774,7 +774,7 @@ $(document).ready(function() {
         var prefix = getLeftNarBarActive();
         var caseIds = getSelectedCase(prefix);
         var comment = $('#help_text').val();
-        // alert(comment)
+        alert(comment)
         var data={
             'case_id'          : caseIds[0],
             'comment'           : comment

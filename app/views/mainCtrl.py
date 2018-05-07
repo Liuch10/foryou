@@ -2,7 +2,6 @@ from flask import Response, render_template
 from app.models.models import User
 from app import db
 from flask_login import current_user, login_required
-from app import ether
 
 
 def main():
