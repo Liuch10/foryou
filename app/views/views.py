@@ -41,6 +41,9 @@ app.add_url_rule('/case-table-infos', methods=['GET'], view_func=case_table_info
 app.add_url_rule('/answer-case-table-infos', methods=['GET'], view_func=answer_case_table_infos)
 app.add_url_rule('/case-table-source-infos', methods=['GET'], view_func=source_case_table_infos)
 app.add_url_rule('/comment-history-table-infos', methods=['GET'], view_func=comment_history_table_infos)
+
+#退出登陆
+app.add_url_rule('/logout', methods=['GET','POST'], view_func = logout)
 # 上传病例
 app.add_url_rule('/upload_case', methods=['POST'], view_func=work_upload_case)
 # 发起会诊
@@ -59,7 +62,6 @@ app.add_url_rule('/updatePersonalInfo', methods=['POST', 'GET'], view_func=updat
 app.add_url_rule('/wallet-table-infos', methods=['GET'], view_func=check_wallet)
 
 app.add_url_rule('/getImageAddress', methods=['POST'], view_func=get_image_address)
-# app.add_url_rule('/logout', methods=['GET'], view_func = logout)
 #
 # app.add_url_rule('/upload-case', methods=['POST','GET'], view_func=upload_case)
 

@@ -107,7 +107,7 @@ $(document).ready(function() {
             $('.checkbox_select').parent('td').css("background-color","black");
         },
         });
-        });
+    });
 
     $('#check_wallet').click(function(){
     $('#wallet_table').DataTable().destroy();
@@ -771,12 +771,10 @@ $(document).ready(function() {
     });
 
     $("#fqhzModalBtn").click(function(){
-        // TODO 发起会诊是可以同时对多个case发起会诊？
-        // 不可以，只能一个一个发起。这里设计一个复选框就是脑残
         var prefix = getLeftNarBarActive();
         var caseIds = getSelectedCase(prefix);
         var comment = $('#help_text').val();
-        alert(comment)
+        // alert(comment)
         var data={
             'case_id'          : caseIds[0],
             'comment'           : comment

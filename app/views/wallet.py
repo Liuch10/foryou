@@ -7,7 +7,7 @@ def check_wallet():
     print('check_wallet')
     g.user = current_user
     data = []
-    if g.user.is_authenticated:
+    if g.user.is_authenticated and len(g.user.transactions) > 0:
         trans = g.user.transactions
         for i in range(0, len(trans)):
             d = {}
@@ -20,10 +20,10 @@ def check_wallet():
     else:
         d = {}
         d['id'] = 0
-        d['date'] = 'undefined'
-        d['type'] = 'undefined'
-        d['amount'] = 'undefined'
-        d['spec'] = 'undefined'
+        d['date'] = '无'
+        d['type'] = '无'
+        d['amount'] = '无'
+        d['spec'] = '无'
         data.append(d)
     rdata = {'recordsTotal': len(data), 'data': data}
     rtn = jsonify(rdata)

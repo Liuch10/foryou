@@ -2,6 +2,7 @@ from flask import Response, render_template, jsonify, request, g, redirect, url_
 from app.models.models import User, Case, ExpertCase, Consultation
 from app.utils.forms import CaseForm
 from app import db
+from config import FLAG_CHAIN
 
 from flask_login import current_user, login_required
 from sqlalchemy import desc
@@ -70,6 +71,8 @@ def work_start_consult():
     case_id = int(request.form.get('case_id'))
     comment_content = request.form.get('comment') if request.form.get('comment') else "未填写"
     case = Case.query.filter_by(id=case_id).first()
+    if (not current_user.is_authenticated) or (not current_user.id == case.uploader.id):
+        return jsonify({'result': '您无权对本病例发起会诊'})
     try:
         if case:
             if not case.in_consultant:
