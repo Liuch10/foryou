@@ -44,17 +44,33 @@
 		  			   </ul>
 			    </div>	
 			    <div class="col-4">
-				    <ul class="breadcrumb justify-content-end bg-transparent">
-					    <li class="breadcrumb-item">
-					      <a href="/login">登录</a>
-					    </li>
-					    <li class="breadcrumb-item">
-					      <a  href="/sign-up">注册</a>
-					    </li>
-					    <li class="breadcrumb-item">
-					      <a href="#"><img src="/static/img/CH.png"><img/></a>
-					    </li>
-					  </ul>
+                    {% if current_user.is_authenticated %}
+    				  <ul class="nav justify-content-end">
+                		<li class="nav-item">
+                    	<a class="nav-link" href="#"><img class="rounded-circle" src="/static/img/head.jpg" width="35px"
+                                                      height="35px"><img/></a>
+		                </li>
+        		        <li class="nav-item">
+                	    <label id="username" class="nav-link text-white">{{current_user.user_name}}</label>
+                		</li>
+                	<li class="nav-item">
+                    	<a class="nav-link" href="#"><img src="/static/img/CH.png"><img/></a>
+                	</li>
+            			</ul>
+					{% else %}
+    					<ul class="breadcrumb justify-content-end bg-transparent">
+					    	<li class="breadcrumb-item">
+					      	<a href="/login">登录</a>
+					    	</li>
+					    	<li class="breadcrumb-item">
+					      	<a  href="/sign-up">注册</a>
+					    	</li>
+					    	<li class="breadcrumb-item">
+					      	<a href="#"><img src="/static/img/CH.png"><img/></a>
+					    	</li>
+					  	</ul>
+					{% endif %}
+
 			    </div>
 			</div>
 			<div id="sign" class="carousel slide" data-ride="carousel">

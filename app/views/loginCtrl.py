@@ -81,7 +81,7 @@ def sign_up():
             try:
                 db.session.add(user)
                 db.session.commit()
-                tryCredit(user.id, CREDIT_SIGNUP, '收入', '注册奖励', False)
+                _ = tryCredit(user.id, CREDIT_SIGNUP, '收入', '注册奖励', False)
             except:
                 print("db error")
                 return redirect('sign-up')

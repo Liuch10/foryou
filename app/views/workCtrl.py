@@ -5,9 +5,10 @@ from app import db
 
 from flask_login import current_user, login_required
 from sqlalchemy import desc
-from config import CREDIT_UPLOAD, CREDIT_REPLY_CONSULTATION, MAX_CREDIT
+from config import CREDIT_UPLOAD, CREDIT_REPLY_CONSULTATION, FLAG_CHAIN
 from app.utils.transaction import tryCredit
-
+from app import contract_helper
+from config import DECIMAL
 
 @login_required
 def work():
@@ -28,8 +29,8 @@ def add_consultation_comment():
     try:
         db.session.add(consultation)
         db.session.commit()
-        token = tryCredit(g.user.id, CREDIT_REPLY_CONSULTATION, '收入', '会诊奖励')
-        return jsonify({'result': 'success', 'token': token})
+        token, trans_hash, wage = tryCredit(g.user.id, CREDIT_REPLY_CONSULTATION, '收入', '会诊奖励')
+        return jsonify({'result': 'success', 'token': token, 'trans_hash': trans_hash, 'wage': wage})
     except:
         return jsonify({'result': 'fail to add comment'})
 
@@ -139,7 +140,7 @@ def work_upload_case():
     try:
         # DONE
         # upload_check = Case.query.filter_by(case_photo_hash=case_photo_hash).first()
-        upload_check=False
+        upload_check = False
         if upload_check:
             print("already uploaed")
             return jsonify({'result': '该文件已经被发布过'})
@@ -147,8 +148,8 @@ def work_upload_case():
             db.session.add(case)
             db.session.commit()
             print("success")
-            token = tryCredit(g.user.id, CREDIT_UPLOAD,'收入','上传奖励')
-            return jsonify({'result': 'success', 'token': token})
+            token, trans_hash, wage = tryCredit(g.user.id, CREDIT_UPLOAD, '收入', '上传奖励')
+            return jsonify({'result': 'success', 'token': token, 'trans_hash': trans_hash, 'wage': wage})
     except:
         print("error")
         return jsonify({'result': 'error'})
@@ -303,7 +304,8 @@ def update_personal_info():
                  'province': g.user.user_city if user_authenticated else "",
                  'mail': g.user.user_mail if user_authenticated else "notlogin",
                  'department': g.user.user_department if user_authenticated else "notlogin",
-                 'allowshare': '是' if user_authenticated and g.user.allow_share  else "否"}
+                 'allowshare': '是' if user_authenticated and g.user.allow_share  else "否",
+                 'wallet_address': g.user.user_wallet_address if user_authenticated else "0x00"}
     # print(rdata)
     return jsonify(rdata)
 
@@ -348,3 +350,19 @@ def get_consultation_message():
     else:
         message = 'invalid'
         return jsonify({'result': 'error', 'message': message})
+
+
+def get_balance():
+    print('get_balance')
+    g.user = current_user
+    try:
+        balance = 0
+        if FLAG_CHAIN:
+            balance = contract_helper.getBalance(g.user.user_wallet_address)
+            balance = int(balance * (0.1 ** DECIMAL))
+        else:
+            balance = current_user.user_wallet_balance
+        # print("here")
+        return jsonify({'result': 'success', 'balance': balance})
+    except:
+        return jsonify({'result': 'success', 'balance': 0})

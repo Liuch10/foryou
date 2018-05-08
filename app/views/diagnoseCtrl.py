@@ -43,15 +43,19 @@ def diagnose():
         credit = 0
         ownership = True if (g.user.is_authenticated and int(g.user.id) == int(request_case.upload_user_id)) else False
         if ownership and not request_case.is_tagged:
-            credit = tryCredit(g.user.id, CREDIT_DIAGNOSE, '收入', '标注奖励')
+            credit, trans_hash, wage = tryCredit(g.user.id, CREDIT_DIAGNOSE, '收入', '标注奖励')
 
-        request_case.is_tagged = True
         request_case.case_tag_info = specs
         request_case.case_tag_time = datetime.strptime(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                                                        '%Y-%m-%d %H:%M:%S')
+        if request_case.is_tagged:
+            db.session.add(request_case)
+            db.session.commit()
+            return jsonify({'result': 'error'})
+        request_case.is_tagged = True
         try:
             db.session.add(request_case)
             db.session.commit()
-            return jsonify({'result': 'success', 'token': credit})
+            return jsonify({'result': 'success', 'token': credit, 'trans_hash': trans_hash, 'wage': wage})
         except:
             return jsonify({'result': 'error'})

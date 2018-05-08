@@ -1,5 +1,4 @@
-import json
-import web3
+import os
 
 from web3 import Web3, HTTPProvider
 from web3.contract import ConciseContract
@@ -8,6 +7,7 @@ from config import TOKEN_ABI_FILE, TOKEN_BIN_FILE, CONTRACT_ADDRESS, DECIMAL
 
 class EthHelper:
     def __init__(self, host='127.0.0.1', port='8545'):
+        print(os.getcwd())
         self.ready = False
         self.w3 = Web3(HTTPProvider('http://' + host + ":" + port))
         self._contract()
@@ -16,7 +16,6 @@ class EthHelper:
 
     def _contract(self, abi_file=TOKEN_ABI_FILE, bin_file=TOKEN_BIN_FILE,
                   contract_address=CONTRACT_ADDRESS):
-
         if (abi_file and bin_file and contract_address):
             with open(abi_file, 'r') as f_abi:
                 contract_abi = f_abi.readline()
@@ -45,14 +44,17 @@ class EthHelper:
         self.w3.personal.lockAccount(addr)
 
     def reward(self, targetAdd, num_token):
+        print("reward")
+        # print(int(num_token * (10 ** DECIMAL)))
 
         transact_hash = self.concise_contract_instance.transfer(Web3.toChecksumAddress(targetAdd),
-                                                                num_token * (10 ** DECIMAL),
+                                                                int(num_token * (10 ** DECIMAL)),
                                                                 transact={'from': self.w3.eth.coinbase})
+        print(transact_hash)
         # reward_receipt = self.w3.eth.waitForTransactionReceipt(transact_hash)
         return transact_hash
 
-    def getBlance(self, targetAdd):
+    def getBalance(self, targetAdd):
         return self.concise_contract_instance.balanceOf(Web3.toChecksumAddress(targetAdd))
 
 

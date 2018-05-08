@@ -107,7 +107,7 @@ class Transaction(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), default=0)
     user = db.relationship(User, backref="transactions")
 
-    trans_amount = db.Column(db.Integer, default=0)
+    trans_amount = db.Column(db.Float, default=0)
     trans_time = db.Column(db.DateTime,
                            default=datetime.strptime(datetime.now().strftime('%Y-%m-%d %H:%M:%S'), '%Y-%m-%d %H:%M:%S'))
     trans_type = db.Column(db.String(64), default="default")

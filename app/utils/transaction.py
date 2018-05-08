@@ -1,6 +1,6 @@
 from flask import g
 from flask_login import current_user
-from app.models.models import Transaction, Wage
+from app.models.models import Transaction, Wage, User
 from app import db
 from config import MAX_CREDIT
 from config import FLAG_CHAIN
@@ -16,6 +16,7 @@ def tryCredit(user_id, num, trans_type, spec, restricted=True):
 
     print("tryCredit")
     today = datetime.now().strftime('%Y%m%d')
+    user = User.query.filter_by(id=user_id).first()
     user_wage = Wage.query.filter_by(user_id=user_id).filter_by(wage_date=today).first()
     # user_wage=None
     print(user_wage)
@@ -29,17 +30,18 @@ def tryCredit(user_id, num, trans_type, spec, restricted=True):
         else:
             available_credit = num
     print(available_credit)
-    print("available")
     try:
         # update wage
         if restricted:
             user_wage.wage += available_credit
+        user.user_wallet_balance += available_credit
         db.session.add(user_wage)
+        db.session.add(user)
         db.session.commit()
         print("commit")
         # update transaction
         if FLAG_CHAIN:
-            trans_hash = contract_helper.reward(user_id, num)
+            trans_hash = contract_helper.reward(user.user_wallet_address, num).hex()
         else:
             trans_hash = "0x00"
         print("hash")
@@ -52,7 +54,7 @@ def tryCredit(user_id, num, trans_type, spec, restricted=True):
         db.session.add(user_trans)
         db.session.commit()
 
-        return available_credit
+        return available_credit, trans_hash, user_wage.wage
 
     except:
-        return 0
+        return 0, 0x00, 0

@@ -638,6 +638,13 @@
 								</span>
                     </div>
                     <div class="input-group">
+								<span style="margin: auto;">
+							    	<label for="">钱包地址</label>
+							    	<input type="text" id="wallet_address" class="bg-secondary border-0 text-white"
+                                           style="margin: auto;padding-left: 5px;" readonly="readonly"></input>
+								</span>
+                    </div>
+                    <div class="input-group">
 							    <span style="margin: auto;">
 							    	<label for="province">省&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;份</label>
 							     	<select class="bg-secondary border-0 text-white" id="province"
@@ -669,6 +676,10 @@
             <div class="tab-pane fade" id="my_wallet" style="padding-top:2%">
             <div class="text-center text-white" style="font-size: 150%;" >
                 <p>我的钱包</p>
+                <p>
+                <label>当前余额：</label>
+                <label id="chain_balance">0</label>
+                </p>
             </div>
             <div style="padding-top: 2%;">
             	<table id="wallet_table" class="display"
@@ -894,6 +905,11 @@
                 <p class="text-white">恭喜您获取FOYO</p>
                 <label class="text-white" id='token_amount'>0</label>
                 <label class="text-white">枚</label>
+                <p class="text-white">链上交易记录哈希为</p>
+                <label class="text-white" id='trans_hash'>0x00</label>
+                <p class="text-white">当天已经获得FOYO</p>
+                <label class="text-white" id='wage'>0</label>
+                <label class="text-white">枚</label>
             </div>
             <!-- 模态框底部 -->
             <div class="modal-footer">
@@ -981,6 +997,7 @@
                 $('#mail').val(data.mail);
                 $('#province').val(data.province);
                 $('#allowshare').val(data.allowshare);
+                $('#wallet_address').val(data.wallet_address);
             },
             error: function(){
             }

@@ -27,6 +27,8 @@ $(document).ready(function() {
                         var comment_history_table = $('#comment-history-table').DataTable();
                         comment_history_table.ajax.reload();
                         $('#token_amount').html(data.token);
+                        $('#trans_hash').html(data.trans_hash);
+                        $('#wage').html(data.wage);
                         $('#jlModal').modal('show');
                     }else{
                     alert(data.result);
@@ -112,6 +114,19 @@ $(document).ready(function() {
     });
 
     $('#check_wallet').click(function(){
+        $.ajax({
+            type: 'GET',
+            url: '/get-balance',
+            dataType: 'json',
+            success: function (data) {
+                $("#chain_balance").html(data.balance);
+            },
+            error: function () {
+                alert('balance error');
+                $("#chain_balance").html('nan');
+            }
+        });
+
     $('#wallet_table').DataTable().destroy();
     $('#wallet_table').DataTable( {
         "bPaginate" : true,
@@ -170,7 +185,7 @@ $(document).ready(function() {
         },
         "language": {
             "sSearch": "搜索: ",
-            "sSearchPlaceholder": "请输入病人ID"
+            "sSearchPlaceholder": ""
         },
         "columns": [
             { "data" : null },
@@ -249,7 +264,7 @@ $(document).ready(function() {
         },
         "language": {
             "sSearch": "搜索: ",
-            "sSearchPlaceholder": "请输入病人ID"
+            "sSearchPlaceholder": ""
         },
         "columns": [
             { "data" : null },
@@ -327,7 +342,7 @@ $(document).ready(function() {
         },
         "language": {
             "sSearch": "搜索: ",
-            "sSearchPlaceholder": "请输入病人ID"
+            "sSearchPlaceholder": ""
         },
         "columns": [
             { "data" : null },
@@ -401,7 +416,7 @@ $(document).ready(function() {
         },
         "language": {
             "sSearch": "搜索: ",
-            "sSearchPlaceholder": "请输入病人ID"
+            "sSearchPlaceholder": ""
         },
         "columns": [
             { "data" : null },
@@ -482,7 +497,7 @@ $(document).ready(function() {
         },
         "language": {
             "sSearch": "搜索: ",
-            "sSearchPlaceholder": "请输入病人ID"
+            "sSearchPlaceholder": ""
         },
         "columns": [
             { "data" : null },
@@ -562,7 +577,7 @@ $(document).ready(function() {
         },
         "language": {
             "sSearch": "搜索: ",
-            "sSearchPlaceholder": "请输入病人ID"
+            "sSearchPlaceholder": ""
         },
         "columns": [
             { "data" : null },
@@ -841,6 +856,8 @@ $(document).ready(function() {
                 $('#loadimage').modal('hide')
                 if (data.result == "success") {
                     $('#token_amount').html(data.token);
+                    $('#trans_hash').html(data.trans_hash);
+                    $('#wage').html(data.wage);
                     $('#jlModal').modal('show');
                     // reload table
                     // var wallet_table = $('#wallet_table').DataTable();
