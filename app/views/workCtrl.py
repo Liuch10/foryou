@@ -139,8 +139,8 @@ def work_upload_case():
                 case_photo_hash=case_photo_hash)
     try:
         # DONE
-        # upload_check = Case.query.filter_by(case_photo_hash=case_photo_hash).first()
-        upload_check = False
+        upload_check = Case.query.filter_by(case_photo_hash=case_photo_hash).first()
+        # upload_check = False
         if upload_check:
             print("already uploaed")
             return jsonify({'result': '该文件已经被发布过'})
