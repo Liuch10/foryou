@@ -113,3 +113,12 @@ class Transaction(db.Model):
     trans_type = db.Column(db.String(64), default="default")
     trans_spec = db.Column(db.String(64), default="default")
     trans_hash = db.Column(db.String(64), default="default")
+
+
+class Wage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), default=0)
+    user = db.relationship(User, backref="wages")
+
+    wage = db.Column(db.Float, default=0.0)
+    wage_date = db.Column(db.String, default=datetime.now().strftime('%Y%m%d'))

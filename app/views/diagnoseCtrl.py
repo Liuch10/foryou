@@ -5,7 +5,9 @@ from app import db
 from datetime import datetime
 from flask_login import current_user, login_required
 import json
+from config import FLAG_CHAIN, CREDIT_DIAGNOSE
 from sqlalchemy import desc
+from app.utils.transaction import tryCredit
 
 
 def diagnose():
@@ -38,6 +40,11 @@ def diagnose():
         print(specs)
         case_id = int(request.form.get('case_id'))
         request_case = Case.query.filter_by(id=case_id).first()
+        credit = 0
+        ownership = True if (g.user.is_authenticated and int(g.user.id) == int(request_case.upload_user_id)) else False
+        if ownership and not request_case.is_tagged:
+            credit = tryCredit(g.user.id, CREDIT_DIAGNOSE, '收入', '标注奖励')
+
         request_case.is_tagged = True
         request_case.case_tag_info = specs
         request_case.case_tag_time = datetime.strptime(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
@@ -45,6 +52,6 @@ def diagnose():
         try:
             db.session.add(request_case)
             db.session.commit()
-            return jsonify({'result': 'success'})
+            return jsonify({'result': 'success', 'token': credit})
         except:
             return jsonify({'result': 'error'})

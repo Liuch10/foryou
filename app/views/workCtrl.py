@@ -2,10 +2,11 @@ from flask import Response, render_template, jsonify, request, g, redirect, url_
 from app.models.models import User, Case, ExpertCase, Consultation
 from app.utils.forms import CaseForm
 from app import db
-from config import FLAG_CHAIN
 
 from flask_login import current_user, login_required
 from sqlalchemy import desc
+from config import CREDIT_UPLOAD, CREDIT_REPLY_CONSULTATION, MAX_CREDIT
+from app.utils.transaction import tryCredit
 
 
 @login_required
@@ -27,7 +28,8 @@ def add_consultation_comment():
     try:
         db.session.add(consultation)
         db.session.commit()
-        return jsonify({'result': 'success'})
+        token = tryCredit(g.user.id, CREDIT_REPLY_CONSULTATION, '收入', '会诊奖励')
+        return jsonify({'result': 'success', 'token': token})
     except:
         return jsonify({'result': 'fail to add comment'})
 
@@ -136,7 +138,8 @@ def work_upload_case():
                 case_photo_hash=case_photo_hash)
     try:
         # DONE
-        upload_check = Case.query.filter_by(case_photo_hash=case_photo_hash).first()
+        # upload_check = Case.query.filter_by(case_photo_hash=case_photo_hash).first()
+        upload_check=False
         if upload_check:
             print("already uploaed")
             return jsonify({'result': '该文件已经被发布过'})
@@ -144,7 +147,8 @@ def work_upload_case():
             db.session.add(case)
             db.session.commit()
             print("success")
-            return jsonify({'result': 'success', 'token': 3})
+            token = tryCredit(g.user.id, CREDIT_UPLOAD,'收入','上传奖励')
+            return jsonify({'result': 'success', 'token': token})
     except:
         print("error")
         return jsonify({'result': 'error'})
@@ -304,21 +308,21 @@ def update_personal_info():
     return jsonify(rdata)
 
 
-def reply_consultation():
-    # TODO get case_id and comment content from frontend
-    case_id = 0
-    comment_content = ""
-    g.user = current_user
-    comment_user_id = g.user.id if g.user.is_authenticated else 0
-    consult = Consultation(comment_user_id=comment_user_id,
-                           case_id=case_id,
-                           comment_content=comment_content)
-    try:
-        db.session.add(consult)
-        db.session.commit()
-        return jsonify({'result': '回复成功'})
-    except:
-        return jsonify({'result': '恢复失败'})
+# def reply_consultation():
+#     # TODO get case_id and comment content from frontend
+#     case_id = 0
+#     comment_content = ""
+#     g.user = current_user
+#     comment_user_id = g.user.id if g.user.is_authenticated else 0
+#     consult = Consultation(comment_user_id=comment_user_id,
+#                            case_id=case_id,
+#                            comment_content=comment_content)
+#     try:
+#         db.session.add(consult)
+#         db.session.commit()
+#         return jsonify({'result': '回复成功'})
+#     except:
+#         return jsonify({'result': '恢复失败'})
 
 
 def get_image_address():

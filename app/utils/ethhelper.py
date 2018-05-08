@@ -1,8 +1,7 @@
 import json
 import web3
 
-from web3 import Web3, TestRPCProvider, HTTPProvider
-from solc import compile_source
+from web3 import Web3, HTTPProvider
 from web3.contract import ConciseContract
 from config import TOKEN_ABI_FILE, TOKEN_BIN_FILE, CONTRACT_ADDRESS, DECIMAL
 
@@ -35,9 +34,9 @@ class EthHelper:
         web3 = Web3(HTTPProvider('http://' + host + ':' + port))
         return web3.eth.blockNumber
 
-    def createAccount(self, passphrase="jiejie"):
+    def createAccount(self, passphrase="jjkj"):
         if self.w3:
-            return address and passphrase
+            # return address and passphrase
             return [self.w3.personal.newAccount(passphrase), passphrase]
         else:
             return ["", passphrase]

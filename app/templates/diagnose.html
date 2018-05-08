@@ -75,6 +75,7 @@
                     url: url,
                     data: $('form').serialize(), // serializes the form's elements.
                     success: function (data) {
+                        $('#token_amount').text(data.token);
                         $('#jlModal').modal('show');
                     }
                 });

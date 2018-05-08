@@ -3,13 +3,14 @@ from flask_login import login_user, logout_user, current_user, login_required
 from app.utils.forms import LoginForm, SignUpForm
 from app.utils.sendmail import send_mail
 from app.models.models import User
-from app import app, db
+from app import db
 from datetime import datetime
 from random import randint
 from app import contract_helper
 from config import FLAG_CHAIN, CREDIT_SIGNUP
 import hashlib
 import json
+from app.utils.transaction import tryCredit
 
 
 def getPasswordHash(passphrase):
@@ -72,31 +73,42 @@ def sign_up():
             user.user_phone = user_phone
             # user.user_chain_address = user_chain_address
             user.user_reg_time = datetime.now()
-            user.user_wallet_address = contract_helper.createAccount()[0]
+            if FLAG_CHAIN:
+                user.user_wallet_address = contract_helper.createAccount()[0]
+
+            else:
+                user.user_wallet_address = "0x00"
             try:
                 db.session.add(user)
                 db.session.commit()
+                tryCredit(user.id, CREDIT_SIGNUP, '收入', '注册奖励', False)
             except:
                 print("db error")
                 return redirect('sign-up')
             print(user_mail + ":" + user_password + ":" + user.user_wallet_address)
-            return redirect(url_for("sign_up_success"))
+            messages = json.dumps({"wallet": user.user_wallet_address})
+            return redirect(url_for("sign_up_success", messages=messages))
     print(form.errors)
+    print('signup.html')
     return render_template("signup.html", form=form)
 
 
 def sign_up_success():
     # g.user = current_user
-    msg = ""
-    if current_user.is_authenticated:
-        # user_id = g.user.id, user_address = g.user.user_chain_address
-        g.user = current_user
-        msg = "您的钱包地址为：" + g.user.user_wallet_address + "。 登陆赠送FOYO币" + CREDIT_SIGNUP + "个"
-        if FLAG_CHAIN:
-            contract_helper.reward(g.user.user_wallet_address, CREDIT_SIGNUP)
-        return render_template('signup_success.html', msg=msg)
+    # msg = ""
+    # if current_user.is_authenticated:
+    # user_id = g.user.id, user_address = g.user.user_chain_address
+    # g.user = current_user
+    # msg = "您的钱包地址为：" + g.user.user_wallet_address + "。 登陆赠送FOYO币" + CREDIT_SIGNUP + "个"
+    try:
+        messages = json.loads(request.args['messages'])
+    except:
+        messages={"wallet":'unknown'}
+    print(messages['wallet'])
+    if FLAG_CHAIN:
+        return render_template('signup_success.html', wallet=messages['wallet'], credit=CREDIT_SIGNUP)
     else:
-        return redirect('sign-up')
+        return render_template('signup_success.html', wallet="0x00", credit=CREDIT_SIGNUP)
 
 
 def sendMail():

@@ -26,6 +26,8 @@ $(document).ready(function() {
                     if (data.result=='success'){
                         var comment_history_table = $('#comment-history-table').DataTable();
                         comment_history_table.ajax.reload();
+                        $('#token_amount').html(data.token);
+                        $('#jlModal').modal('show');
                     }else{
                     alert(data.result);
                     }
@@ -727,6 +729,19 @@ $(document).ready(function() {
     }
 
 
+    $("#check_diagnose").click(function(){
+
+        var comment_page_case_table = $('#comment-page-case-table').DataTable();
+        comment_page_case_table.ajax.reload();
+    });
+
+    $("#check_consultation").click(function(){
+        var answer_huizhen_case_table = $('#answer-huizhen-case-table').DataTable();
+        var ask_huizhen_case_table = $('#ask-huizhen-case-table').DataTable();
+        answer_huizhen_case_table.ajax.reload();
+        ask_huizhen_case_table.ajax.reload();
+
+    });
 
     $("#startComment").click(function(){
         // TODO 每次标注取第一个选择的case
@@ -830,19 +845,19 @@ $(document).ready(function() {
                     // reload table
                     // var wallet_table = $('#wallet_table').DataTable();
                     var case_table = $('#case-table').DataTable();
-                    var comment_page_case_table = $('#comment-page-case-table').DataTable();
-                    var answer_huizhen_case_table = $('#answer-huizhen-case-table').DataTable();
-                    var ask_huizhen_case_table = $('#ask-huizhen-case-table').DataTable();
-                    var source_expert_case_table = $('#source-expert-case-table').DataTable();
-                    var source_user_case_table = $('#source-user-case-table').DataTable();
+                    // var comment_page_case_table = $('#comment-page-case-table').DataTable();
+                    // var answer_huizhen_case_table = $('#answer-huizhen-case-table').DataTable();
+                    // var ask_huizhen_case_table = $('#ask-huizhen-case-table').DataTable();
+                    // var source_expert_case_table = $('#source-expert-case-table').DataTable();
+                    // var source_user_case_table = $('#source-user-case-table').DataTable();
 
                     // wallet_table.ajax.reload();
                     case_table.ajax.reload();
-                    comment_page_case_table.ajax.reload();
-                    answer_huizhen_case_table.ajax.reload();
-                    ask_huizhen_case_table.ajax.reload();
-                    source_expert_case_table.ajax.reload();
-                    source_user_case_table.ajax.reload();
+                    // comment_page_case_table.ajax.reload();
+                    // answer_huizhen_case_table.ajax.reload();
+                    // ask_huizhen_case_table.ajax.reload();
+                    // source_expert_case_table.ajax.reload();
+                    // source_user_case_table.ajax.reload();
                 }
                 else{
                     alert(data.result)
