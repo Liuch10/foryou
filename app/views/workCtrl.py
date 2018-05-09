@@ -125,10 +125,12 @@ def work_upload_case():
     case_diagnose_type = request.form.get(
         'patient_diagnose_type') if 'patient_diagnose_type' in request.form else '未知'
 
+
     case_diagnose_result = request.form.get(
         'patient_diagnose_result') if 'patient_diagnose_result' in request.form else "未知"
     case_photo_hash = request.form.get('patient_photo_file') if 'patient_photo_file' in request.form else 'nohash'
 
+    case_dcm_hash = request.form.get('patient_dcm_file') if 'patient_dcm_file' in request.form else 'nohash'
     case = Case(upload_user_id=upload_user_id,
                 case_patient_name=case_patient_name,
                 case_patient_gender=case_patient_gender,
@@ -136,7 +138,8 @@ def work_upload_case():
                 case_photo_type=case_photo_type,
                 case_diagnose_type=case_diagnose_type,
                 case_diagnose_result=case_diagnose_result,
-                case_photo_hash=case_photo_hash)
+                case_photo_hash=case_photo_hash,
+                case_dcm_hash=case_dcm_hash)
     try:
         # DONE
         upload_check = Case.query.filter_by(case_photo_hash=case_photo_hash).first()
@@ -232,7 +235,7 @@ def answer_case_table_infos():
         ownership = True if (consultant_cases[i].upload_user_id == g.user.id) else False
         d['id'] = consultant_cases[i].id
         d['description'] = consultant_cases[i].consultation_message
-        d['starter'] = consultant_cases[i].upload_user_id if ownership else '*'
+        d['starter'] = consultant_cases[i].uploader.user_name if ownership else '*'
         d['hospital'] = "test" if ownership else '*'
         d['department'] = "test" if ownership else '*'
         d['start-date'] = "test" if ownership else '*'

@@ -44,6 +44,7 @@ class CaseForm(Form):
     patient_photo_type = SelectField(
         choices=[('其他', '其他'), ('CR', 'CR'), ('DR', 'DR'), ('CT', 'CT'), ('MR', 'MR'), ('超声', '超声')])
     # patient_photo_file = StringField(validators=[Required()])
+    case_dcm_hash = StringField()
     case_photo_hash = StringField()
     is_diagnois = StringField()
     is_expert = StringField()
