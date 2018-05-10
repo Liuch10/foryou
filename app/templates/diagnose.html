@@ -80,7 +80,7 @@
                             $('#wage').text(data.wage);
                             $('#jlModal').modal('show');
                         }else{
-                             window.location.href = '/work';
+                             window.location.href = '/work?on=diagnose';
 
                         }
                     }
@@ -97,7 +97,7 @@
 
             $("#jlModal").on("hide.bs.modal", function () {
                 // put your default event here
-                window.location.href = '/work';
+                window.location.href = '/work?on=diagnose';
             });
 
 

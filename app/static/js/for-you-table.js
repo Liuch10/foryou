@@ -1,5 +1,7 @@
 $(document).ready(function () {
-
+    if  (getURLParameter('on')=='diagnose'){
+        $("#check_diagnose").click();
+    }
     $('#startConsult').click(function () {
         $('#comment-history-table').DataTable().destroy();
         var prefix = getLeftNarBarActive();
