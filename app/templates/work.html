@@ -39,6 +39,19 @@
             color: white;
         }
 
+        #comment-page-case-table_filter label {
+            color: white;
+        }
+
+        #ask-huizhen-case-table_filter label{
+            color: white;
+        }
+        #source-user-case-table_filter label{
+            color: white;
+        }
+        #source-expert-case-table_filter label{
+            color: white;
+        }
         #case-table_filter input {
             /*width: 100px;*/
             margin: auto;
@@ -111,6 +124,9 @@
             <ul class="nav">
                 <li class="nav-item">
                     <a class="nav-link" href="main">首页</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="work">工作台</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="product">服务介绍</a>
@@ -185,13 +201,9 @@
                     </button>
                 </div>
                 <div id="new-search-area" class="input-group" style="padding-top: 1%;">
-                    <!-- <span class="input-group-btn bg-secondary" style="margin: auto;border-radius: 20px;padding: 5px;">
-                        <input type="text" class="bg-secondary border-0 text-white" value="请输入病人ID" style="width:300px;margin: auto;border-bottom-left-radius: 20px;border-top-left-radius: 20px;">
-                        <img src="/static/img/查询.png"/>
-                    </span> -->
                 </div><!-- /input-group -->
                 <div style="padding-top: 2%; padding-bottom: 5%">
-                    <table id="case-table" class="display" style="width:100%; background-color: black; color: white;">
+                    <table id="case-table" class="display" style="font-size:80%; width:100%;background-color: black; color: white;">
                         <thead>
                         <tr>
                             <th><input type="checkbox" name="select_all" id="select-all"></th>
@@ -209,156 +221,6 @@
                         </tr>
                         </thead>
                     </table>
-
-                    <!-- <table class="table table-dark table-hover">
-                        <thead>
-                          <tr>
-                              <th>
-                                <input type="checkbox" value="" style="margin: 0px;">全选
-                              </th>
-                            <th>患者ID</th>
-                            <th>姓名</th>
-                            <th>性别</th>
-                            <th>年龄</th>
-                            <th>影像类型</th>
-                            <th>良恶性</th>
-                            <th>诊断结果</th>
-                            <th>上传日期</th>
-                            <th>操作</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                              <td><input type="checkbox" value="" style="margin: 0px;"></td>
-                            <td>201804181023</td>
-                            <td>唐宝来</td>
-                            <td>男</td>
-                            <td>54</td>
-                            <td>DR</td>
-                            <td>良性</td>
-                            <td>正常</td>
-                            <td>2018/04/18 10:23:45</td>
-                            <td class="text-info"><a href="check.html">查看</a></td>
-                          </tr>
-                          <tr>
-                            <td><input type="checkbox" value="" style="margin: 0px;"></td>
-                            <td>201804181026</td>
-                            <td>富兴</td>
-                            <td>男</td>
-                            <td>66</td>
-                            <td>DR</td>
-                            <td>良性</td>
-                            <td>正常</td>
-                            <td>2018/04/18 10:12:21</td>
-                            <td class="text-info"><a href="check.html">查看</a></td>
-                          </tr>
-                          <tr>
-                            <td><input type="checkbox" value="" style="margin: 0px;"></td>
-                            <td>201804181032</td>
-                            <td>李子来</td>
-                            <td>男</td>
-                            <td>69</td>
-                            <td>DR</td>
-                            <td>恶性</td>
-                            <td>一期</td>
-                            <td>2018/04/18 10:32:56</td>
-                            <td class="text-info"><a href="check.html">查看</a></td>
-                          </tr>
-                           <tr>
-                            <td><input type="checkbox" value="" style="margin: 0px;"></td>
-                            <td>201804181033</td>
-                            <td>王富贵</td>
-                            <td>男</td>
-                            <td>57</td>
-                            <td>DR</td>
-                            <td>恶性</td>
-                            <td>一期</td>
-                            <td>2018/04/18 10:33:12</td>
-                            <td class="text-info"><a href="check.html">查看</a></td>
-                          </tr>
-                           <tr>
-                           <td><input type="checkbox" value="" style="margin: 0px;"></td>
-                            <td>201804181036</td>
-                            <td>王金彪</td>
-                            <td>男</td>
-                            <td>35</td>
-                            <td>DR</td>
-                            <td>恶性</td>
-                            <td>一期</td>
-                            <td>2018/04/18 10:36:23</td>
-                            <td class="text-info"><a href="check.html">查看</a></td>
-                          </tr>
-                          <tr>
-                           <td><input type="checkbox" value="" style="margin: 0px;"></td>
-                            <td>201804181049</td>
-                            <td>赵任申</td>
-                            <td>男</td>
-                            <td>42</td>
-                            <td>DR</td>
-                            <td>良性</td>
-                            <td>正常</td>
-                            <td>2018/04/18 10:49:12</td>
-                            <td class="text-info"><a href="check.html">查看</a></td>
-                          </tr>
-                          <tr>
-                           <td><input type="checkbox" value="" style="margin: 0px;"></td>
-                            <td>201804180152</td>
-                            <td>张金鑫</td>
-                            <td>男</td>
-                            <td>67</td>
-                            <td>DR</td>
-                            <td>恶性</td>
-                            <td>一期</td>
-                            <td>2018/04/18 10:53:34</td>
-                            <td class="text-info"><a href="check.html">查看</a></td>
-                          </tr>
-                          <tr>
-                              <td><input type="checkbox" value="" style="margin: 0px;"></td>
-                            <td>201804181053</td>
-                            <td>王志珠</td>
-                            <td>女</td>
-                            <td>35</td>
-                            <td>DR</td>
-                            <td>良性</td>
-                            <td>正常</td>
-                            <td>2018/04/18 10:53:49</td>
-                            <td class="text-info"><a href="check.html">查看</a></td>
-                          </tr>
-                          <tr>
-                              <td><input type="checkbox" value="" style="margin: 0px;"></td>
-                            <td>201804181058</td>
-                            <td>周少林</td>
-                            <td>男</td>
-                            <td>47</td>
-                            <td>DR</td>
-                            <td>良性</td>
-                            <td>正常</td>
-                            <td>2018/04/18 10:58:48</td>
-                            <td class="text-info"><a href="check.html">查看</a></td>
-                          </tr>
-                          <tr>
-                              <td><input type="checkbox" value="" style="margin: 0px;"></td>
-                            <td>201804181101</td>
-                            <td>魏文国</td>
-                            <td>男</td>
-                            <td>69</td>
-                            <td>DR</td>
-                            <td>恶性</td>
-                            <td>一期</td>
-                            <td>2018/04/18 11:02:12</td>
-                            <td class="text-info"><a href="check.html">查看</a></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <div class="container-fluid" style="padding-left: 40%;">
-                             <ul class="pagination pagination-sm">
-                               <li class="page-item"><a class="page-link" href="">&laquo;</a></li>
-                              <li class="page-item"><a class="page-link" href="">1</a></li>
-                              <li class="page-item active"><a class="page-link" href="">2</a></li>
-                              <li class="page-item"><a class="page-link" href="">3</a></li>
-                              <li class="page-item"><a class="page-link" href="">&raquo;</a></li>
-                            </ul>
-                      </div> -->
                 </div>
             </div>
             <div class="tab-pane fade" id="my_mark" style="padding-top: 2%;">
@@ -381,7 +243,7 @@
                 </div><!-- /input-group -->
                 <div style="padding-top: 2%;padding-bottom: 5%;">
                     <table id="comment-page-case-table" class="display"
-                           style="width:100%; background-color: black; color: white;">
+                           style="font-size:80%; width:100%; background-color: black; color: white;">
                         <thead>
                         <tr>
                             <th><input type="checkbox" name="comment-select-all" id="comment-select-all"></th>
@@ -410,7 +272,7 @@
                          style="padding-top: 1%;border-bottom-width: 2px;border-bottom-style: solid;">
                         <ul class="nav navbar-collapse" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active show huizhen-nav" data-tag="ask-huizhen-" data-toggle="pill" href="#fqhz">发起会诊</a>
+                                <a class="nav-link active show huizhen-nav" data-tag="ask-huizhen-" data-toggle="pill" href="#fqhz" id="show-fqhz">发起会诊</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link huizhen-nav" data-tag="answer-huizhen-" data-toggle="pill" href="#jshz" id ="show-jshz">接收会诊</a>
@@ -435,7 +297,7 @@
                             </div><!-- /input-group -->
                             <div style="padding-top: 2%;padding-bottom: 5%;">
                                 <table id="ask-huizhen-case-table" class="display"
-                                       style="width:100%; background-color: black; color: white;">
+                                       style="font-size:80%; width:100%; background-color: black; color: white;">
                                     <thead>
                                     <tr>
                                         <th><input type="checkbox" name="ask-huizhen-page-select-all"
@@ -474,7 +336,7 @@
                             </div><!-- /input-group -->
                             <div style="padding-top: 2%;padding-bottom: 5%;">
                                 <table id="answer-huizhen-case-table" class="display"
-                                       style="width:100%; background-color: black; color: white;">
+                                       style="font-size:80%; width:100%; background-color: black; color: white;">
                                     <thead>
                                     <tr>
                                         <th><input type="checkbox" name="answer-huizhen-page-select-all"
@@ -502,10 +364,10 @@
                      style="padding-top: 1%;border-bottom-width: 2px;border-bottom-style: solid;">
                     <ul class="nav navbar-collapse" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active show source-nav" data-tag="source-user-" data-toggle="pill" href="#yhdtgx">用户动态更新</a>
+                            <a class="nav-link active show source-nav" data-tag="source-user-" data-toggle="pill" href="#yhdtgx" id="show-yhdtgx">用户动态更新</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link source-nav" data-tag="source-expert-" data-toggle="pill" href="#zjzydt">专家资源动态</a>
+                            <a class="nav-link source-nav" data-tag="source-expert-" data-toggle="pill" href="#zjzydt" id="show-zjzydt">专家资源动态</a>
                         </li>
                     </ul>
                 </div>
@@ -530,7 +392,7 @@
                 <div class="tab-content">
                     <div id="yhdtgx" class="tab-pane active" style="padding-top: 2%;">
                         <table id="source-user-case-table" class="display"
-                               style="width:100%; background-color: black; color: white;">
+                               style="font-size:80%; width:100%; background-color: black; color: white;">
                             <thead>
                             <tr>
                                 <th><input type="checkbox" name="source-user-select-all" id="source-user-select-all">
@@ -555,7 +417,7 @@
                     </div>
                     <div id="zjzydt" class="tab-pane fade" style="padding-top: 2%;">
                         <table id="source-expert-case-table" class="display"
-                               style="width:100%; background-color: black; color: white;">
+                               style="font-size:80%; width:100%; background-color: black; color: white;">
                             <thead>
                             <tr>
                                 <th><input type="checkbox" name="source-expert-select-all"
@@ -688,23 +550,13 @@
                     <tr>
                     	<th>index</th>
                         <th>日期</th>
+                        <th>交易哈希</th>
                         <th>交易类型</th>
                         <th>交易数量</th>
                         <th>信息摘要</th>
-<!--                         <th>余币</th>
-                        <th>信息摘要</th>
- -->                    </tr>
+                     </tr>
                     </thead>
                 </table>
-                <!-- <div class="container-fluid" style="padding-left: 40%;">
-                    <ul class="pagination pagination-sm">
-                        <li class="page-item"><a class="page-link" href="">&laquo;</a></li>
-                        <li class="page-item"><a class="page-link" href="">1</a></li>
-                        <li class="page-item active"><a class="page-link" href="">2</a></li>
-                        <li class="page-item"><a class="page-link" href="">3</a></li>
-                        <li class="page-item"><a class="page-link" href="">&raquo;</a></li>
-                    </ul>
-                </div> -->
             </div>
         </div>
         </div>
@@ -714,7 +566,7 @@
 <!-- 模态框 -->
 <div class="modal fade text-center" id="preview-modal">
     <div class="modal-dialog " style="max-width: none! important; display:  inline-block;width:  auto;">
-    <img id='preview'></img>
+    <img id='preview' height="700" width="575"></img>
 </div>
 </div>
 <div class="modal fade" id="loadimage" tabindex="-1" role="dialog" aria-labelledby="loadimage">
@@ -762,8 +614,8 @@
                         <label>影像类型</label>
                         <select class="bg-secondary border-0 text-white" id="patient_photo_type"
                                 style="margin: auto;padding-left: 5px;">
-                            <option>CT</option>
                             <option>DR</option>
+                            <option>CT</option>
                             <option>CR</option>
                         </select>
                     </div>
@@ -850,7 +702,7 @@
 
                             </div>
                             <div style="padding-top: 2%;">
-                                <table id="comment-history-table" class="display" style="max-width: 220px; width:100%; background-color: black; color: white;">
+                                <table id="comment-history-table" class="display" style="font-size:80%; max-width: 220px; width:100%; background-color: black; color: white;">
                                     <thead class="comment-history-table-header">
                                     <tr>
                                         <th>index</th>
@@ -952,7 +804,7 @@
             var data = this.result;
             var jpgBuffer = new buffer.Buffer(data, 'binary');
             ipfs.add(jpgBuffer, function (err, resHash) {
-                alert(resHash);
+                alert('DCM影像添加成功，文件哈希为:\n'+resHash);
                 $("#patient_dcm_file").val(resHash);
             });
         }
@@ -966,7 +818,7 @@
             var data = this.result;
             var jpgBuffer = new buffer.Buffer(data, 'binary');
             ipfs.add(jpgBuffer, function (err, resHash) {
-                alert(resHash);
+                alert('JPEG影像添加成功，文件哈希为:\n'+resHash);
                 $("#patient_photo_file").val(resHash);
             });
         }
@@ -991,7 +843,7 @@
             telephone:$('#telephone').val(),
             mail:$('#mail').val(),
             province:$('#province').val(),
-            share: $('#allowshare').val()
+            allowshare: $('#allowshare').val()
         }
 //        alert(data.name);
         $.ajax({
@@ -1068,7 +920,30 @@
             }
         });
     };
+
+    function pad(n, width, z) {
+        z = z || '0';
+        n = n + '';
+        return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+    }
+    $('#show-fqhz').click(function() {
+        $('#show-jshz').css('color', 'white');
+        $('#show-fqhz').css('color', 'blue');
+    })
+    $('#show-jshz').click(function() {
+        $('#show-fqhz').css('color', 'white');
+        $('#show-jshz').css('color', 'blue');
+    })
+    $('#show-yhdtgx').click(function () {
+        $('#show-zjzydt').css('color', 'white');
+        $('#show-yhdtgx').css('color', 'blue');
+    })
+    $('#show-zjzydt').click(function () {
+        $('#show-yhdtgx').css('color', 'white');
+        $('#show-zjzydt').css('color', 'blue');
+    })
 </script>
+
 
 </body>
 </html>

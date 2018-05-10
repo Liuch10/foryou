@@ -45,7 +45,7 @@ def comment_history_table_infos():
     for i in range(0, len(consultations)):
         d = {}
         d['id'] = consultations[i].id
-        d['doctor'] = 'test'  # consultations[i].commenter.user_name
+        d['doctor'] = consultations[i].commenter.user_name + ":" + consultations[i].commenter.user_hospital
         d['comment'] = consultations[i].comment_content
         d['date'] = consultations[i].comment_time
         data.append(d)
@@ -183,13 +183,13 @@ def source_case_table_infos():
             d['id'] = cases[i].id
             d['userid'] = cases[i].id
             d['name'] = cases[i].case_patient_name if visible else "*"
-            d['sex'] = cases[i].case_patient_gender if visible else "*"
-            d['age'] = cases[i].case_patient_age if visible else "*"
-            d['imgTpye'] = cases[i].case_photo_type if visible else "*"
-            d['type'] = cases[i].case_diagnose_type if visible else "*"
-            d['consultResult'] = cases[i].case_diagnose_result if visible else "*"
-            d['commentType'] = ('已标注' if cases[i].is_tagged else '未标注') if visible else "*"
-            d['uploadDate'] = cases[i].case_upload_time if visible else "*"
+            d['sex'] = cases[i].case_patient_gender
+            d['age'] = cases[i].case_patient_age
+            d['imgTpye'] = cases[i].case_photo_type
+            d['type'] = cases[i].case_diagnose_type
+            d['consultResult'] = cases[i].case_diagnose_result
+            d['commentType'] = '已标注' if cases[i].is_tagged else '未标注'
+            d['uploadDate'] = cases[i].case_upload_time.strftime('%Y-%m-%d')
         except:
             d['id'] = "-1"
             d['userid'] = "-2"
@@ -202,7 +202,7 @@ def source_case_table_infos():
             d['commentType'] = "*"
             d['uploadDate'] = "*"
         try:
-            d['department'] = users[i].user_department if visible else "*"
+            d['department'] = users[i].user_department
             d['hospital'] = users[i].user_hospital if visible else "*"
             d['expert'] = users[i].user_name if visible else "*"
         except:
@@ -232,13 +232,14 @@ def answer_case_table_infos():
         return jsonify(rdata)
     for i in range(0, len(consultant_cases)):
         d = {}
-        ownership = True if (consultant_cases[i].upload_user_id == g.user.id) else False
+        # ownership = True if (consultant_cases[i].upload_user_id == g.user.id) else False
+        ownership = True #会诊表格都不脱敏
         d['id'] = consultant_cases[i].id
         d['description'] = consultant_cases[i].consultation_message
         d['starter'] = consultant_cases[i].uploader.user_name if ownership else '*'
-        d['hospital'] = "test" if ownership else '*'
-        d['department'] = "test" if ownership else '*'
-        d['start-date'] = "test" if ownership else '*'
+        d['hospital'] = consultant_cases[i].uploader.user_hospital if ownership else '*'
+        d['department'] = consultant_cases[i].uploader.user_department if ownership else '*'
+        d['start-date'] = consultant_cases[i].consultant_time.strftime('%Y-%m-%d') if ownership else '*'
         data.append(d)
     if request.method == 'GET':
         rdata = {'recordsTotal': len(data), 'data': data}
@@ -257,8 +258,8 @@ def Case2Json(case, secret=False):
     d['type'] = case.case_diagnose_type if (not secret) else "****"
     d['consultResult'] = case.case_diagnose_result if (not secret) else "****"
     commentType = "已标注" if case.is_tagged else "未标注"
-    d['commentType'] = commentType if (not secret) else "****:w"
-    d['uploadDate'] = case.case_upload_time if (not secret) else "****"
+    d['commentType'] = commentType if (not secret) else "****"
+    d['uploadDate'] = case.case_upload_time.strftime('%Y-%m-%d') if (not secret) else "****"
     d['hospital'] = "***"
     return d
 

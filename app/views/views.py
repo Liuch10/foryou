@@ -28,7 +28,8 @@ def before_request():
 
 
 # app.add_url_rule('/', methods=['GET'], view_func = index)
-app.add_url_rule('/main', methods=['GET'], view_func=main)
+app.add_url_rule('/foryou', methods=['GET'], view_func=main)
+app.add_url_rule('/', methods=['GET'], view_func=main)
 app.add_url_rule('/about-us', methods=['GET'], view_func=aboutUs)
 app.add_url_rule('/product', methods=['GET'], view_func=product)
 app.add_url_rule('/contact-us', methods=['GET'], view_func=contactUs)

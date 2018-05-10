@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="/static/css/bootstrap-work.min.css">
     <script src="/static/js/jquery-3.3.1.min.js"></script>
     <script src="/static/js/bootstrap-work.min.js"></script>
-    <script src="/static/js/comment-upload.js"></script>
     <script>
         function GetQueryString(name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -82,6 +81,7 @@
                             $('#jlModal').modal('show');
                         }else{
                              window.location.href = '/work';
+
                         }
                     }
                 });
@@ -186,7 +186,7 @@
                 <div class="form-group" style="background-color: #323943;">
                     <div class="form-inline" style="padding-bottom: 5px;padding-top:5px ;">
                         <label class="text-white" for="imagequality">总体密集度:</label>&nbsp;&nbsp;
-                        {{form.intensity(class_="form-check-label text-white",style="width: auto;")}}
+                        {{form.intensity(class_="form-control bg-secondary border-0 text-white",style="width: auto;")}}
                     </div>
                 </div>
                 <div class="form-group" style="background-color: #323943;">

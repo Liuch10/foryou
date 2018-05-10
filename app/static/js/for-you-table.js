@@ -126,49 +126,49 @@ $(document).ready(function() {
                 $("#chain_balance").html('nan');
             }
         });
-
-    $('#wallet_table').DataTable().destroy();
-    $('#wallet_table').DataTable( {
-        "bPaginate" : true,
-        "processing": true,
-        "searching": true,
-        "serverSide": false,
-        "bDeferRender": true,
-        "bAutoWidth" : true,
-        "bFilter": true,
-        "ajax": {
-            "url": "/wallet-table-infos",
-            "type": "GET"
-        },"columns": [
-            { "title": "index",  "data" : "id" },
-            { "title": "日期",  "data" : "date" },
-            { "title": "交易类型",  "data" : "type" },
-            { "title": "交易数量",  "data" : "amount" },
-            // { "title": "支出",  "data" : "amount1" },
-            // { "title": "余币",  "data" : "amount2" },
-            { "title": "信息摘要",  "data" : "spec" }
-        ],
-        "aoColumnDefs":[
-            {
-                "bVisible": false,
-                "aTargets": [ 0 ]
+        $('#wallet_table').DataTable().destroy();
+        $('#wallet_table').DataTable({
+            "bPaginate": true,
+            "processing": true,
+            "searching": true,
+            "serverSide": false,
+            "bDeferRender": true,
+            "bAutoWidth": true,
+            "bFilter": true,
+            "ajax": {
+                "url": "/wallet-table-infos",
+                "type": "GET"
+            }, "columns": [
+                {"title": "index", "data": "id", "width": "10%"},
+                {"title": "日期", "data": "date", "width": "25%"},
+                {"title": "交易哈希", "data": "trans_hash", "width": "50%"},
+                {"title": "交易类型", "data": "type", "width": "10%"},
+                {"title": "数量", "data": "amount", "width": "10%"},
+                // { "title": "支出",  "data" : "amount1" },
+                // { "title": "余币",  "data" : "amount2" },
+                {"title": "信息摘要", "data": "spec", "width": "15%"}
+            ],
+            "aoColumnDefs": [
+                {
+                    "bVisible": false,
+                    "aTargets": [0, 3]
+                },
+            ],
+            "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                $(nRow).css("background-color", "black");
+                $(nRow).css("color", "white");
             },
-        ],
-        "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-            $(nRow).css("background-color", "black");
-            $(nRow).css("color", "white");
-        },
-        initComplete : function() {
+            initComplete: function () {
 
-        },
-        "dom": 't<"#pBottom"p>',
-        "fnInitComplete":function(){
-            $("#pBottom > #case-table_previous").css("color", "white");
-            // $('#case-table').css("color","white").css("background-color","black");
-            $('.checkbox_select').parent('td').css("background-color","black");
-            // $("#case-table_filter").detach().appendTo('#new-search-area');
-        },
-    });
+            },
+            "dom": 't<"#pBottom"p>',
+            "fnInitComplete": function () {
+                $("#pBottom > #case-table_previous").css("color", "white");
+                // $('#case-table').css("color","white").css("background-color","black");
+                $('.checkbox_select').parent('td').css("background-color", "black");
+                // $("#case-table_filter").detach().appendTo('#new-search-area');
+            },
+        });
     });
 
     $('#case-table').DataTable( {
@@ -184,24 +184,33 @@ $(document).ready(function() {
             "type": "GET"
         },
         "language": {
-            "sSearch": "搜索: ",
+            "sSearch": "模糊查询: ",
             "sSearchPlaceholder": ""
         },
         "columns": [
-            { "data" : null },
-            { "title": "index",  "data" : "id" },
-            { "title": "患者ID",  "data" : "userid" },
-            { "title": "姓名",  "data" : "name" },
-            { "title": "性别",  "data" : "sex" },
-            { "title": "年龄",  "data" : "age" },
-            { "title": "影像类型",  "data" : "imgTpye" },
-            { "title": "良恶性",  "data" : "type" },
-            { "title": "诊断结果",  "data" : "consultResult" },
-            { "title": "标注状态",  "data" : "commentType" },
-            { "title": "上传日期",  "data" : "uploadDate" },
+            { "data" : null , "width":"5%"},
+            { "title": "index",  "data" : "id", "width":"20%"},//invisible
+            { "title": "ID",  "data" : "userid", "width":"5%" },
+            { "title": "姓名",  "data" : "name", "width":"10%" },
+            { "title": "性别",  "data" : "sex", "width":"8%" },
+            { "title": "年龄",  "data" : "age", "width":"8%" },
+            { "title": "类型",  "data" : "imgTpye", "width":"8%" },
+            { "title": "性质",  "data" : "type", "width":"8%" },
+            { "title": "结果",  "data" : "consultResult", "width":"10%" },
+            { "title": "标注状态",  "data" : "commentType", "width":"10%" },//invisible
+            { "title": "日期",  "data" : "uploadDate", "width":"15%" },
             { "title": "操作",  "data" : null }
         ],
         "aoColumnDefs":[
+            {
+                "targets": 2,
+                "data": null,
+                "bSortable": false,
+                render: function(data, type, row) {
+                    var html =pad(row.id,6);
+                    return html;
+                }
+            },
             {
                 "targets": 0,
                 "data": null,
@@ -215,7 +224,7 @@ $(document).ready(function() {
                 "targets": -1,
                 "bSortable": false,
                 render: function(data, type, row) {
-                    var html ='<a data-toggle="modal" data-target="#preview-modal" onclick="previewImage(' + row.id + ')" value="' + row.id + '">查看</a>';
+                    var html ='<a data-toggle="modal" data-target="#preview-modal" onclick="previewImage(' + row.id + ')" value="' + row.id + '">查看</a>&nbsp&nbsp&nbsp &nbsp&nbsp<a>调阅原片</a>';
 
                     return html;
                 }
@@ -263,24 +272,33 @@ $(document).ready(function() {
             "type": "GET"
         },
         "language": {
-            "sSearch": "搜索: ",
+            "sSearch": "模糊查询: ",
             "sSearchPlaceholder": ""
         },
         "columns": [
             { "data" : null },
             { "title": "index",  "data" : "id" },
-            { "title": "患者ID",  "data" : "userid" },
+            { "title": "ID",  "data" : "userid" },
             { "title": "姓名",  "data" : "name" },
             { "title": "性别",  "data" : "sex" },
             { "title": "年龄",  "data" : "age" },
-            { "title": "影像类型",  "data" : "imgTpye" },
-            { "title": "良恶性",  "data" : "type" },
-            { "title": "诊断结果",  "data" : "consultResult" },
-            { "title": "标注状态",  "data" : "commentType" },
-            { "title": "上传日期",  "data" : "uploadDate" },
+            { "title": "类型",  "data" : "imgTpye" },
+            { "title": "性质",  "data" : "type" },
+            { "title": "结果",  "data" : "consultResult" },
+            { "title": "状态",  "data" : "commentType" },
+            { "title": "日期",  "data" : "uploadDate" },
             { "title": "操作",  "data" : null }
         ],
         "aoColumnDefs":[
+            {
+                "targets": 2,
+                "data": null,
+                "bSortable": false,
+                render: function(data, type, row) {
+                    var html =pad(row.id,6);
+                    return html;
+                }
+            },
             {
                 "targets": 0,
                 "data": null,
@@ -295,7 +313,7 @@ $(document).ready(function() {
                 "bSortable": false,
                 render: function(data, type, row) {
                     // var html ='<a href="javascript:alert(' + row.id + ')" value="' + row.id + '">查看</button>';
-                    var html ='<a data-toggle="modal" data-target="#preview-modal" onclick="previewImage(' + row.id + ')" value="' + row.id + '">查看</a>';
+                    var html ='<a data-toggle="modal" data-target="#preview-modal" onclick="previewImage(' + row.id + ')" value="' + row.id + '">查看</a>&nbsp&nbsp&nbsp &nbsp&nbsp<a>调阅原片</a>';
                     return html;
                 }
             },
@@ -341,7 +359,7 @@ $(document).ready(function() {
             "type": "GET"
         },
         "language": {
-            "sSearch": "搜索: ",
+            "sSearch": "模糊查询: ",
             "sSearchPlaceholder": ""
         },
         "columns": [
@@ -356,6 +374,15 @@ $(document).ready(function() {
         ],
         "aoColumnDefs":[
             {
+                "targets": 2,
+                "data": null,
+                "bSortable": false,
+                render: function(data, type, row) {
+                    var html =pad(row.id,6);
+                    return html;
+                }
+            },
+            {
                 "targets": 0,
                 "data": null,
                 "bSortable": false,
@@ -369,7 +396,7 @@ $(document).ready(function() {
                 "bSortable": false,
                 render: function(data, type, row) {
                     // var html ='<a href="javascript:alert(' + row.id + ')" value="' + row.id + '">查看</button>';
-                    var html ='<a data-toggle="modal" data-target="#preview-modal" onclick="previewImage(' + row.id + ')" value="' + row.id + '">查看</a>';
+                    var html ='<a data-toggle="modal" data-target="#preview-modal" onclick="previewImage(' + row.id + ')" value="' + row.id + '">查看</a>&nbsp&nbsp&nbsp &nbsp&nbsp<a>调阅原片</a>';
                     return html;
                 }
             },
@@ -415,24 +442,33 @@ $(document).ready(function() {
             "type": "GET"
         },
         "language": {
-            "sSearch": "搜索: ",
+            "sSearch": "模糊查询: ",
             "sSearchPlaceholder": ""
         },
         "columns": [
             { "data" : null },
             { "title": "index",  "data" : "id" },
-            { "title": "患者ID",  "data" : "userid" },
+            { "title": "ID",  "data" : "userid" },
             { "title": "姓名",  "data" : "name" },
             { "title": "性别",  "data" : "sex" },
             { "title": "年龄",  "data" : "age" },
-            { "title": "影像类型",  "data" : "imgTpye" },
-            { "title": "良恶性",  "data" : "type" },
-            { "title": "诊断结果",  "data" : "consultResult" },
-            { "title": "标注状态",  "data" : "commentType" },
-            { "title": "上传日期",  "data" : "uploadDate" },
+            { "title": "类型",  "data" : "imgTpye" },
+            { "title": "性质",  "data" : "type" },
+            { "title": "结果",  "data" : "consultResult" },
+            { "title": "状态",  "data" : "commentType" },
+            { "title": "日期",  "data" : "uploadDate" },
             { "title": "操作",  "data" : null }
         ],
         "aoColumnDefs":[
+            {
+                "targets": 2,
+                "data": null,
+                "bSortable": false,
+                render: function(data, type, row) {
+                    var html =pad(row.id,6);
+                    return html;
+                }
+            },
             {
                 "targets": 0,
                 "data": null,
@@ -447,7 +483,7 @@ $(document).ready(function() {
                 "bSortable": false,
                 render: function(data, type, row) {
                     // var html ='<a href="javascript:alert(' + row.id + ')" value="' + row.id + '">查看</button>';
-                    var html ='<a data-toggle="modal" data-target="#preview-modal" onclick="previewImage(' + row.id + ')" value="' + row.id + '">查看</a>';
+                    var html ='<a data-toggle="modal" data-target="#preview-modal" onclick="previewImage(' + row.id + ')" value="' + row.id + '">查看</a>&nbsp&nbsp&nbsp &nbsp&nbsp<a>调阅原片</a>';
                     return html;
                 }
             },
@@ -496,26 +532,35 @@ $(document).ready(function() {
             "type": "GET"
         },
         "language": {
-            "sSearch": "搜索: ",
+            "sSearch": "模糊查询: ",
             "sSearchPlaceholder": ""
         },
         "columns": [
             { "data" : null },
             { "title": "index",  "data" : "id" },
-            { "title": "患者ID",  "data" : "userid" },
+            { "title": "ID",  "data" : "userid" },
             { "title": "姓名",  "data" : "name" },
             { "title": "性别",  "data" : "sex" },
             { "title": "年龄",  "data" : "age" },
-            { "title": "影像类型",  "data" : "imgTpye" },
-            { "title": "良恶性",  "data" : "type" },
-            { "title": "诊断结果",  "data" : "consultResult" },
-            { "title": "标注状态",  "data" : "commentType" },
-            { "title": "上传日期",  "data" : "uploadDate" },
+            { "title": "类型",  "data" : "imgTpye" },
+            { "title": "性质",  "data" : "type" },
+            { "title": "结果",  "data" : "consultResult" },
+            { "title": "状态",  "data" : "commentType" },
+            { "title": "日期",  "data" : "uploadDate" },
             { "title": "医院",  "data" : "hospital" },
             { "title": "专家",  "data" : "expert" },
             { "title": "操作",  "data" : null }
         ],
         "aoColumnDefs":[
+            {
+                "targets": 2,
+                "data": null,
+                "bSortable": false,
+                render: function(data, type, row) {
+                    var html =pad(row.id,6);
+                    return html;
+                }
+            },
             {
                 "targets": 0,
                 "data": null,
@@ -530,7 +575,7 @@ $(document).ready(function() {
                 "bSortable": false,
                 render: function(data, type, row) {
                     // var html ='<a href="javascript:alert(' + row.id + ')" value="' + row.id + '">查看</button>';
-                    var html ='<a data-toggle="modal" data-target="#preview-modal" onclick="previewImage(' + row.id + ')" value="' + row.id + '">查看</a>';
+                    var html ='<a data-toggle="modal" data-target="#preview-modal" onclick="previewImage(' + row.id + ')" value="' + row.id + '">查看</a>&nbsp&nbsp&nbsp &nbsp&nbsp<a>调阅原片</a>';
                     return html;
                 }
             },
@@ -576,26 +621,35 @@ $(document).ready(function() {
             "type": "GET"
         },
         "language": {
-            "sSearch": "搜索: ",
+            "sSearch": "模糊查询: ",
             "sSearchPlaceholder": ""
         },
         "columns": [
             { "data" : null },
             { "title": "index",  "data" : "id" },
-            { "title": "患者ID",  "data" : "userid" },
+            { "title": "ID",  "data" : "userid" },
             { "title": "姓名",  "data" : "name" },
             { "title": "性别",  "data" : "sex" },
             { "title": "年龄",  "data" : "age" },
-            { "title": "影像类型",  "data" : "imgTpye" },
-            { "title": "良恶性",  "data" : "type" },
-            { "title": "诊断结果",  "data" : "consultResult" },
-            { "title": "标注状态",  "data" : "commentType" },
-            { "title": "上传日期",  "data" : "uploadDate" },
+            { "title": "类型",  "data" : "imgTpye" },
+            { "title": "性质",  "data" : "type" },
+            { "title": "结果",  "data" : "consultResult" },
+            { "title": "状态",  "data" : "commentType" },
+            { "title": "日期",  "data" : "uploadDate" },
             { "title": "医院",  "data" : "hospital" },
             { "title": "科室",  "data" : "department" },
             { "title": "操作",  "data" : null }
         ],
         "aoColumnDefs":[
+            {
+                "targets": 2,
+                "data": null,
+                "bSortable": false,
+                render: function(data, type, row) {
+                    var html =pad(row.id,6);
+                    return html;
+                }
+            },
             {
                 "targets": 0,
                 "data": null,
@@ -610,7 +664,7 @@ $(document).ready(function() {
                 "bSortable": false,
                 render: function(data, type, row) {
                     // var html ='<a href="javascript:alert(' + row.id + ')" value="' + row.id + '">查看</button>';
-                    var html ='<a data-toggle="modal" data-target="#preview-modal" onclick="previewImage(' + row.id + ')" value="' + row.id + '">查看</a>';
+                    var html ='<a data-toggle="modal" data-target="#preview-modal" onclick="previewImage(' + row.id + ')" value="' + row.id + '">查看</a>&nbsp&nbsp&nbsp &nbsp&nbsp<a>调阅原片</a>';
                     return html;
                 }
             },
@@ -804,7 +858,7 @@ $(document).ready(function() {
         var prefix = getLeftNarBarActive();
         var caseIds = getSelectedCase(prefix);
         var comment = $('#help_text').val();
-        alert(comment)
+        $('#help_text').val('');
         var data={
             'case_id'          : caseIds[0],
             'comment'           : comment
@@ -838,6 +892,7 @@ $(document).ready(function() {
         var patient_photo_file      = $('#patient_photo_file').val();
         var patient_diagnose_type   = $('#patient_diagnose_type').val();
         var patient_diagnose_result = $('#patient_diagnose_result').val();
+        var patient_dcm_file      = $('#patient_dcm_file').val();
         var data={
             'patient_name'           : patient_name,
             'patient_gender'         : patient_gender,
@@ -845,7 +900,9 @@ $(document).ready(function() {
             'patient_photo_type'     : patient_photo_type,
             'patient_photo_file'     : patient_photo_file,
             'patient_diagnose_type'  : patient_diagnose_type,
-            'patient_diagnose_result': patient_diagnose_result
+            'patient_diagnose_result': patient_diagnose_result,
+            'patient_dcm_file'       : patient_dcm_file
+
         }
         $.ajax({
             type: 'POST',
