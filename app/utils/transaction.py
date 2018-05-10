@@ -38,9 +38,11 @@ def tryCredit(user_id, num, trans_type, spec, restricted=True):
         db.session.add(user_wage)
         db.session.add(user)
         db.session.commit()
-        print("commit")
+        print("commit wage")
         # update transaction
         if FLAG_CHAIN:
+            if user.user_wallet_address=='default':
+                return 'token钱包异常', 'token钱包异常', 'token钱包异常'
             trans_hash = contract_helper.reward(user.user_wallet_address, num).hex()
         else:
             trans_hash = "0x00"
@@ -57,4 +59,4 @@ def tryCredit(user_id, num, trans_type, spec, restricted=True):
         return available_credit, trans_hash, user_wage.wage
 
     except:
-        return 0, 0x00, 0
+        return 'token钱包异常', 'token钱包异常', 'token钱包异常'

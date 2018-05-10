@@ -5,7 +5,7 @@ SRF_ENABLED = True
 SECRET_KEY = 'for-you'
 SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
 
-FLAG_CHAIN = False
+FLAG_CHAIN = True
 CONTRACT_ADDRESS = "0xeb318dc01C835CB01E627215cB67e3a2e0Bc90D5"
 DECIMAL = 18
 # BANK_ADDRESS = "0x0000"

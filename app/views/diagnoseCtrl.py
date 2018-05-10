@@ -44,7 +44,7 @@ def diagnose():
         ownership = True if (g.user.is_authenticated and int(g.user.id) == int(request_case.upload_user_id)) else False
         if ownership and not request_case.is_tagged:
             credit, trans_hash, wage = tryCredit(g.user.id, CREDIT_DIAGNOSE, '收入', '标注奖励')
-
+        print(credit,trans_hash,wage)
         request_case.case_tag_info = specs
         request_case.case_tag_time = datetime.strptime(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                                                        '%Y-%m-%d %H:%M:%S')

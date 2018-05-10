@@ -1,7 +1,7 @@
 from flask import jsonify, g
 from flask_login import current_user, login_required
 from sqlalchemy import desc
-
+from app.models.models import Transaction
 
 def check_wallet():
     print('check_wallet')

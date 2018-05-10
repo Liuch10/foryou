@@ -99,13 +99,15 @@ def work_start_consult():
 def work_update_expert():
     # TODO... update expert_db
     print("work_update_expert")
-    if 'case_id' in request.form:
+    print(request.form)
+    if 'case_id' not in request.form:
         return jsonify({'result': '请选择'})
     case_id = int(request.form.get('case_id'))
     g.user = current_user
     user_id = g.user.id if g.user.is_authenticated else 0
     expertCase = ExpertCase(original_case_id=case_id,
                             expert_user_id=user_id)
+
     try:
         db.session.add(expertCase)
         db.session.commit()
@@ -167,6 +169,7 @@ def source_case_table_infos():
     user_id = g.user.id if g.user.is_authenticated else 0
     if get_expert:
         expertcases = ExpertCase.query.order_by(desc(ExpertCase.expert_time)).all()
+        print(len(expertcases))
         cases = [case.original_case for case in expertcases]
         users = [case.expert for case in expertcases]
     else:
@@ -190,6 +193,7 @@ def source_case_table_infos():
             d['consultResult'] = cases[i].case_diagnose_result
             d['commentType'] = '已标注' if cases[i].is_tagged else '未标注'
             d['uploadDate'] = cases[i].case_upload_time.strftime('%Y-%m-%d')
+            d['file_hash'] = cases[i].case_photo_hash
         except:
             d['id'] = "-1"
             d['userid'] = "-2"
@@ -240,6 +244,7 @@ def answer_case_table_infos():
         d['hospital'] = consultant_cases[i].uploader.user_hospital if ownership else '*'
         d['department'] = consultant_cases[i].uploader.user_department if ownership else '*'
         d['start-date'] = consultant_cases[i].consultant_time.strftime('%Y-%m-%d') if ownership else '*'
+        d['file_hash'] = consultant_cases[i].case_photo_hash if ownership else '*'
         data.append(d)
     if request.method == 'GET':
         rdata = {'recordsTotal': len(data), 'data': data}
@@ -261,6 +266,7 @@ def Case2Json(case, secret=False):
     d['commentType'] = commentType if (not secret) else "****"
     d['uploadDate'] = case.case_upload_time.strftime('%Y-%m-%d') if (not secret) else "****"
     d['hospital'] = "***"
+    d['file_hash']=case.case_photo_hash if (not secret) else "****"
     return d
 
 
@@ -363,7 +369,7 @@ def get_balance():
         balance = 0
         if FLAG_CHAIN:
             balance = contract_helper.getBalance(g.user.user_wallet_address)
-            balance = int(balance * (0.1 ** DECIMAL))
+            balance = round(float(balance * (0.1 ** DECIMAL)),2)
         else:
             balance = current_user.user_wallet_balance
         # print("here")

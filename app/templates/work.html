@@ -52,6 +52,9 @@
         #source-expert-case-table_filter label{
             color: white;
         }
+        #answer-huizhen-case-table_filter label{
+            color: white;
+        }
         #case-table_filter input {
             /*width: 100px;*/
             margin: auto;
@@ -156,7 +159,7 @@
         </div>
     </div>
     <div class="row clearfix">
-        <div class="col-md-2">
+        <div class="col-md-1">
         </div>
         <div class="col-md-1" style="background-color: #333A44;" style="padding-top: 5%;">
             <!-- Links -->
@@ -187,7 +190,7 @@
                 </li>
             </ul>
         </div>
-        <div class="col-md-7 tab-content">
+        <div class="col-md-10 tab-content">
             <div class="tab-pane active" id="my_load" style="padding-top: 2%;">
                 <div class="text-center text-white" style="font-size: 150%;" id="">
                     <p>上传患病信息</p>
@@ -217,6 +220,7 @@
                             <th>诊断结果</th>
                             <th>标注状态</th>
                             <th>上传日期</th>
+                            <th>文件哈希</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -257,6 +261,7 @@
                             <th>诊断结果</th>
                             <th>标注状态</th>
                             <th>上传日期</th>
+                            <th>文件哈希</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -312,6 +317,7 @@
                                         <th>诊断结果</th>
                                         <th>标注状态</th>
                                         <th>上传日期</th>
+                                        <th>文件哈希</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
@@ -347,6 +353,7 @@
                                         <th>所在医院</th>
                                         <th>所在科室</th>
                                         <th>发起日期</th>
+                                        <th>文件哈希</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
@@ -409,6 +416,7 @@
                                 <th>上传日期</th>
                                 <th>医院</th>
                                 <th>科室</th>
+                                <th>文件哈希</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -434,6 +442,7 @@
                                 <th>上传日期</th>
                                 <th>医院</th>
                                 <th>专家</th>
+                                <th>文件哈希</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -537,7 +546,7 @@
         </div>
             <div class="tab-pane fade" id="my_wallet" style="padding-top:2%">
             <div class="text-center text-white" style="font-size: 150%;" >
-                <p>我的钱包</p>
+                <p>我的钱包（余额有可能会出现延迟）</p>
                 <p>
                 <label>当前余额：</label>
                 <label id="chain_balance">0</label>
@@ -937,10 +946,192 @@
     $('#show-yhdtgx').click(function () {
         $('#show-zjzydt').css('color', 'white');
         $('#show-yhdtgx').css('color', 'blue');
+                $('#source-user-case-table').DataTable().destroy();
+        $('#source-user-case-table').DataTable({
+            "bPaginate": true,
+            "processing": true,
+            "searching": true,
+            "serverSide": false,
+            "bDeferRender": true,
+            "bAutoWidth": true,
+            "bFilter": true,
+            "ajax": {
+                "url": "/case-table-source-infos?type=case",
+                "type": "GET"
+            },
+            "language": {
+                "sSearch": "模糊查询: ",
+                "sSearchPlaceholder": ""
+            },
+            "columns": [
+                {"data": null},
+                {"title": "index", "data": "id"},
+                {"title": "ID", "data": "userid"},
+                {"title": "姓名", "data": "name"},
+                {"title": "性别", "data": "sex"},
+                {"title": "年龄", "data": "age"},
+                {"title": "类型", "data": "imgTpye"},
+                {"title": "性质", "data": "type"},
+                {"title": "结果", "data": "consultResult"},
+                {"title": "状态", "data": "commentType"},
+                {"title": "日期", "data": "uploadDate"},
+                {"title": "医院", "data": "hospital"},
+                {"title": "科室", "data": "department"},
+                {"title": "文件哈希", "data": "file_hash"},
+                {"title": "操作", "data": null}
+            ],
+            "aoColumnDefs": [
+                {
+                    "targets": 2,
+                    "data": null,
+                    "bSortable": false,
+                    render: function (data, type, row) {
+                        var html = pad(row.id, 6);
+                        return html;
+                    }
+                },
+                {
+                    "targets": 0,
+                    "data": null,
+                    "bSortable": false,
+                    render: function (data, type, row) {
+                        var html = "<input type ='checkbox' name='source-user-check-upload-case' class='source-user-checkbox-select' value='" + row.id + "'>";
+                        return html;
+                    }
+                },
+                {
+                    "targets": -1,
+                    "bSortable": false,
+                    render: function (data, type, row) {
+                        // var html ='<a href="javascript:alert(' + row.id + ')" value="' + row.id + '">查看</button>';
+                        var html = '<a data-toggle="modal" data-target="#preview-modal" onclick="previewImage(' + row.id + ')" value="' + row.id + '">查看</a>&nbsp&nbsp&nbsp &nbsp&nbsp<a>调阅原片</a>&nbsp&nbsp&nbsp &nbsp&nbsp<a onclick=alert("' + row.file_hash + '")>文件哈希</a>';
+                        return html;
+                    }
+                },
+                {
+                    "bSearchable": true,
+                    "bVisible": true,
+                    "bFilter": true,
+                    "aTargets": [2]
+                },
+                {
+                    "bVisible": false,
+                    "aTargets": [1, 12, -2]
+                },
+            ],
+            "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                $(nRow).css("background-color", "black");
+                $(nRow).css("color", "white");
+            },
+            initComplete: function () {
+
+            },
+            "dom": 'rft<"#pBottom"p>',
+            "fnInitComplete": function () {
+                $("#pBottom > #source-user-case-table_previous").css("color", "white");
+                $('.source-user-checkbox-select').parent('td').css("background-color", "black");
+                // $("#case-table_filter").detach().appendTo('#new-search-area');
+            },
+            "fnDrawCallback": function () {
+                $("#source-user-all-checked").prop("checked", false);
+            },
+        });
+
     })
     $('#show-zjzydt').click(function () {
         $('#show-yhdtgx').css('color', 'white');
         $('#show-zjzydt').css('color', 'blue');
+                $('#source-expert-case-table').DataTable().destroy();
+
+        $('#source-expert-case-table').DataTable({
+            "bPaginate": true,
+            "processing": true,
+            "searching": true,
+            "serverSide": false,
+            "bDeferRender": true,
+            "bAutoWidth": true,
+            "bFilter": true,
+            "ajax": {
+                "url": "/case-table-source-infos?type=expert",
+                "type": "GET"
+            },
+            "language": {
+                "sSearch": "模糊查询: ",
+                "sSearchPlaceholder": ""
+            },
+            "columns": [
+                {"data": null},
+                {"title": "index", "data": "id"},
+                {"title": "ID", "data": "userid"},
+                {"title": "姓名", "data": "name"},
+                {"title": "性别", "data": "sex"},
+                {"title": "年龄", "data": "age"},
+                {"title": "类型", "data": "imgTpye"},
+                {"title": "性质", "data": "type"},
+                {"title": "结果", "data": "consultResult"},
+                {"title": "状态", "data": "commentType"},
+                {"title": "日期", "data": "uploadDate"},
+                {"title": "医院", "data": "hospital"},
+                {"title": "专家", "data": "expert"},
+                {"title": "文件哈希", "data": "file_hash"},
+                {"title": "操作", "data": null}
+            ],
+            "aoColumnDefs": [
+                {
+                    "targets": 2,
+                    "data": null,
+                    "bSortable": false,
+                    render: function (data, type, row) {
+                        var html = pad(row.id, 6);
+                        return html;
+                    }
+                },
+                {
+                    "targets": 0,
+                    "data": null,
+                    "bSortable": false,
+                    render: function (data, type, row) {
+                        var html = "<input type ='checkbox' name='source-expert-check-upload-case' class='source-expert-checkbox-select' value='" + row.id + "'>";
+                        return html;
+                    }
+                },
+                {
+                    "targets": -1,
+                    "bSortable": false,
+                    render: function (data, type, row) {
+                        // var html ='<a href="javascript:alert(' + row.id + ')" value="' + row.id + '">查看</button>';
+                        var html = '<a data-toggle="modal" data-target="#preview-modal" onclick="previewImage(' + row.id + ')" value="' + row.id + '">查看</a>&nbsp&nbsp&nbsp &nbsp&nbsp<a>调阅原片</a>&nbsp&nbsp&nbsp &nbsp&nbsp<a onclick=alert("' + row.file_hash + '")>文件哈希</a>';
+                        return html;
+                    }
+                },
+                {
+                    "bSearchable": true,
+                    "bVisible": true,
+                    "bFilter": true,
+                    "aTargets": [2]
+                },
+                {
+                    "bVisible": false,
+                    "aTargets": [1, -2]
+                },
+            ],
+            "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                $(nRow).css("background-color", "black");
+                $(nRow).css("color", "white");
+            },
+            initComplete: function () {
+
+            },
+            "dom": 'rft<"#pBottom"p>',
+            "fnInitComplete": function () {
+                $("#pBottom > #source-expert-case-table_previous").css("color", "white");
+                $('.source-expert-checkbox-select').parent('td').css("background-color", "black");
+                // $("#case-table_filter").detach().appendTo('#new-search-area');
+            },
+            "fnDrawCallback": function () {
+                $("#source-expert-all-checked").prop("checked", false);
+            },
+        });
     })
 </script>
 

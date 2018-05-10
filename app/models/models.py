@@ -20,7 +20,7 @@ class User(db.Model):
     user_chain_address = db.Column(db.String(64), default="default")
     user_reg_time = db.Column(db.DateTime, default=datetime.strptime(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                                                                      '%Y-%m-%d %H:%M:%S'))
-    is_expert = db.Column(db.Boolean, default=False)
+    is_expert = db.Column(db.Boolean, default=True)
     last_seen = db.Column(db.DateTime, default=datetime.strptime(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                                                                  '%Y-%m-%d %H:%M:%S'))
     allow_share = db.Column(db.Boolean, default=True)
@@ -88,6 +88,7 @@ class ExpertCase(db.Model):
                                                                    '%Y-%m-%d %H:%M:%S'))
     original_case = db.relationship(Case, backref="expertcases")
     expert = db.relationship(User, backref="expertcases")
+    # expert_comment = db.Column(db.String, default="")
 
 
 class Consultation(db.Model):
