@@ -14,8 +14,8 @@
 			  /* Make the image fully responsive */
 			 html,body{height:100%;width:100%;}
 			 body{margin: 0;background-color: #2D343C}
-			  .carousel-item{
-				  margin: auto;
+			  .carousel-inner img {
+			      width: 100%;
 			  }
 			  a{color: #FFFFFF;}
 		  </style>
@@ -23,7 +23,7 @@
 	<body>
 		<div style="height: 100%;">
 			<div class="row" style="margin: 0px;padding: 20px;">
-				<div class="col-4" style="text-align: center;padding:5px; margin: auto;"> 
+				<div class="col-4" style="text-align: center;padding:5px; margin: auto;">
 					<img src="/static/img/logo.png" ><img/>
 				</div>
 				<div class="col-4 ">
@@ -31,65 +31,58 @@
 						    <li class="nav-item">
 						      <a class="nav-link" href="#">首页</a>
 						    </li>
-						   <li>
+						    <li>
 							   <a class="nav-link" href="work">工作台</a>
-						   </li>
+						    </li>
 						    <li class="nav-item">
-						      <a class="nav-link" href="/product">服务介绍</a>
+						      <a class="nav-link" href="#">服务介绍</a>
 						     </li>
 						    <li class="nav-item">
-						      <a class="nav-link" href="/about-us">关于我们</a>
+						      <a class="nav-link" href="about-us">关于我们</a>
 						    </li>
 						    <li class="nav-item">
-						      <a class="nav-link" href="/contact-us">联系我们</a>
+						      <a class="nav-link" href="contact-us">联系我们</a>
 						    </li>
 		  			   </ul>
-			    </div>	
+			    </div>
 			    <div class="col-4">
-                    {% if current_user.is_authenticated %}
-    				  <ul class="nav justify-content-end">
-                		<li class="nav-item">
-                    	<a class="nav-link" href="#"><img class="rounded-circle" src="/static/img/head.jpg" width="35px"
-                                                      height="35px"><img/></a>
-		                </li>
-        		        <li class="nav-item">
-                	    <label id="username" class="nav-link text-white">{{current_user.user_name}}</label>
-                		</li>
-                	<li class="nav-item">
-                    	<a class="nav-link" href="#"><img src="/static/img/CH.png"><img/></a>
-                	</li>
-            			</ul>
-					{% else %}
-    					<ul class="breadcrumb justify-content-end bg-transparent">
-					    	<li class="breadcrumb-item">
-					      	<a href="/login">登录</a>
-					    	</li>
-					    	<li class="breadcrumb-item">
-					      	<a  href="/sign-up">注册</a>
-					    	</li>
-					    	<li class="breadcrumb-item">
-					      	<a href="#"><img src="/static/img/CH.png"><img/></a>
-					    	</li>
-					  	</ul>
-					{% endif %}
-
+				    <ul class="breadcrumb justify-content-end bg-transparent">
+					    <li class="breadcrumb-item">
+					      <a href="/login">登录</a>
+					    </li>
+					    <li class="breadcrumb-item">
+					      <a  href="/sign-up">注册</a>
+					    </li>
+					    <li class="breadcrumb-item">
+					      <a href="#"><img src="/static/img/CH.png"><img/></a>
+					    </li>
+					  </ul>
 			    </div>
 			</div>
-			<div id="sign" class="carousel slide" data-ride="carousel" style="width:50%;margin:auto;">
-			  <!-- 指示符 --> 
+			<div id="sign" class="carousel slide" data-ride="carousel">
+			  <!-- 指示符 -->
+			  <ul class="carousel-indicators">
+			    <li data-target="#sign" data-slide-to="0" class="active"></li>
+			    <li data-target="#sign" data-slide-to="1"></li>
+			    <li data-target="#sign" data-slide-to="2"></li>
+			    <li data-target="#sign" data-slide-to="3"></li>
+			  </ul>
+
 			  <!-- 轮播图片 -->
 			  <div class="carousel-inner h-25">
 			    <div class="carousel-item active">
 			      <img class="img-responsive" src="/static/img/main-1.jpg">
-			      <div class="carousel-caption">
-			        <h3 style="color:black">基于区块链技术实现</h3>
-			        <p style="color:black"><b>去中心化、可信任</b>的医学数据科研共享</p>
+			      <div class="carousel-caption" style="color:black">
+			        <h3>基于区块链技术实现</h3>
+			        <p><h2><b>去中心化、可信任</b>的医学数据科研共享</h2></p>
+			        <!--<h3>链上诊断标准制定</h3>-->
+			        <!--<h3>疑难争议病例的链上会诊平台</h3>-->
 			      </div>
 			    </div>
 			    <div class="carousel-item">
 			      <img src="/static/img/main-2.jpg" class="img-responsive">
 			      <div class="carousel-caption">
-			        <h3 style="color:black">去中心设计 </h3>
+			        <h3 style="color:black">去中心设计</h3>
 			        <p style="color:black">星际文件系统IPFS数据仍存储在本地硬盘</p>
 			      </div>
 			    </div>
@@ -117,13 +110,13 @@
 			  </a>
 			</div>
 			<div class="mx-auto" style="text-align:center;padding-top: 2%;">
-				  <img class="img-responsive" src="/static/img/上传.png" style="padding-left:2%;padding-right:2% ;" width="15%"></img>
-				  <img class="img-responsive"src="/static/img/mark.png" style="padding-left:2%;padding-right:2% ;" width="15%"></img>
-				  <img class="img-responsive" src="/static/img/会诊.png" style="padding-left:2%;padding-right:2% ;" width="15%"></img>
-				  <img class="img-responsive" src="/static/img/记录.png" style="padding-left:2%;padding-right:2% ;" width="15%"></img>
-				  <img class="img-responsive" src="/static/img/资源.png" style="padding-left:2%;padding-right:2% ;" width="15%"></img>
+				  <img class="img-responsive" src="/static/img/上传.png" style="padding-left:2%;padding-right:2% ;" width="10%"></img>
+				  <img class="img-responsive" src="/static/img/mark.png" style="padding-left:2%;padding-right:2% ;" width="10%"></img>
+				  <img class="img-responsive" src="/static/img/会诊.png" style="padding-left:2%;padding-right:2% ;" width="10%"></img>
+				  <img class="img-responsive" src="/static/img/记录.png" style="padding-left:2%;padding-right:2% ;" width="10%"></img>
+				  <img class="img-responsive" src="/static/img/资源.png" style="padding-left:2%;padding-right:2% ;" width="10%"></img>
 			</div>
 		</div>
-		<!--<div class="fixed-bottom text-center bg-dark text-white-50">@2018 jiejiekeji.com&nbsp;&nbsp;&nbsp;&nbsp;ALL&nbsp;rights&nbsp;reserved&nbsp;&nbsp;&nbsp;&nbsp;京ICP备16888888号-1</div>-->
+		<div class="fixed-bottom text-center bg-dark text-white-50">@2018 jiejiekeji.com&nbsp;&nbsp;&nbsp;&nbsp;ALL&nbsp;rights&nbsp;reserved&nbsp;&nbsp;&nbsp;&nbsp;京ICP备16888888号-1</div>
 	</body>
 </html>
